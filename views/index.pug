@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  #myDiv(style='width: 1080px; height: 400px;')
+  script(src='javascripts/plot.js')
+  fieldset.pure-group
+    textarea.pure-input-1-2#input(placeholder='Entrez votre fonction', rows='8', cols='100')
+  button.pure-button.pure-input-1-2.pure-button-primary(onclick="send();") Afficher
