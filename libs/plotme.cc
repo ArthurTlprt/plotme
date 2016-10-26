@@ -10,37 +10,27 @@ using v8::Number;
 using v8::Object;
 using v8::String;
 using v8::Value;
+using v8::Array;
 
-void add(const FunctionCallbackInfo<Value>& args) {
+void getPoints(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
-  // Check the number of arguments passed.
-if (args.Length() < 2) {
-  // Throw an Error that is passed back to JavaScript
-  isolate->ThrowException(Exception::TypeError(
-      String::NewFromUtf8(isolate, "Wrong number of arguments")));
-  return;
-}
 
-// Check the argument types
-if (!args[0]->IsNumber() || !args[1]->IsNumber()) {
-  isolate->ThrowException(Exception::TypeError(
-      String::NewFromUtf8(isolate, "Wrong arguments")));
-  return;
-}
+  Local<Array> points = Array::New(isolate, 10);
 
-// Perform the operation
-double value = args[0]->NumberValue() + args[1]->NumberValue();
-Local<Number> num = Number::New(isolate, value);
+  Local<Object> obj = Object::New(isolate);
+  obj->Set(String::NewFromUtf8(isolate, "x"), Number::New(isolate, 42 ));
+  obj->Set(String::NewFromUtf8(isolate, "y"), Number::New(isolate, 43 ));
 
-// Set the return value (using the passed in
-// FunctionCallbackInfo<Value>&)
-args.GetReturnValue().Set(num);
+  points->Set(obj);
+
+  args.GetReturnValue().Set(points);
+
 }
 
 void init(Local<Object> exports) {
-  NODE_SET_METHOD(exports, "add", add);
+  NODE_SET_METHOD(exports, "getPoints", getPoints);
 }
 
-NODE_MODULE(addon, init)
+NODE_MODULE(plotme, init)
 
 }  // namespace demo
