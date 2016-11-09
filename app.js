@@ -13,9 +13,7 @@ var io = require('socket.io')(http);
 
 //var plotme = require("./libs/build/Release/plotme.node");
 
-const addon = require('./libs/build/Release/addon');
-
-console.log('This should be eight:', addon.add(3, 5))
+const plot = require('./libs/build/Release/plot');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -67,7 +65,9 @@ app.use(function(err, req, res, next) {
 io.on('connection', function(socket){
   socket.on('new plot', function(equation) {
     console.log(equation);
-    console.log(plotme.getPoints());
+    points = plot.evaluate();
+    socket.emit('result', points);
+    //console.log(points);
   });
 });
 
