@@ -13,7 +13,7 @@ var io = require('socket.io')(http);
 
 //var plotme = require("./libs/build/Release/plotme.node");
 
-const addon = require('./build/Release/addon');
+const addon = require('./libs/build/Release/addon');
 
 console.log('This should be eight:', addon.add(3, 5))
 

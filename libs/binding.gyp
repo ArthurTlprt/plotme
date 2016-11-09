@@ -1,8 +1,8 @@
 {
   "targets": [
     {
-      "target_name": "plotme",
-      "sources": [ "plotme.cc" ]
+      "target_name": "addon",
+      "sources": [ "addon.cc" ]
     }
   ]
 }
