@@ -1,3 +1,4 @@
+// addon.cc
 #include <node.h>
 
 namespace demo {
@@ -10,27 +11,41 @@ using v8::Number;
 using v8::Object;
 using v8::String;
 using v8::Value;
-using v8::Array;
 
-void getPoints(const FunctionCallbackInfo<Value>& args) {
+// This is the implementation of the "add" method
+// Input arguments are passed using the
+// const FunctionCallbackInfo<Value>& args struct
+void Add(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
 
-  Local<Array> points = Array::New(isolate, 10);
+  // Check the number of arguments passed.
+  if (args.Length() < 2) {
+    // Throw an Error that is passed back to JavaScript
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "Wrong number of arguments")));
+    return;
+  }
 
-  Local<Object> obj = Object::New(isolate);
-  obj->Set(String::NewFromUtf8(isolate, "x"), Number::New(isolate, 42 ));
-  obj->Set(String::NewFromUtf8(isolate, "y"), Number::New(isolate, 43 ));
+  // Check the argument types
+  if (!args[0]->IsNumber() || !args[1]->IsNumber()) {
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "Wrong arguments")));
+    return;
+  }
 
-  points->Set(obj);
+  // Perform the operation
+  double value = args[0]->NumberValue() + args[1]->NumberValue();
+  Local<Number> num = Number::New(isolate, value);
 
-  args.GetReturnValue().Set(points);
-
+  // Set the return value (using the passed in
+  // FunctionCallbackInfo<Value>&)
+  args.GetReturnValue().Set(num);
 }
 
-void init(Local<Object> exports) {
-  NODE_SET_METHOD(exports, "getPoints", getPoints);
+void Init(Local<Object> exports) {
+  NODE_SET_METHOD(exports, "add", Add);
 }
 
-NODE_MODULE(plotme, init)
+NODE_MODULE(addon, Init)
 
 }  // namespace demo

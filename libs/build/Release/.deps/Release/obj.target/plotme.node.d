@@ -1,0 +1,1 @@
+cmd_Release/obj.target/plotme.node := g++ -shared -pthread -rdynamic -m64  -Wl,-soname=plotme.node -o Release/obj.target/plotme.node -Wl,--start-group Release/obj.target/plotme/plotme.o -Wl,--end-group 

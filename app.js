@@ -11,8 +11,11 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var plotme = require("./libs/build/Release/plotme.node");
+//var plotme = require("./libs/build/Release/plotme.node");
 
+const addon = require('./build/Release/addon');
+
+console.log('This should be eight:', addon.add(3, 5))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
