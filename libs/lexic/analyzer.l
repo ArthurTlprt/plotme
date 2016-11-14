@@ -2,38 +2,47 @@
 
 %{
 
-#include <vector>
-
+#include "stdio.h"
 
 
 %}
 %%
 
-[a-zA-Z0-9]+ {
-
+(-?[1-9]([0-9])*(\.[0-9]+)?) {
+	printf("number ");
+}
+[a-zA-Z]+"(x)" {
+	printf("function ");
+}
+([A-Za-z]|_)+([A-Za-z]|_|[0-9])+ {
+	printf("variable ");
+}
+"(" {
+	printf("\"(\"" );
+}
+")" {
+	printf("\")\"" );
+}
+\+ {
+	printf("plus ");
+}
+\- {
+	printf("minus ");
+}
+\* {
+	printf("multiplication  ");
+}
+\/ {
+	printf("division ");
+}
+\= {
+	printf("equal ");
 }
 
-y = {
-
-}
-
--?[1-9]([0-9]?)+(.[0-9]+)? {
-
-}
-
-[a-zA-Z](x) {
-
-}
-
-+ {
-
-}
-
-sin {
-	
-}
 
 %%
+
+
 int main()
 {
 	// flex -o exo1.c exo1.l
@@ -41,6 +50,5 @@ int main()
 	// ./exo1.out < text
 	// cat text | ./exo1.out
 	yylex();
-	printf( "# of lines = %d, # of chars = %d, # of words = %d\n",
-			num_lines, num_chars, num_words );
+	printf("hello world");
 }

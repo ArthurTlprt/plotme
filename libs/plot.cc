@@ -2,6 +2,7 @@
 #include <node.h>
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
 
 namespace demo {
 
@@ -17,6 +18,8 @@ using v8::Array;
 
 void Evaluate(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
+
+  std::system("./lexic/analyzer.out < \" mon input \"");
 
   Local<Object> coord = Object::New(isolate);
   Local<Array> x = Array::New(isolate);
