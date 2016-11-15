@@ -7,38 +7,25 @@
 
 %}
 %%
-
-(-?[1-9]([0-9])*(\.[0-9]+)?) {
-	printf("number ");
-}
-[a-zA-Z]+"(x)" {
-	printf("function ");
-}
-([A-Za-z]|_)+([A-Za-z]|_|[0-9])+ {
-	printf("variable ");
-}
-"(" {
-	printf("\"(\"" );
-}
-")" {
-	printf("\")\"" );
-}
-\+ {
-	printf("plus ");
-}
-\- {
-	printf("minus ");
-}
-\* {
-	printf("multiplication  ");
-}
-\/ {
-	printf("division ");
-}
-\= {
-	printf("equal ");
-}
-
+[ \t]	; // ignore all whitespace
+"pi" { printf("pi"); }
+"sin" { printf("sin"); }
+"cos" { printf(" cos "); }
+"exp" { printf(" exp "); }
+"tan" { printf(" tan "); }
+"arcsin" { printf("arcsin "); }
+"arcos" { printf("arcos "); }
+"arctan" { printf("arctan "); }
+"(" { printf("\"(\" "); }
+")" { printf("\")\" "); }
+(-?[1-9]([0-9])*(\.[0-9]+)?) { printf("number "); }
+[a-zA-Z]+"(x)" { printf("function "); }
+([A-Za-z]|_)+([A-Za-z]|_|[0-9])+ { printf("variable "); }
+\+ { printf("plus "); }
+\- { printf("minus "); }
+\* { printf("multiplication  "); }
+\/ { printf("division "); }
+\= { printf("equal "); }
 
 %%
 
