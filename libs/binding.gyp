@@ -1,8 +1,11 @@
 {
   "targets": [
     {
-      "target_name": "plot",
-      "sources": [ "plot.cc" ]
+      "target_name": "parser",
+      "sources": [
+        "scanner.cpp",
+        "parser.tab.cpp"
+        ]
     }
   ]
 }

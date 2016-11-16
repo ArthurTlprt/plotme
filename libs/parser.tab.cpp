@@ -58,14 +58,6 @@
 /* Pull parsers.  */
 #define YYPULL 1
 
-/* "%code top" blocks.  */
-#line 28 "parser.ypp" /* yacc.c:316  */
-
-	#include <map>
-	#include <string>
-  std::string getPoints();
-
-#line 69 "parser.tab.cpp" /* yacc.c:316  */
 
 
 
@@ -73,6 +65,7 @@
 #line 1 "parser.ypp" /* yacc.c:339  */
 
 
+#include <node.h>
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -98,7 +91,7 @@ vector<int>    postfixee;
 
 
 
-#line 102 "parser.tab.cpp" /* yacc.c:339  */
+#line 95 "parser.tab.cpp" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -165,13 +158,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 34 "parser.ypp" /* yacc.c:355  */
+#line 30 "parser.ypp" /* yacc.c:355  */
 
 	int ival;
 	float fval;
 	char* sval;
 
-#line 175 "parser.tab.cpp" /* yacc.c:355  */
+#line 168 "parser.tab.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -188,7 +181,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 192 "parser.tab.cpp" /* yacc.c:358  */
+#line 185 "parser.tab.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -488,9 +481,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    55,    55,    56,    59,    60,    61,    64,    65,    66,
-      67,    68,    74,    75,    76,    77,    78,    79,    80,    81,
-      82,    83,    84,    85,    86,    87
+       0,    51,    51,    52,    55,    56,    57,    60,    61,    62,
+      63,    64,    70,    71,    72,    73,    74,    75,    76,    77,
+      78,    79,    80,    81,    82,    83
 };
 #endif
 
@@ -1309,137 +1302,137 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 60 "parser.ypp" /* yacc.c:1646  */
+#line 56 "parser.ypp" /* yacc.c:1646  */
     { printf("\tResult: %f\n", (yyvsp[-1].fval)); }
-#line 1315 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1308 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 61 "parser.ypp" /* yacc.c:1646  */
+#line 57 "parser.ypp" /* yacc.c:1646  */
     { printf("bye!\n"); exit(0); }
-#line 1321 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1314 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 64 "parser.ypp" /* yacc.c:1646  */
+#line 60 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(X); values.push_back(0); }
-#line 1327 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1320 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 65 "parser.ypp" /* yacc.c:1646  */
+#line 61 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = M_PI; }
-#line 1333 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1326 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 66 "parser.ypp" /* yacc.c:1646  */
+#line 62 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = (yyvsp[0].fval); }
-#line 1339 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1332 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 67 "parser.ypp" /* yacc.c:1646  */
+#line 63 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = (yyvsp[0].fval); }
-#line 1345 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1338 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 68 "parser.ypp" /* yacc.c:1646  */
+#line 64 "parser.ypp" /* yacc.c:1646  */
     {
 
 		  postfixee.push_back(FLOAT);
 			values.push_back((yyvsp[0].fval));
 		}
-#line 1355 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1348 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 74 "parser.ypp" /* yacc.c:1646  */
+#line 70 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(PLUS); values.push_back(0); }
-#line 1361 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1354 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 75 "parser.ypp" /* yacc.c:1646  */
+#line 71 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = (yyvsp[-2].fval) - (yyvsp[0].fval); }
-#line 1367 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1360 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 76 "parser.ypp" /* yacc.c:1646  */
+#line 72 "parser.ypp" /* yacc.c:1646  */
     {}
-#line 1373 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1366 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 77 "parser.ypp" /* yacc.c:1646  */
+#line 73 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = (yyvsp[-2].fval) / (yyvsp[0].fval); }
-#line 1379 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1372 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 78 "parser.ypp" /* yacc.c:1646  */
+#line 74 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = (yyvsp[-1].fval); }
-#line 1385 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1378 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 79 "parser.ypp" /* yacc.c:1646  */
+#line 75 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = sin( (yyvsp[-1].fval) );}
-#line 1391 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1384 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 80 "parser.ypp" /* yacc.c:1646  */
+#line 76 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = cos( (yyvsp[-1].fval) );}
-#line 1397 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1390 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 81 "parser.ypp" /* yacc.c:1646  */
+#line 77 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = tan( (yyvsp[-1].fval) );}
-#line 1403 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1396 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 82 "parser.ypp" /* yacc.c:1646  */
+#line 78 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = asin( (yyvsp[-1].fval) );}
-#line 1409 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1402 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 83 "parser.ypp" /* yacc.c:1646  */
+#line 79 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = acos( (yyvsp[-1].fval) );}
-#line 1415 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1408 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 84 "parser.ypp" /* yacc.c:1646  */
+#line 80 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = atan( (yyvsp[-1].fval) );}
-#line 1421 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1414 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 85 "parser.ypp" /* yacc.c:1646  */
+#line 81 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = exp( (yyvsp[-1].fval) );}
-#line 1427 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1420 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 86 "parser.ypp" /* yacc.c:1646  */
+#line 82 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = sqrt( (yyvsp[-1].fval) );}
-#line 1433 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1426 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 87 "parser.ypp" /* yacc.c:1646  */
+#line 83 "parser.ypp" /* yacc.c:1646  */
     { printf("ma couleur est %s",(yyvsp[0].sval)); (yyval.fval)=(yyvsp[-1].fval) ; }
-#line 1439 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1432 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1443 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1436 "parser.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1667,7 +1660,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 92 "parser.ypp" /* yacc.c:1906  */
+#line 88 "parser.ypp" /* yacc.c:1906  */
 
 
 
@@ -1695,21 +1688,55 @@ double Evaluation(double x){
 	return pile.top();
 }
 
-string getPoints() {
-	map<float, float> points;
-	return "coeur";
+namespace demo {
+
+using v8::Exception;
+using v8::FunctionCallbackInfo;
+using v8::Isolate;
+using v8::Local;
+using v8::Number;
+using v8::Object;
+using v8::String;
+using v8::Value;
+using v8::Array;
+
+void Evaluate(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = args.GetIsolate();
+
+  std::system("./lexic/analyzer.out < \" mon input \"");
+
+  Local<Object> coord = Object::New(isolate);
+  Local<Array> x = Array::New(isolate);
+  Local<Array> y = Array::New(isolate);
+
+  for(unsigned int i=0; i < 100; i++) {
+    x->Set(i, Number::New(isolate, i));
+    y->Set(i, Number::New(isolate, i*i));
+  }
+
+  coord->Set(String::NewFromUtf8(isolate, "x"), x );
+  coord->Set(String::NewFromUtf8(isolate, "y"), y );
+  coord->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
+
+  args.GetReturnValue().Set(coord);
+  std::cout << "Evaluate" << std::endl;
+  std::cout << "rigolo socket on" << std::endl;
 }
+
+void Init(Local<Object> exports) {
+  NODE_SET_METHOD(exports, "evaluate", Evaluate);
+}
+
+NODE_MODULE(parser, Init)
+
+}  // namespace demo
 
 int main() {
 	yyin = stdin;
-
-
-		yyparse();
-
+	yyparse();
 	for (int i = 0; i < 10; i++) {
 		cout << "f("<<  i << ") = " << Evaluation(i) << endl;
 	}
-
 	return 0;
 }
 

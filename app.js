@@ -11,9 +11,8 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-//var plotme = require("./libs/build/Release/plotme.node");
 
-const plot = require('./libs/build/Release/plot');
+const parser = require('./libs/build/Release/parser');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -65,7 +64,7 @@ app.use(function(err, req, res, next) {
 io.on('connection', function(socket){
   socket.on('new plot', function(equation) {
     console.log(equation);
-    points = plot.evaluate();
+    points = parser.evaluate();
     socket.emit('result', points);
     //console.log(points);
   });
