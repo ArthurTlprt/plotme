@@ -46,27 +46,29 @@ extern int yydebug;
   enum yytokentype
   {
     FLOAT = 258,
-    PLUS = 259,
-    MINUS = 260,
-    MULTIPLY = 261,
-    DIVIDE = 262,
-    LEFT = 263,
-    RIGHT = 264,
-    EQUAL = 265,
-    NEWLINE = 266,
-    QUIT = 267,
-    FUNCTION = 268,
-    X = 269,
-    VARIABLE = 270,
-    MPI = 271,
-    EXP = 272,
-    SIN = 273,
-    COS = 274,
-    TAN = 275,
-    ARCTAN = 276,
-    ARCSIN = 277,
-    ARCOS = 278,
-    SQRT = 279
+    COLOR = 259,
+    PLUS = 260,
+    MINUS = 261,
+    MULTIPLY = 262,
+    DIVIDE = 263,
+    LEFT = 264,
+    RIGHT = 265,
+    EQUAL = 266,
+    NEWLINE = 267,
+    QUIT = 268,
+    FUNCTION = 269,
+    X = 270,
+    VARIABLE = 271,
+    MPI = 272,
+    EXP = 273,
+    SIN = 274,
+    COS = 275,
+    TAN = 276,
+    ARCTAN = 277,
+    ARCSIN = 278,
+    ARCOS = 279,
+    SQRT = 280,
+    DRAW = 281
   };
 #endif
 
@@ -75,12 +77,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 15 "parser.ypp" /* yacc.c:1909  */
+#line 16 "parser.ypp" /* yacc.c:1909  */
 
 	int ival;
 	float fval;
+	char* sval;
 
-#line 84 "parser.tab.hpp" /* yacc.c:1909  */
+#line 87 "parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

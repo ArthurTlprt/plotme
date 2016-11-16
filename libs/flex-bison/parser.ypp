@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <cmath>
 #include <vector>
+#include <string>
 
 extern int yylex();
 extern int yyparse();
@@ -15,13 +16,15 @@ void yyerror(const char* s);
 %union {
 	int ival;
 	float fval;
+	char* sval;
 }
 
 %token<fval> FLOAT
+%token<sval> COLOR
 %token PLUS MINUS MULTIPLY DIVIDE LEFT RIGHT EQUAL
 %token NEWLINE QUIT
 %token FUNCTION X VARIABLE
-%token MPI EXP SIN COS TAN ARCTAN ARCSIN ARCOS SQRT
+%token MPI EXP SIN COS TAN ARCTAN ARCSIN ARCOS SQRT DRAW
 %left PLUS MINUS
 %left MULTIPLY DIVIDE
 
@@ -58,6 +61,7 @@ mixed_expression: X { $$ = 42; }
 		| ARCTAN LEFT mixed_expression RIGHT { $$ = atan( $3 );}
 		| EXP LEFT mixed_expression RIGHT { $$ = exp( $3 );}
 		| SQRT LEFT mixed_expression RIGHT { $$ = sqrt( $3 );}
+		| DRAW mixed_expression COLOR { printf("ma couleur est %s",$3); $$=$2 ; }
 ;
 %%
 
