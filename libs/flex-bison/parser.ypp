@@ -67,12 +67,12 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| LEFT mixed_expression RIGHT		 { }
 		| SIN LEFT mixed_expression RIGHT { postfixee.push_back(SIN); values.push_back(0); }
 		| COS LEFT mixed_expression RIGHT { postfixee.push_back(COS); values.push_back(0); }
-		| TAN LEFT mixed_expression RIGHT { $$ = tan( $3 );}
-		| ARCSIN LEFT mixed_expression RIGHT { $$ = asin( $3 );}
-		| ARCOS LEFT mixed_expression RIGHT { $$ = acos( $3 );}
-		| ARCTAN LEFT mixed_expression RIGHT { $$ = atan( $3 );}
-		| EXP LEFT mixed_expression RIGHT { $$ = exp( $3 );}
-		| SQRT LEFT mixed_expression RIGHT { $$ = sqrt( $3 );}
+		| TAN LEFT mixed_expression RIGHT { postfixee.push_back(TAN); values.push_back(0); }
+		| ARCSIN LEFT mixed_expression RIGHT { postfixee.push_back(ARCSIN); values.push_back(0); }
+		| ARCOS LEFT mixed_expression RIGHT { postfixee.push_back(ARCOS); values.push_back(0); }
+		| ARCTAN LEFT mixed_expression RIGHT { postfixee.push_back(ARCTAN); values.push_back(0); }
+		| EXP LEFT mixed_expression RIGHT { postfixee.push_back(EXP); values.push_back(0); }
+		| SQRT LEFT mixed_expression RIGHT { postfixee.push_back(SQRT); values.push_back(0); }
 		| DRAW mixed_expression COLOR { printf("ma couleur est %s",$3); $$=$2 ; }
 		| X { postfixee.push_back(X); values.push_back(0); }
 		| FLOAT                 		 {
@@ -129,6 +129,36 @@ for (int i = 0; i < postfixee.size(); i++) {
 		case COS:
 			a = pile.top(); pile.pop();
 			b=cos(a);
+			pile.push(b);
+		break;
+		case TAN:
+			a = pile.top(); pile.pop();
+			b=tan(a);
+			pile.push(b);
+		break;
+		case EXP:
+			a = pile.top(); pile.pop();
+			b=exp(a);
+			pile.push(b);
+		break;
+		case SQRT:
+			a = pile.top(); pile.pop();
+			b=sqrt(a);
+			pile.push(b);
+		break;
+		case ARCSIN:
+			a = pile.top(); pile.pop();
+			b=asin(a);
+			pile.push(b);
+		break;
+		case ARCOS:
+			a = pile.top(); pile.pop();
+			b=acos(a);
+			pile.push(b);
+		break;
+		case ARCTAN:
+			a = pile.top(); pile.pop();
+			b=atan(a);
 			pile.push(b);
 		break;
 	}

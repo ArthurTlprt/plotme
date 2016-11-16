@@ -1371,37 +1371,37 @@ yyreduce:
 
   case 17:
 #line 70 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = tan( (yyvsp[-1].fval) );}
+    { postfixee.push_back(TAN); values.push_back(0); }
 #line 1376 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 71 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = asin( (yyvsp[-1].fval) );}
+    { postfixee.push_back(ARCSIN); values.push_back(0); }
 #line 1382 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 72 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = acos( (yyvsp[-1].fval) );}
+    { postfixee.push_back(ARCOS); values.push_back(0); }
 #line 1388 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 73 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = atan( (yyvsp[-1].fval) );}
+    { postfixee.push_back(ARCTAN); values.push_back(0); }
 #line 1394 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
 #line 74 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = exp( (yyvsp[-1].fval) );}
+    { postfixee.push_back(EXP); values.push_back(0); }
 #line 1400 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
 #line 75 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = sqrt( (yyvsp[-1].fval) );}
+    { postfixee.push_back(SQRT); values.push_back(0); }
 #line 1406 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -1702,6 +1702,36 @@ for (int i = 0; i < postfixee.size(); i++) {
 		case COS:
 			a = pile.top(); pile.pop();
 			b=cos(a);
+			pile.push(b);
+		break;
+		case TAN:
+			a = pile.top(); pile.pop();
+			b=tan(a);
+			pile.push(b);
+		break;
+		case EXP:
+			a = pile.top(); pile.pop();
+			b=exp(a);
+			pile.push(b);
+		break;
+		case SQRT:
+			a = pile.top(); pile.pop();
+			b=sqrt(a);
+			pile.push(b);
+		break;
+		case ARCSIN:
+			a = pile.top(); pile.pop();
+			b=asin(a);
+			pile.push(b);
+		break;
+		case ARCOS:
+			a = pile.top(); pile.pop();
+			b=acos(a);
+			pile.push(b);
+		break;
+		case ARCTAN:
+			a = pile.top(); pile.pop();
+			b=atan(a);
 			pile.push(b);
 		break;
 	}
