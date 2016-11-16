@@ -34,10 +34,12 @@ vector<int>    postfixee;
 %token<sval> COLOR
 %token PLUS MINUS MULTIPLY DIVIDE LEFT RIGHT EQUAL
 %token NEWLINE QUIT
-%token FUNCTION X VARIABLE
+%token  X VARIABLE
 %token MPI EXP SIN COS TAN ARCTAN ARCSIN ARCOS SQRT DRAW
 %left PLUS MINUS
 %left MULTIPLY DIVIDE
+%left RIGHT LEFT
+%left EXP SIN COS TAN ARCTAN ARCSIN ARCOS SQRT
 
 %type<fval> mixed_expression
 
@@ -54,23 +56,17 @@ line: NEWLINE
     | QUIT NEWLINE { printf("bye!\n"); exit(0); }
 ;
 
-mixed_expression: X { postfixee.push_back(X); values.push_back(0); }
-		|	MPI { $$ = M_PI; }
-		|	FUNCTION EQUAL mixed_expression	{ $$ = $3; }
+mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
+		| VARIABLE LEFT X RIGHT EQUAL mixed_expression {}
 		| VARIABLE EQUAL mixed_expression { $$ = $3; }
-		| FLOAT                 		 {
-
-		  postfixee.push_back(FLOAT);
-			values.push_back($1);
-		}
 
 		| mixed_expression PLUS mixed_expression	 { postfixee.push_back(PLUS); values.push_back(0); }
-	  | mixed_expression MINUS mixed_expression	 { $$ = $1 - $3; }
-	  | mixed_expression MULTIPLY mixed_expression {}
-	  | mixed_expression DIVIDE mixed_expression	 { $$ = $1 / $3; }
-	  | LEFT mixed_expression RIGHT		 { $$ = $2; }
-		| SIN LEFT mixed_expression RIGHT { $$ = sin( $3 );}
-		| COS LEFT mixed_expression RIGHT { $$ = cos( $3 );}
+	  | mixed_expression MINUS mixed_expression	 { postfixee.push_back(MINUS); values.push_back(0);}
+	  | mixed_expression MULTIPLY mixed_expression {postfixee.push_back(MULTIPLY); values.push_back(0); }
+	  | mixed_expression DIVIDE mixed_expression	 { postfixee.push_back(DIVIDE); values.push_back(0); }
+		| LEFT mixed_expression RIGHT		 { }
+		| SIN LEFT mixed_expression RIGHT { postfixee.push_back(SIN); values.push_back(0); }
+		| COS LEFT mixed_expression RIGHT { postfixee.push_back(COS); values.push_back(0); }
 		| TAN LEFT mixed_expression RIGHT { $$ = tan( $3 );}
 		| ARCSIN LEFT mixed_expression RIGHT { $$ = asin( $3 );}
 		| ARCOS LEFT mixed_expression RIGHT { $$ = acos( $3 );}
@@ -78,6 +74,12 @@ mixed_expression: X { postfixee.push_back(X); values.push_back(0); }
 		| EXP LEFT mixed_expression RIGHT { $$ = exp( $3 );}
 		| SQRT LEFT mixed_expression RIGHT { $$ = sqrt( $3 );}
 		| DRAW mixed_expression COLOR { printf("ma couleur est %s",$3); $$=$2 ; }
+		| X { postfixee.push_back(X); values.push_back(0); }
+		| FLOAT                 		 {
+
+		postfixee.push_back(FLOAT);
+		values.push_back($1);
+		}
 ;
 
 //constant : FLOAT { $$ = $1; }
@@ -104,6 +106,31 @@ for (int i = 0; i < postfixee.size(); i++) {
 		case X :
 			pile.push(x);
 			break;
+		case MULTIPLY:
+				a = pile.top(); pile.pop();
+				b = pile.top(); pile.pop();
+				pile.push(a*b);
+		break;
+		case MINUS:
+				a = pile.top(); pile.pop();
+				b = pile.top(); pile.pop();
+				pile.push(b-a);
+		break;
+		case DIVIDE:
+			a = pile.top(); pile.pop();
+			b = pile.top(); pile.pop();
+			pile.push(b/a);
+		break;
+		case SIN:
+			a = pile.top(); pile.pop();
+			b=sin(a);
+			pile.push(b);
+		break;
+		case COS:
+			a = pile.top(); pile.pop();
+			b=cos(a);
+			pile.push(b);
+		break;
 	}
 }
 	return pile.top();

@@ -13,6 +13,7 @@ using namespace std;
 /*extern "C" int yylex();
 extern "C" int yyparse();
 extern "C" FILE *yyin;*/
+//[a-zA-Z]+"(x)" { return FUNCTION; }
 
 void yyerror(const char *s);
 
@@ -22,6 +23,7 @@ void yyerror(const char *s);
 %%
 
 [ \t]	; // ignore all whitespace
+"x" {return X;}
 "pi" { return MPI; }
 "sin" { return SIN; }
 "cos" { return  COS; }
@@ -32,20 +34,19 @@ void yyerror(const char *s);
 "arcsin" { return ARCSIN; }
 "arcos" { return ARCOS; }
 "arctan" { return ARCTAN; }
+"quit"		{return QUIT;}
+"exit"		{return QUIT;}
+"-"		{return MINUS;}
 (blue|red|yellow|green) { yylval.sval = yytext; return COLOR; }
-"x" {return X;}
-(-?([0-9])*(\.[0-9]+)?) 	{yylval.fval = atof(yytext); return FLOAT;}
-[a-zA-Z]+"(x)" { return FUNCTION; }
+(([0-9])*(\.[0-9]+)?) 	{yylval.fval = atof(yytext); return FLOAT;}
 ([A-Za-z]|_)+([A-Za-z]|_|[0-9])+ { return VARIABLE; }
 \n		{return NEWLINE;}
 "+"		{return PLUS;}
-"-"		{return MINUS;}
 "*"		{return MULTIPLY;}
 "/"		{return DIVIDE;}
 "("		{return LEFT;}
 ")"		{return RIGHT;}
 "="   {return EQUAL;}
-"exit"		{return QUIT;}
-"quit"		{return QUIT;}
+
 
 %%
