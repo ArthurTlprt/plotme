@@ -4,6 +4,8 @@
 #include <cmath>
 #include <cstdlib>
 
+using namespace std;
+
 namespace demo {
 
 using v8::Exception;

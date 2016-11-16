@@ -65,18 +65,26 @@
 #line 1 "parser.ypp" /* yacc.c:339  */
 
 
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <cmath>
 #include <vector>
+#include <algorithm>
+
+using namespace std;
 
 extern int yylex();
 extern int yyparse();
 extern FILE* yyin;
-
 void yyerror(const char* s);
 
-#line 80 "parser.tab.cpp" /* yacc.c:339  */
+#define YYSTYPE std::string
+#define tab_float vector<float>
+
+
+
+#line 88 "parser.tab.cpp" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -140,12 +148,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 15 "parser.ypp" /* yacc.c:355  */
+#line 23 "parser.ypp" /* yacc.c:355  */
 
 	int ival;
 	float fval;
 
-#line 149 "parser.tab.cpp" /* yacc.c:355  */
+#line 157 "parser.tab.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -162,7 +170,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 166 "parser.tab.cpp" /* yacc.c:358  */
+#line 174 "parser.tab.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -461,8 +469,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    34,    34,    35,    38,    39,    40,    43,    44,    45,
-      46,    47,    48,    49,    50,    51,    52
+       0,    42,    42,    43,    46,    47,    48,    51,    52,    53,
+      54,    55,    59,    60,    61,    63,    64
 };
 #endif
 
@@ -1250,79 +1258,83 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 39 "parser.ypp" /* yacc.c:1646  */
-    { printf("\tResult: %f\n", (yyvsp[-1].fval));}
-#line 1256 "parser.tab.cpp" /* yacc.c:1646  */
+#line 47 "parser.ypp" /* yacc.c:1646  */
+    { printf("\tResult: %f\n", (yyvsp[-1].tab_float)); }
+#line 1264 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 40 "parser.ypp" /* yacc.c:1646  */
+#line 48 "parser.ypp" /* yacc.c:1646  */
     { printf("bye!\n"); exit(0); }
-#line 1262 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1270 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 43 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = 42; }
-#line 1268 "parser.tab.cpp" /* yacc.c:1646  */
+#line 51 "parser.ypp" /* yacc.c:1646  */
+    { (yyval.tab_float) = 42; }
+#line 1276 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 44 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = M_PI; }
-#line 1274 "parser.tab.cpp" /* yacc.c:1646  */
+#line 52 "parser.ypp" /* yacc.c:1646  */
+    { (yyval.tab_float) = M_PI; }
+#line 1282 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 45 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = (yyvsp[0].fval); }
-#line 1280 "parser.tab.cpp" /* yacc.c:1646  */
+#line 53 "parser.ypp" /* yacc.c:1646  */
+    { (yyval.tab_float) = (yyvsp[0].tab_float); }
+#line 1288 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 46 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = (yyvsp[0].fval); }
-#line 1286 "parser.tab.cpp" /* yacc.c:1646  */
+#line 54 "parser.ypp" /* yacc.c:1646  */
+    { (yyval.tab_float) = (yyvsp[0].tab_float); }
+#line 1294 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 47 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = (yyvsp[0].fval); }
-#line 1292 "parser.tab.cpp" /* yacc.c:1646  */
+#line 55 "parser.ypp" /* yacc.c:1646  */
+    {
+			vector<float> tab_val (10);
+			fill (tab_val.begin(),tab_val.end(), (yyvsp[0].fval));
+		}
+#line 1303 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 48 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = (yyvsp[-2].fval) + (yyvsp[0].fval); }
-#line 1298 "parser.tab.cpp" /* yacc.c:1646  */
+#line 59 "parser.ypp" /* yacc.c:1646  */
+    { (yyval.tab_float) = (yyvsp[-2].tab_float) + (yyvsp[0].tab_float); }
+#line 1309 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 49 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = (yyvsp[-2].fval) - (yyvsp[0].fval); }
-#line 1304 "parser.tab.cpp" /* yacc.c:1646  */
+#line 60 "parser.ypp" /* yacc.c:1646  */
+    { (yyval.tab_float) = (yyvsp[-2].tab_float) - (yyvsp[0].tab_float); }
+#line 1315 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 50 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = (yyvsp[-2].fval) * (yyvsp[0].fval); }
-#line 1310 "parser.tab.cpp" /* yacc.c:1646  */
-    break;
-
-  case 15:
-#line 51 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = (yyvsp[-2].fval) / (yyvsp[0].fval); }
-#line 1316 "parser.tab.cpp" /* yacc.c:1646  */
-    break;
-
-  case 16:
-#line 52 "parser.ypp" /* yacc.c:1646  */
-    { (yyval.fval) = (yyvsp[-1].fval); }
+#line 61 "parser.ypp" /* yacc.c:1646  */
+    {
+			(yyval.tab_float) = std::transform( (yyvsp[-2].tab_float).begin(), (yyvsp[-2].tab_float).end(), (yyvsp[0].tab_float).begin(), (yyvsp[0].tab_float).end(), std::multiplies<float>() ); }
 #line 1322 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
+  case 15:
+#line 63 "parser.ypp" /* yacc.c:1646  */
+    { (yyval.tab_float) = (yyvsp[-2].tab_float) / (yyvsp[0].tab_float); }
+#line 1328 "parser.tab.cpp" /* yacc.c:1646  */
+    break;
 
-#line 1326 "parser.tab.cpp" /* yacc.c:1646  */
+  case 16:
+#line 64 "parser.ypp" /* yacc.c:1646  */
+    { (yyval.tab_float) = (yyvsp[-1].tab_float); }
+#line 1334 "parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+
+#line 1338 "parser.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1550,7 +1562,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 56 "parser.ypp" /* yacc.c:1906  */
+#line 69 "parser.ypp" /* yacc.c:1906  */
 
 
 int main() {
@@ -1559,7 +1571,6 @@ int main() {
 	do {
 		yyparse();
 	} while(!feof(yyin));
-
 	return 0;
 }
 
