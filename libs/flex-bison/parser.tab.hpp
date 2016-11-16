@@ -65,7 +65,8 @@ extern int yydebug;
     TAN = 275,
     ARCTAN = 276,
     ARCSIN = 277,
-    ARCOS = 278
+    ARCOS = 278,
+    SQRT = 279
   };
 #endif
 
@@ -74,12 +75,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 14 "parser.ypp" /* yacc.c:1909  */
+#line 16 "parser.ypp" /* yacc.c:1909  */
 
 	int ival;
 	float fval;
 
-#line 83 "parser.tab.hpp" /* yacc.c:1909  */
+#line 84 "parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
