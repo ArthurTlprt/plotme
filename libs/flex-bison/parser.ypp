@@ -1,8 +1,7 @@
 %{
 
 #include <stdio.h>
-
-#include <cstdlib>
+#include <stdlib.h>
 #include <cmath>
 #include <vector>
 
@@ -60,9 +59,6 @@ mixed_expression: X { $$ = 42; }
 		| EXP LEFT mixed_expression RIGHT { $$ = exp( $3 );}
 		| SQRT LEFT mixed_expression RIGHT { $$ = sqrt( $3 );}
 ;
-
-
-
 %%
 
 int main() {
