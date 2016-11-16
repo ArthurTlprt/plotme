@@ -1,18 +1,28 @@
 %option noyywrap
 
 %{
-#include <stdio.h>
-
 #define YY_DECL int yylex()
 
-#include "calc.tab.h"
+#include "parser.tab.hpp"
+#include <cstdio>
+#include <iostream>
+
+using namespace std;
+
+// stuff from flex that bison needs to know about:
+/*extern "C" int yylex();
+extern "C" int yyparse();
+extern "C" FILE *yyin;*/
+
+void yyerror(const char *s);
 
 %}
+
 
 %%
 
 [ \t]	; // ignore all whitespace
-"pi" { return PI; }
+"pi" { return MPI; }
 "sin" { return SIN; }
 "cos" { return  COS; }
 "exp" { return EXP; }

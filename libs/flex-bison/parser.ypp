@@ -1,8 +1,9 @@
 %{
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include <iostream>
+#include <cstdlib>
+#include <cmath>
+#include <vector>
 
 extern int yylex();
 extern int yyparse();
@@ -20,7 +21,7 @@ void yyerror(const char* s);
 %token PLUS MINUS MULTIPLY DIVIDE LEFT RIGHT EQUAL
 %token NEWLINE QUIT
 %token FUNCTION X VARIABLE
-%token PI EXP SIN COS TAN ARCTAN ARCSIN ARCOS
+%token MPI EXP SIN COS TAN ARCTAN ARCSIN ARCOS
 %left PLUS MINUS
 %left MULTIPLY DIVIDE
 
@@ -39,8 +40,8 @@ line: NEWLINE
     | QUIT NEWLINE { printf("bye!\n"); exit(0); }
 ;
 
-mixed_expression: X { $$ = 42 }
-		|	PI { $$ = PI }
+mixed_expression: X { $$ = 42; }
+		|	MPI { $$ = M_PI; }
 		|	FUNCTION EQUAL mixed_expression	{ $$ = $3; }
 		| VARIABLE EQUAL mixed_expression { $$ = $3; }
 		| FLOAT                 		 { $$ = $1; }

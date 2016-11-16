@@ -1,13 +1,11 @@
-all: calc
-
-calc.tab.c calc.tab.h:	calc.y
-	bison -d calc.y
-
-lex.yy.c: calc.l calc.tab.h
-	flex calc.l
-
-calc: lex.yy.c calc.tab.c calc.tab.h
-	gcc -o calc calc.tab.c lex.yy.c
+all:
+	flex -o scanner.cpp scanner.l
+	bison -d parser.ypp
+	g++ -o run scanner.cpp parser.tab.cpp
 
 clean:
-	rm calc calc.tab.c lex.yy.c calc.tab.h
+	rm lex.yy.cc
+	rm parser.cpp
+	rm parser.tab.cpp
+	rm parser.tab.hpp
+	rm scanner.cpp
