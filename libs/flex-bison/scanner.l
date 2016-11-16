@@ -27,11 +27,14 @@ void yyerror(const char *s);
 "cos" { return  COS; }
 "exp" { return EXP; }
 "tan" { return TAN; }
+"draw" { return DRAW; }
+"sqrt" { return SQRT; }
 "arcsin" { return ARCSIN; }
 "arcos" { return ARCOS; }
 "arctan" { return ARCTAN; }
+(blue|red|yellow|green) { yylval.sval = yytext; return COLOR; }
 "x" {return X;}
-(-?[1-9]([0-9])*(\.[0-9]+)?) 	{yylval.fval = atof(yytext); return FLOAT;}
+(-?([0-9])*(\.[0-9]+)?) 	{yylval.fval = atof(yytext); return FLOAT;}
 [a-zA-Z]+"(x)" { return FUNCTION; }
 ([A-Za-z]|_)+([A-Za-z]|_|[0-9])+ { return VARIABLE; }
 \n		{return NEWLINE;}
