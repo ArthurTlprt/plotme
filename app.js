@@ -63,10 +63,10 @@ app.use(function(err, req, res, next) {
 
 io.on('connection', function(socket){
   socket.on('new plot', function(equation) {
-    console.log(equation);
-    points = parser.evaluate();
+    //console.log(equation);
+    points = parser.evaluate(equation);
     socket.emit('result', points);
-    //console.log(points);
+    console.log("lol");
   });
 });
 

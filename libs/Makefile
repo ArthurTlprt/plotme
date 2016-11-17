@@ -1,6 +1,6 @@
 all:
-	flex -o scanner.cpp scanner.l
 	bison -d parser.ypp
+	flex -o scanner.cpp scanner.l
 	node-gyp configure build
 
 clean:

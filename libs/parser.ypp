@@ -10,10 +10,9 @@
 #include <stack>
 #include <map>
 #include <string>
+#include <fstream>
 
 using namespace std;
-
-
 
 extern int yylex();
 extern int yyparse();
@@ -22,8 +21,6 @@ void yyerror(const char* s);
 
 vector<double> values;
 vector<int>    postfixee;
-
-
 
 %}
 
@@ -112,6 +109,8 @@ double Evaluation(double x){
 	return pile.top();
 }
 
+
+
 namespace demo {
 
 using v8::Exception;
@@ -127,7 +126,24 @@ using v8::Array;
 void Evaluate(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
 
-  std::system("./lexic/analyzer.out < \" mon input \"");
+	String::Utf8Value param1(args[0]->ToString());
+	std::string input = std::string(*param1);
+	std::cout << input << " C'est moi qui pese" << std::endl;
+
+	string const file("user_input");
+  ofstream m_stream(file.c_str());
+
+  if(m_stream) {
+      m_stream << input;
+  } else {
+		std::cout << "ne fonctionne pas" << std::endl;
+	}
+
+	yyin = fopen("user_input", "r");
+  yyparse();
+	for (int i = 0; i < 10; i++) {
+		cout << "f("<<  i << ") = " << Evaluation(i) << endl;
+	}
 
   Local<Object> coord = Object::New(isolate);
   Local<Array> x = Array::New(isolate);
@@ -142,9 +158,8 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
   coord->Set(String::NewFromUtf8(isolate, "y"), y );
   coord->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
 
-  args.GetReturnValue().Set(coord);
+  //args.GetReturnValue().Set(coord);
   std::cout << "Evaluate" << std::endl;
-  std::cout << "rigolo socket on" << std::endl;
 }
 
 void Init(Local<Object> exports) {
@@ -153,7 +168,7 @@ void Init(Local<Object> exports) {
 
 NODE_MODULE(parser, Init)
 
-}  // namespace demo
+}
 
 int main() {
 	yyin = stdin;
