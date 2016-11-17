@@ -65,7 +65,6 @@
 #line 1 "parser.ypp" /* yacc.c:339  */
 
 
-#include <node.h>
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -73,32 +72,23 @@
 #include <vector>
 #include <algorithm>
 #include <stack>
-#include <map>
-#include <string>
-#include <fstream>
 
 using namespace std;
 
-using v8::Exception;
-using v8::FunctionCallbackInfo;
-using v8::Isolate;
-using v8::Local;
-using v8::Number;
-using v8::Object;
-using v8::String;
-using v8::Value;
-using v8::Array;
+#include <string>
 
 extern int yylex();
 extern int yyparse();
 extern FILE* yyin;
 void yyerror(const char* s);
 
-vector<float> values;
+vector<double> values;
 vector<int>    postfixee;
 
 
-#line 102 "parser.tab.cpp" /* yacc.c:339  */
+
+
+#line 92 "parser.tab.cpp" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -164,13 +154,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 37 "parser.ypp" /* yacc.c:355  */
+#line 27 "parser.ypp" /* yacc.c:355  */
 
 	int ival;
 	float fval;
 	char* sval;
 
-#line 174 "parser.tab.cpp" /* yacc.c:355  */
+#line 164 "parser.tab.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -187,7 +177,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 191 "parser.tab.cpp" /* yacc.c:358  */
+#line 181 "parser.tab.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -487,9 +477,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    60,    60,    61,    64,    65,    66,    69,    70,    71,
-      73,    74,    75,    76,    77,    78,    79,    80,    81,    82,
-      83,    84,    85,    86,    87,    88
+       0,    50,    50,    51,    54,    55,    56,    59,    60,    61,
+      63,    64,    65,    66,    67,    68,    69,    70,    71,    72,
+      73,    74,    75,    76,    77,    78
 };
 #endif
 
@@ -1308,137 +1298,137 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 65 "parser.ypp" /* yacc.c:1646  */
+#line 55 "parser.ypp" /* yacc.c:1646  */
     { printf("\tResult: %f\n", (yyvsp[-1].fval)); }
-#line 1314 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1304 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 66 "parser.ypp" /* yacc.c:1646  */
+#line 56 "parser.ypp" /* yacc.c:1646  */
     { printf("bye!\n"); exit(0); }
-#line 1320 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1310 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 69 "parser.ypp" /* yacc.c:1646  */
+#line 59 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(FLOAT); values.push_back(M_PI); }
-#line 1326 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1316 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 70 "parser.ypp" /* yacc.c:1646  */
+#line 60 "parser.ypp" /* yacc.c:1646  */
     {}
-#line 1332 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1322 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 71 "parser.ypp" /* yacc.c:1646  */
+#line 61 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = (yyvsp[0].fval); }
-#line 1338 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1328 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 73 "parser.ypp" /* yacc.c:1646  */
+#line 63 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(PLUS); values.push_back(0); }
-#line 1344 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1334 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 74 "parser.ypp" /* yacc.c:1646  */
+#line 64 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(MINUS); values.push_back(0);}
-#line 1350 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1340 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 75 "parser.ypp" /* yacc.c:1646  */
+#line 65 "parser.ypp" /* yacc.c:1646  */
     {postfixee.push_back(MULTIPLY); values.push_back(0); }
-#line 1356 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1346 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 76 "parser.ypp" /* yacc.c:1646  */
+#line 66 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(DIVIDE); values.push_back(0); }
-#line 1362 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1352 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 77 "parser.ypp" /* yacc.c:1646  */
+#line 67 "parser.ypp" /* yacc.c:1646  */
     { }
-#line 1368 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1358 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 78 "parser.ypp" /* yacc.c:1646  */
+#line 68 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(SIN); values.push_back(0); }
-#line 1374 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1364 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 79 "parser.ypp" /* yacc.c:1646  */
+#line 69 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(COS); values.push_back(0); }
-#line 1380 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1370 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 80 "parser.ypp" /* yacc.c:1646  */
+#line 70 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(TAN); values.push_back(0); }
-#line 1386 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1376 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 81 "parser.ypp" /* yacc.c:1646  */
+#line 71 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ARCSIN); values.push_back(0); }
-#line 1392 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1382 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 82 "parser.ypp" /* yacc.c:1646  */
+#line 72 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ARCOS); values.push_back(0); }
-#line 1398 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1388 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 83 "parser.ypp" /* yacc.c:1646  */
+#line 73 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ARCTAN); values.push_back(0); }
-#line 1404 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1394 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 84 "parser.ypp" /* yacc.c:1646  */
+#line 74 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(EXP); values.push_back(0); }
-#line 1410 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1400 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 85 "parser.ypp" /* yacc.c:1646  */
+#line 75 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(SQRT); values.push_back(0); }
-#line 1416 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1406 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 86 "parser.ypp" /* yacc.c:1646  */
+#line 76 "parser.ypp" /* yacc.c:1646  */
     { printf("ma couleur est %s",(yyvsp[0].sval)); (yyval.fval)=(yyvsp[-1].fval) ; }
-#line 1422 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1412 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 87 "parser.ypp" /* yacc.c:1646  */
+#line 77 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(X); values.push_back(0); }
-#line 1428 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1418 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 88 "parser.ypp" /* yacc.c:1646  */
+#line 78 "parser.ypp" /* yacc.c:1646  */
     {
 
 		postfixee.push_back(FLOAT);
 		values.push_back((yyvsp[0].fval));
 		}
-#line 1438 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1428 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1442 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1432 "parser.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1666,152 +1656,99 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 97 "parser.ypp" /* yacc.c:1906  */
+#line 87 "parser.ypp" /* yacc.c:1906  */
 
 
 
 
-float Evaluation(float x){
+double Evaluation(double x){
 
-	stack <float> pile;
+stack <double> pile;
 
-	float a, b;
-	for (int i = 0; i < postfixee.size(); i++) {
-		switch (postfixee[i]) {
-			case PLUS :
-			     a = pile.top(); pile.pop();
-					 b = pile.top(); pile.pop();
-					 pile.push(a+b);
+double a, b;
+for (int i = 0; i < postfixee.size(); i++) {
+	switch (postfixee[i]) {
+		case PLUS :
+		     a = pile.top(); pile.pop();
+				 b = pile.top(); pile.pop();
+				 pile.push(a+b);
+		break;
+		case FLOAT:
+		     pile.push(values[i]);
+		break;
+		case X :
+			pile.push(x);
 			break;
-			case FLOAT:
-			     pile.push(values[i]);
-			break;
-			case X :
-				pile.push(x);
-				break;
-			case MULTIPLY:
-					a = pile.top(); pile.pop();
-					b = pile.top(); pile.pop();
-					pile.push(a*b);
-			break;
-			case MINUS:
-					a = pile.top(); pile.pop();
-					b = pile.top(); pile.pop();
-					pile.push(b-a);
-			break;
-			case DIVIDE:
+		case MULTIPLY:
 				a = pile.top(); pile.pop();
 				b = pile.top(); pile.pop();
-				pile.push(b/a);
-			break;
-			case SIN:
+				pile.push(a*b);
+		break;
+		case MINUS:
 				a = pile.top(); pile.pop();
-				b=sin(a);
-				pile.push(b);
-			break;
-			case COS:
-				a = pile.top(); pile.pop();
-				b=cos(a);
-				pile.push(b);
-			break;
-			case TAN:
-				a = pile.top(); pile.pop();
-				b=tan(a);
-				pile.push(b);
-			break;
-			case EXP:
-				a = pile.top(); pile.pop();
-				b=exp(a);
-				pile.push(b);
-			break;
-			case SQRT:
-				a = pile.top(); pile.pop();
-				b=sqrt(a);
-				pile.push(b);
-			break;
-			case ARCSIN:
-				a = pile.top(); pile.pop();
-				b=asin(a);
-				pile.push(b);
-			break;
-			case ARCOS:
-				a = pile.top(); pile.pop();
-				b=acos(a);
-				pile.push(b);
-			break;
-			case ARCTAN:
-				a = pile.top(); pile.pop();
-				b=atan(a);
-				pile.push(b);
-			break;
-		}
+				b = pile.top(); pile.pop();
+				pile.push(b-a);
+		break;
+		case DIVIDE:
+			a = pile.top(); pile.pop();
+			b = pile.top(); pile.pop();
+			pile.push(b/a);
+		break;
+		case SIN:
+			a = pile.top(); pile.pop();
+			b=sin(a);
+			pile.push(b);
+		break;
+		case COS:
+			a = pile.top(); pile.pop();
+			b=cos(a);
+			pile.push(b);
+		break;
+		case TAN:
+			a = pile.top(); pile.pop();
+			b=tan(a);
+			pile.push(b);
+		break;
+		case EXP:
+			a = pile.top(); pile.pop();
+			b=exp(a);
+			pile.push(b);
+		break;
+		case SQRT:
+			a = pile.top(); pile.pop();
+			b=sqrt(a);
+			pile.push(b);
+		break;
+		case ARCSIN:
+			a = pile.top(); pile.pop();
+			b=asin(a);
+			pile.push(b);
+		break;
+		case ARCOS:
+			a = pile.top(); pile.pop();
+			b=acos(a);
+			pile.push(b);
+		break;
+		case ARCTAN:
+			a = pile.top(); pile.pop();
+			b=atan(a);
+			pile.push(b);
+		break;
 	}
+}
 	return pile.top();
 }
 
-
-
-
-void Evaluate(const FunctionCallbackInfo<Value>& args) {
-  Isolate* isolate = args.GetIsolate();
-
-	String::Utf8Value param1(args[0]->ToString());
-	std::string input = std::string(*param1);
-
-	string const file("user_input");
-  ofstream m_stream(file.c_str());
-
-
-  if(m_stream) {
-      m_stream << input;
-  } else {
-		std::cout << "ne fonctionne pas" << std::endl;
-	}
-	std::cout << "ecriture du fichier" << std::endl;
-
-	yyin = fopen("user_input", "r");
-	if (yyin != NULL) {
-		std::cout << "fichier ouvert" << std::endl;
-		yyparse();
-		//fclose(yyin);
-	} else {
-		std::cout << "impossible d'ouvrir le fichier" << std::endl;
-	}
-	for (int i = 0; i < 10; i++) {
-		cout << "f("<<  i << ") = " << Evaluation(i) << endl;
-	}
-
-  Local<Object> coord = Object::New(isolate);
-  Local<Array> x = Array::New(isolate);
-  Local<Array> y = Array::New(isolate);
-
-  for(unsigned int i=0; i < 100; i++) {
-    x->Set(i, Number::New(isolate, i));
-    y->Set(i, Number::New(isolate, i*i));
-  }
-
-  coord->Set(String::NewFromUtf8(isolate, "x"), x );
-  coord->Set(String::NewFromUtf8(isolate, "y"), y );
-  coord->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
-
-  //args.GetReturnValue().Set(coord);
-  std::cout << "Evaluate" << std::endl;
-	return;
-}
-
-void Init(Local<Object> exports) {
-  NODE_SET_METHOD(exports, "evaluate", Evaluate);
-}
-
-NODE_MODULE(parser, Init)
-
-
 int main() {
 	yyin = stdin;
-	yyparse();
+
+
+		yyparse();
+
 	for (int i = 0; i < 10; i++) {
 		cout << "f("<<  i << ") = " << Evaluation(i) << endl;
 	}
+
 	return 0;
 }
 

@@ -1,0 +1,185 @@
+%{
+
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <cmath>
+#include <vector>
+#include <algorithm>
+#include <stack>
+
+using namespace std;
+
+#include <string>
+
+extern int yylex();
+extern int yyparse();
+extern FILE* yyin;
+void yyerror(const char* s);
+
+vector<double> values;
+vector<int>    postfixee;
+
+
+
+%}
+
+%union {
+	int ival;
+	float fval;
+	char* sval;
+}
+
+%token<fval> FLOAT
+%token<sval> COLOR
+%token PLUS MINUS MULTIPLY DIVIDE LEFT RIGHT EQUAL
+%token NEWLINE QUIT
+%token  X VARIABLE
+%token MPI EXP SIN COS TAN ARCTAN ARCSIN ARCOS SQRT DRAW
+%left PLUS MINUS
+%left MULTIPLY DIVIDE
+%left RIGHT LEFT
+%left EXP SIN COS TAN ARCTAN ARCSIN ARCOS SQRT
+
+%type<fval> mixed_expression
+
+%start calculation
+
+%%
+
+calculation:
+	   | calculation line
+;
+
+line: NEWLINE
+    | mixed_expression NEWLINE { printf("\tResult: %f\n", $1); }
+    | QUIT NEWLINE { printf("bye!\n"); exit(0); }
+;
+
+mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
+		| VARIABLE LEFT X RIGHT EQUAL mixed_expression {}
+		| VARIABLE EQUAL mixed_expression { $$ = $3; }
+
+		| mixed_expression PLUS mixed_expression	 { postfixee.push_back(PLUS); values.push_back(0); }
+	  | mixed_expression MINUS mixed_expression	 { postfixee.push_back(MINUS); values.push_back(0);}
+	  | mixed_expression MULTIPLY mixed_expression {postfixee.push_back(MULTIPLY); values.push_back(0); }
+	  | mixed_expression DIVIDE mixed_expression	 { postfixee.push_back(DIVIDE); values.push_back(0); }
+		| LEFT mixed_expression RIGHT		 { }
+		| SIN LEFT mixed_expression RIGHT { postfixee.push_back(SIN); values.push_back(0); }
+		| COS LEFT mixed_expression RIGHT { postfixee.push_back(COS); values.push_back(0); }
+		| TAN LEFT mixed_expression RIGHT { postfixee.push_back(TAN); values.push_back(0); }
+		| ARCSIN LEFT mixed_expression RIGHT { postfixee.push_back(ARCSIN); values.push_back(0); }
+		| ARCOS LEFT mixed_expression RIGHT { postfixee.push_back(ARCOS); values.push_back(0); }
+		| ARCTAN LEFT mixed_expression RIGHT { postfixee.push_back(ARCTAN); values.push_back(0); }
+		| EXP LEFT mixed_expression RIGHT { postfixee.push_back(EXP); values.push_back(0); }
+		| SQRT LEFT mixed_expression RIGHT { postfixee.push_back(SQRT); values.push_back(0); }
+		| DRAW mixed_expression COLOR { printf("ma couleur est %s",$3); $$=$2 ; }
+		| X { postfixee.push_back(X); values.push_back(0); }
+		| FLOAT                 		 {
+
+		postfixee.push_back(FLOAT);
+		values.push_back($1);
+		}
+;
+
+//constant : FLOAT { $$ = $1; }
+
+%%
+
+
+
+double Evaluation(double x){
+
+stack <double> pile;
+
+double a, b;
+for (int i = 0; i < postfixee.size(); i++) {
+	switch (postfixee[i]) {
+		case PLUS :
+		     a = pile.top(); pile.pop();
+				 b = pile.top(); pile.pop();
+				 pile.push(a+b);
+		break;
+		case FLOAT:
+		     pile.push(values[i]);
+		break;
+		case X :
+			pile.push(x);
+			break;
+		case MULTIPLY:
+				a = pile.top(); pile.pop();
+				b = pile.top(); pile.pop();
+				pile.push(a*b);
+		break;
+		case MINUS:
+				a = pile.top(); pile.pop();
+				b = pile.top(); pile.pop();
+				pile.push(b-a);
+		break;
+		case DIVIDE:
+			a = pile.top(); pile.pop();
+			b = pile.top(); pile.pop();
+			pile.push(b/a);
+		break;
+		case SIN:
+			a = pile.top(); pile.pop();
+			b=sin(a);
+			pile.push(b);
+		break;
+		case COS:
+			a = pile.top(); pile.pop();
+			b=cos(a);
+			pile.push(b);
+		break;
+		case TAN:
+			a = pile.top(); pile.pop();
+			b=tan(a);
+			pile.push(b);
+		break;
+		case EXP:
+			a = pile.top(); pile.pop();
+			b=exp(a);
+			pile.push(b);
+		break;
+		case SQRT:
+			a = pile.top(); pile.pop();
+			b=sqrt(a);
+			pile.push(b);
+		break;
+		case ARCSIN:
+			a = pile.top(); pile.pop();
+			b=asin(a);
+			pile.push(b);
+		break;
+		case ARCOS:
+			a = pile.top(); pile.pop();
+			b=acos(a);
+			pile.push(b);
+		break;
+		case ARCTAN:
+			a = pile.top(); pile.pop();
+			b=atan(a);
+			pile.push(b);
+		break;
+	}
+}
+	return pile.top();
+}
+
+int main() {
+	yyin = stdin;
+
+
+		yyparse();
+
+	for (int i = 0; i < 10; i++) {
+		cout << "f("<<  i << ") = " << Evaluation(i) << endl;
+	}
+
+	return 0;
+}
+
+void yyerror(const char* s) {
+	fprintf(stderr, "Parse error: %s\n", s);
+	exit(1);
+}

@@ -14,12 +14,22 @@
 
 using namespace std;
 
+using v8::Exception;
+using v8::FunctionCallbackInfo;
+using v8::Isolate;
+using v8::Local;
+using v8::Number;
+using v8::Object;
+using v8::String;
+using v8::Value;
+using v8::Array;
+
 extern int yylex();
 extern int yyparse();
 extern FILE* yyin;
 void yyerror(const char* s);
 
-vector<double> values;
+vector<float> values;
 vector<int>    postfixee;
 
 %}
@@ -88,11 +98,11 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 
 
 
-double Evaluation(double x){
+float Evaluation(float x){
 
-	stack <double> pile;
+	stack <float> pile;
 
-	double a, b;
+	float a, b;
 	for (int i = 0; i < postfixee.size(); i++) {
 		switch (postfixee[i]) {
 			case PLUS :
@@ -106,97 +116,94 @@ double Evaluation(double x){
 			case X :
 				pile.push(x);
 				break;
-		case MULTIPLY:
+			case MULTIPLY:
+					a = pile.top(); pile.pop();
+					b = pile.top(); pile.pop();
+					pile.push(a*b);
+			break;
+			case MINUS:
+					a = pile.top(); pile.pop();
+					b = pile.top(); pile.pop();
+					pile.push(b-a);
+			break;
+			case DIVIDE:
 				a = pile.top(); pile.pop();
 				b = pile.top(); pile.pop();
-				pile.push(a*b);
-		break;
-		case MINUS:
+				pile.push(b/a);
+			break;
+			case SIN:
 				a = pile.top(); pile.pop();
-				b = pile.top(); pile.pop();
-				pile.push(b-a);
-		break;
-		case DIVIDE:
-			a = pile.top(); pile.pop();
-			b = pile.top(); pile.pop();
-			pile.push(b/a);
-		break;
-		case SIN:
-			a = pile.top(); pile.pop();
-			b=sin(a);
-			pile.push(b);
-		break;
-		case COS:
-			a = pile.top(); pile.pop();
-			b=cos(a);
-			pile.push(b);
-		break;
-		case TAN:
-			a = pile.top(); pile.pop();
-			b=tan(a);
-			pile.push(b);
-		break;
-		case EXP:
-			a = pile.top(); pile.pop();
-			b=exp(a);
-			pile.push(b);
-		break;
-		case SQRT:
-			a = pile.top(); pile.pop();
-			b=sqrt(a);
-			pile.push(b);
-		break;
-		case ARCSIN:
-			a = pile.top(); pile.pop();
-			b=asin(a);
-			pile.push(b);
-		break;
-		case ARCOS:
-			a = pile.top(); pile.pop();
-			b=acos(a);
-			pile.push(b);
-		break;
-		case ARCTAN:
-			a = pile.top(); pile.pop();
-			b=atan(a);
-			pile.push(b);
-		break;
+				b=sin(a);
+				pile.push(b);
+			break;
+			case COS:
+				a = pile.top(); pile.pop();
+				b=cos(a);
+				pile.push(b);
+			break;
+			case TAN:
+				a = pile.top(); pile.pop();
+				b=tan(a);
+				pile.push(b);
+			break;
+			case EXP:
+				a = pile.top(); pile.pop();
+				b=exp(a);
+				pile.push(b);
+			break;
+			case SQRT:
+				a = pile.top(); pile.pop();
+				b=sqrt(a);
+				pile.push(b);
+			break;
+			case ARCSIN:
+				a = pile.top(); pile.pop();
+				b=asin(a);
+				pile.push(b);
+			break;
+			case ARCOS:
+				a = pile.top(); pile.pop();
+				b=acos(a);
+				pile.push(b);
+			break;
+			case ARCTAN:
+				a = pile.top(); pile.pop();
+				b=atan(a);
+				pile.push(b);
+			break;
+		}
 	}
 	return pile.top();
 }
 
 
 
-namespace demo {
-
-using v8::Exception;
-using v8::FunctionCallbackInfo;
-using v8::Isolate;
-using v8::Local;
-using v8::Number;
-using v8::Object;
-using v8::String;
-using v8::Value;
-using v8::Array;
 
 void Evaluate(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
 
 	String::Utf8Value param1(args[0]->ToString());
 	std::string input = std::string(*param1);
-	std::cout << input << " C'est moi qui pese" << std::endl;
 
 	string const file("user_input");
   ofstream m_stream(file.c_str());
+
 
   if(m_stream) {
       m_stream << input;
   } else {
 		std::cout << "ne fonctionne pas" << std::endl;
 	}
+	std::cout << "ecriture du fichier" << std::endl;
 
 	yyin = fopen("user_input", "r");
-  yyparse();
+	if (yyin != NULL) {
+		std::cout << "fichier ouvert" << std::endl;
+		yyparse();
+		//fclose(yyin);
+	} else {
+		std::cout << "impossible d'ouvrir le fichier" << std::endl;
+	}
 	for (int i = 0; i < 10; i++) {
 		cout << "f("<<  i << ") = " << Evaluation(i) << endl;
 	}
@@ -216,6 +223,7 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
 
   //args.GetReturnValue().Set(coord);
   std::cout << "Evaluate" << std::endl;
+	return;
 }
 
 void Init(Local<Object> exports) {
@@ -224,7 +232,6 @@ void Init(Local<Object> exports) {
 
 NODE_MODULE(parser, Init)
 
-}
 
 int main() {
 	yyin = stdin;
