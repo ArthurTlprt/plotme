@@ -1,6 +1,7 @@
 all:
 	bison -d parser.ypp
 	flex -o scanner.cpp scanner.l
+	g++ -o run scanner.cpp parser.tab.cpp
 	node-gyp configure build
 
 clean:

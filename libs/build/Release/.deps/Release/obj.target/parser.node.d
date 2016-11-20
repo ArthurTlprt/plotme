@@ -1,1 +1,1 @@
-cmd_Release/obj.target/parser.node := g++ -shared -pthread -rdynamic -m64  -Wl,-soname=parser.node -o Release/obj.target/parser.node -Wl,--start-group Release/obj.target/parser/scanner.o Release/obj.target/parser/parser.tab.o -Wl,--end-group 
+cmd_Release/obj.target/parser.node := g++ -shared -pthread -rdynamic -m64  -Wl,-soname=parser.node -o Release/obj.target/parser.node -Wl,--start-group Release/obj.target/parser/plot.o -Wl,--end-group 
