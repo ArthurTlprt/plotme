@@ -29,7 +29,12 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
 	String::Utf8Value param1(args[0]->ToString());
 	std::string input = std::string(*param1);
 
-  std::string command_line = "./libs/run < " + input;
+  std::string file = "libs/equation";
+  std::ofstream equation(file.c_str());
+  equation << input;
+  std::string command_line = "./libs/run < libs/equation";
+
+  std::cout << command_line << std::endl;
   std::system(command_line.c_str());
 
   std::ifstream stream("libs/evaluation");
@@ -39,6 +44,7 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
   getline(stream, xs); //On lit une ligne complète
   getline(stream, ys);
   std::cout << "xs: " << xs << std::endl;
+  std::cout << "ys: " << ys << std::endl;
 
   Local<Object> coord = Object::New(isolate);
   Local<Array> x = Array::New(isolate);

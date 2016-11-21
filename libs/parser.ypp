@@ -22,9 +22,13 @@ void yyerror(const char* s);
 vector<double> values;
 vector<int>    postfixee;
 
+std::string debug_file("debug");
+ofstream debug(debug_file.c_str());
 
 
 %}
+
+%error-verbose
 
 %union {
 	int ival;
@@ -92,6 +96,7 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 
 double Evaluation(double x){
 
+debug << "Evaluation" << endl;
 stack <double> pile;
 
 double a, b;
@@ -163,8 +168,8 @@ for (int i = 0; i < postfixee.size(); i++) {
 			b=atan(a);
 			pile.push(b);
 		break;
+		}
 	}
-}
 	return pile.top();
 }
 
@@ -180,9 +185,17 @@ int main() {
 		stream << i << " ";
 	}
 	stream << std::endl;
+	debug << "values " << endl;
+	for(int i = 0; i < values.size(); i++) {
+		debug << values[i] << endl;
+	}
+	debug << "postfixee " << endl;
+	for(int i = 0; i < postfixee.size(); i++) {
+		debug << postfixee[i] << endl;
+	}
 	for (int i = 0; i < 10; i++) {
 		stream << Evaluation(i) << " ";
-		cout << "f("<<  i << ") = " << Evaluation(i) << endl;
+		debug << "f("<<  i << ") = " << Evaluation(i) << endl;
 	}
 
 	return 0;
