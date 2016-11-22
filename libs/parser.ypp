@@ -15,7 +15,7 @@ using namespace std;
 #include <string>
 
 extern int yylex();
-extern int yyparse();
+//extern int yyparse();
 extern FILE* yyin;
 void yyerror(const char* s);
 
@@ -24,7 +24,6 @@ vector<int>    postfixee;
 
 std::string debug_file("debug");
 ofstream debug(debug_file.c_str());
-
 
 %}
 
@@ -175,9 +174,8 @@ for (int i = 0; i < postfixee.size(); i++) {
 
 int main() {
 	yyin = stdin;
-
-
 	yyparse();
+
 	std::string file("evaluation");
   ofstream stream(file.c_str());
 
