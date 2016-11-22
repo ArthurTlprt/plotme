@@ -30,19 +30,19 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
 
 	String::Utf8Value param1(args[0]->ToString());
 	std::string input = std::string(*param1);
-  std::cout << input << std::endl;
+  //std::cout << input << std::endl;
 
   std::ofstream equation("equation");
   equation << input << std::endl;
   equation.close();
 
   int systemMessage = std::system("./libs/run < equation");
-  if(systemMessage == -1) {
-    std::cout << "ça marche po" << std::endl;
-  } else {
-    std::cout << "En Marche! " << std::endl;
-  }
-  std::cout << systemMessage << std::endl;
+  // if(systemMessage == -1) {
+  //   std::cout << "ça marche po" << std::endl;
+  // } else {
+  //   std::cout << "En Marche! " << std::endl;
+  // }
+  //std::cout << systemMessage << std::endl;
   std::ifstream xStream("x");
   std::ifstream yStream("y");
 
@@ -60,7 +60,6 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
   double xf, yf;
   unsigned int i=0;
   while(xStream >> xf && yStream >> yf) {
-    std::cout << xf << std::endl;
     x->Set(i, Number::New(isolate, xf));
     y->Set(i, Number::New(isolate, yf));
     i++;
@@ -71,7 +70,7 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
   coord->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
 
   args.GetReturnValue().Set(coord);
-  std::cout << "The parsing is done" << std::endl;
+  //std::cout << "The parsing is done" << std::endl;
 	return;
 }
 
