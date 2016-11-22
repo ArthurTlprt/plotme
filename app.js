@@ -66,7 +66,7 @@ io.on('connection', function(socket){
     console.log("the server gets an equation from the client");
     console.log(equation);
     points = parser.evaluate(equation);
-    //console.log("the server says the parser result is " + JSON.stringify(points, 4, null));
+    console.log("the server says the parser result is " + JSON.stringify(points, 4, null));
     socket.emit('result', points);
   });
 });

@@ -43,31 +43,36 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
     std::cout << "En Marche! " << std::endl;
   }
   std::cout << systemMessage << std::endl;
-  // std::ifstream stream("evaluation");
-  //
+  std::ifstream xStream("x");
+  std::ifstream yStream("y");
+
   // std::string xs, ys;
   //
-  // getline(stream, xs);
-  // getline(stream, ys);
+  // getline(xStream, xs);
+  // getline(yStream, ys);
   // std::cout << "xs: " << xs << std::endl;
   // std::cout << "ys: " << ys << std::endl;
-  //
-  // Local<Object> coord = Object::New(isolate);
-  // Local<Array> x = Array::New(isolate);
-  // Local<Array> y = Array::New(isolate);
-  //
-  // for(unsigned int i=0; i < 100; i++) {
-  //   x->Set(i, Number::New(isolate, i));
-  //   y->Set(i, Number::New(isolate, i*i));
-  // }
-  //
-  // coord->Set(String::NewFromUtf8(isolate, "x"), x );
-  // coord->Set(String::NewFromUtf8(isolate, "y"), y );
-  // coord->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
-  //
-  // args.GetReturnValue().Set(coord);
-  // std::cout << "The parsing is done" << std::endl;
-	// return;
+
+  Local<Object> coord = Object::New(isolate);
+  Local<Array> x = Array::New(isolate);
+  Local<Array> y = Array::New(isolate);
+
+  double xf, yf;
+  unsigned int i=0;
+  while(xStream >> xf && yStream >> yf) {
+    std::cout << xf << std::endl;
+    x->Set(i, Number::New(isolate, xf));
+    y->Set(i, Number::New(isolate, yf));
+    i++;
+  }
+
+  coord->Set(String::NewFromUtf8(isolate, "x"), x );
+  coord->Set(String::NewFromUtf8(isolate, "y"), y );
+  coord->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
+
+  args.GetReturnValue().Set(coord);
+  std::cout << "The parsing is done" << std::endl;
+	return;
 }
 
 void Init(Local<Object> exports) {

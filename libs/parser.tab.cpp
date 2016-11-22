@@ -1747,13 +1747,12 @@ int main() {
 	yyin = stdin;
 	yyparse();
 
-	std::string file("evaluation");
-  ofstream stream(file.c_str());
+  ofstream xStream("x");
+	ofstream yStream("y");
 
 	for (int i = 0; i < 10; i++) {
-		stream << i << " ";
+		xStream << i << " ";
 	}
-	stream << std::endl;
 	debug << "values " << endl;
 	for(int i = 0; i < values.size(); i++) {
 		debug << values[i] << endl;
@@ -1763,7 +1762,7 @@ int main() {
 		debug << postfixee[i] << endl;
 	}
 	for (int i = 0; i < 10; i++) {
-		stream << Evaluation(i) << " ";
+		yStream << Evaluation(i) << " ";
 		debug << "f("<<  i << ") = " << Evaluation(i) << endl;
 	}
 
