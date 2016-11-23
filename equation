@@ -1,4 +1,4 @@
-cos(x) 
-x=[5,10]
+f(x)=sin(x)
+x=[-5,10]
+x*3
 draw f(x) blue
-

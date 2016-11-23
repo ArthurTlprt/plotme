@@ -19,9 +19,10 @@ extern int yylex();
 //extern int yyparse();
 extern FILE* yyin;
 void yyerror(const char* s);
-
 vector<double> values;
 vector<int>    postfixee;
+map<string,vector<double> > Myvalues;
+map<string,vector<int> >    Mypostfixee;
 
 std::string debug_file("debug");
 ofstream debug(debug_file.c_str());
@@ -69,11 +70,14 @@ line: NEWLINE
 
 
 mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
-		| X EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {xinf=$4; xsup=$6;}
 		| mixed_expression PLUS mixed_expression	 { postfixee.push_back(PLUS); values.push_back(0); }
 	  | mixed_expression MINUS mixed_expression	 { postfixee.push_back(MINUS); values.push_back(0);}
 	  | mixed_expression MULTIPLY mixed_expression {postfixee.push_back(MULTIPLY); values.push_back(0); }
 	  | mixed_expression DIVIDE mixed_expression	 { postfixee.push_back(DIVIDE); values.push_back(0); }
+		| X EQUAL BRACKETL MINUS FLOAT COMA FLOAT BRACKETR {xinf=(-$5); xsup=$7;}
+		| X EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR {xinf=$4; xsup=(-$7);}
+		| X EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR {xinf=(-$5); xsup=(-$8);}
+		| X EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {xinf=$4; xsup=$6;}
 		| LEFT mixed_expression RIGHT		 { }
 		| SIN LEFT mixed_expression RIGHT { postfixee.push_back(SIN); values.push_back(0); }
 		| COS LEFT mixed_expression RIGHT { postfixee.push_back(COS); values.push_back(0); }
