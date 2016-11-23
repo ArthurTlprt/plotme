@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <stack>
 #include <fstream>
+#include <map>
 
 
 using namespace std;
@@ -26,6 +27,7 @@ std::string debug_file("debug");
 ofstream debug(debug_file.c_str());
 double xinf=0;
 double xsup=20;
+map<string,string> dessine;
 %}
 
 %error-verbose
@@ -37,10 +39,10 @@ double xsup=20;
 }
 
 %token<fval> FLOAT
-%token<sval> COLOR
+%token<sval> COLOR VARIABLE
 %token PLUS MINUS MULTIPLY DIVIDE LEFT RIGHT EQUAL
 %token NEWLINE QUIT
-%token  X VARIABLE
+%token  X
 %token MPI EXP SIN COS TAN ARCTAN ARCSIN ARCOS SQRT DRAW BRACKETR BRACKETL COMA
 %left PLUS MINUS
 %left MULTIPLY DIVIDE
@@ -79,8 +81,8 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| ARCTAN LEFT mixed_expression RIGHT { postfixee.push_back(ARCTAN); values.push_back(0); }
 		| EXP LEFT mixed_expression RIGHT { postfixee.push_back(EXP); values.push_back(0); }
 		| SQRT LEFT mixed_expression RIGHT { postfixee.push_back(SQRT); values.push_back(0); }
-		| DRAW mixed_expression COLOR { printf("ma couleur est %s",$3); $$=$2 ; }
-		| DRAW mixed_expression { $$=$2 ;}
+		| DRAW VARIABLE LEFT X RIGHT COLOR { string a1= $2; string a2=$6;dessine.insert(pair<string,string>(a1,a2)); }
+		| DRAW VARIABLE LEFT X RIGHT { }
 		| X { postfixee.push_back(X); values.push_back(0); }
 		| FLOAT                 		 {
 
@@ -181,14 +183,14 @@ int main() {
 
   ofstream xStream("x");
 	ofstream yStream("y");
-
-	for (double i = xinf; i < xsup; i+=0.1) {
-		xStream << i << " ";
+	if(dessine.size()>1){
+		for (double i = xinf; i < xsup; i+=0.1) {
+			xStream << i << " ";
+		}
+		for (double i = xinf; i < xsup; i+=0.1) {
+			yStream << Evaluation(i) << " ";
+		}
 	}
-	for (double i = xinf; i < xsup; i+=0.1) {
-		yStream << Evaluation(i) << " ";
-	}
-
 	return 0;
 }
 
