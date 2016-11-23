@@ -34,6 +34,7 @@ void yyerror(const char *s);
 "draw" { return DRAW; }
 "sqrt" { return SQRT; }
 "^"  { return POW; }
+"abs" { return ABS; }
 "arcsin" { return ARCSIN; }
 "arcos" { return ARCOS; }
 "arctan" { return ARCTAN; }

@@ -73,7 +73,8 @@ extern int yydebug;
     DRAW = 283,
     BRACKETR = 284,
     BRACKETL = 285,
-    COMA = 286
+    COMA = 286,
+    ABS = 287
   };
 #endif
 
@@ -88,7 +89,7 @@ union YYSTYPE
 	float fval;
 	char* sval;
 
-#line 92 "parser.tab.hpp" /* yacc.c:1909  */
+#line 93 "parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
