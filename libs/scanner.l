@@ -33,6 +33,7 @@ void yyerror(const char *s);
 "tan" { return TAN; }
 "draw" { return DRAW; }
 "sqrt" { return SQRT; }
+"^"  { return POW; }
 "arcsin" { return ARCSIN; }
 "arcos" { return ARCOS; }
 "arctan" { return ARCTAN; }

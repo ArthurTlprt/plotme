@@ -1,3 +1,3 @@
-j(x) = log(x)+10
+j(x) = x^2
 x = [0.001, 10]
 draw j(x) blue
