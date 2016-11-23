@@ -28,6 +28,7 @@ void yyerror(const char *s);
 "sin" { return SIN; }
 "cos" { return  COS; }
 "exp" { return EXP; }
+"ln" { return LN; }
 "log" { return LOG; }
 "tan" { return TAN; }
 "draw" { return DRAW; }

@@ -43,11 +43,10 @@ map<string,string> dessine;
 %token PLUS MINUS MULTIPLY DIVIDE LEFT RIGHT EQUAL
 %token NEWLINE QUIT
 %token  X
-%token MPI EXP LOG SIN COS TAN ARCTAN ARCSIN ARCOS SQRT DRAW BRACKETR BRACKETL COMA
+%token MPI EXP LN LOG SIN COS TAN ARCTAN ARCSIN ARCOS SQRT DRAW BRACKETR BRACKETL COMA
 %left PLUS MINUS
 %left MULTIPLY DIVIDE
 %left RIGHT LEFT
-%left EXP SIN COS TAN ARCTAN ARCSIN ARCOS SQRT
 
 %type<fval> mixed_expression
 %type<sval> draw_function
@@ -156,9 +155,14 @@ for (int i = 0; i < postfixee.size(); i++) {
 			b=exp(a);
 			pile.push(b);
 		break;
-		case LOG:
+		case LN:
 			a = pile.top(); pile.pop();
 			b=log(a);
+			pile.push(b);
+		break;
+		case LOG:
+			a = pile.top(); pile.pop();
+			b=log10(a);
 			pile.push(b);
 		break;
 		case SQRT:
