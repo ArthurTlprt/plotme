@@ -37,21 +37,10 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
   equation.close();
 
   int systemMessage = std::system("./libs/run < equation");
-  // if(systemMessage == -1) {
-  //   std::cout << "ça marche po" << std::endl;
-  // } else {
-  //   std::cout << "En Marche! " << std::endl;
-  // }
-  //std::cout << systemMessage << std::endl;
+
   std::ifstream xStream("x");
   std::ifstream yStream("y");
 
-  // std::string xs, ys;
-  //
-  // getline(xStream, xs);
-  // getline(yStream, ys);
-  // std::cout << "xs: " << xs << std::endl;
-  // std::cout << "ys: " << ys << std::endl;
 
   Local<Object> coord = Object::New(isolate);
   Local<Array> x = Array::New(isolate);
