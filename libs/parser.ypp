@@ -48,16 +48,19 @@ double xsup=20;
 %left EXP SIN COS TAN ARCTAN ARCSIN ARCOS SQRT
 
 %type<fval> mixed_expression
+%type<sval> draw_function
 
 %start calculation
 
 %%
+
 
 calculation:
 	   | calculation line
 ;
 
 line: NEWLINE
+		| draw_function NEWLINE {}
     | mixed_expression NEWLINE { printf("\tResult: %f\n", $1); }
     | QUIT NEWLINE { printf("bye!\n"); exit(0); }
 ;
@@ -79,8 +82,6 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| ARCTAN LEFT mixed_expression RIGHT { postfixee.push_back(ARCTAN); values.push_back(0); }
 		| EXP LEFT mixed_expression RIGHT { postfixee.push_back(EXP); values.push_back(0); }
 		| SQRT LEFT mixed_expression RIGHT { postfixee.push_back(SQRT); values.push_back(0); }
-		| DRAW mixed_expression COLOR { printf("ma couleur est %s",$3); $$=$2 ; }
-		| DRAW mixed_expression { $$=$2 ;}
 		| X { postfixee.push_back(X); values.push_back(0); }
 		| FLOAT                 		 {
 
@@ -88,6 +89,9 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		values.push_back($1);
 		}
 ;
+
+draw_function: DRAW VARIABLE COLOR { printf("The function %s color is %s",$2, $3); $$=$2 ; }
+		;
 
 
 
