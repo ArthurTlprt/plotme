@@ -37,6 +37,9 @@ void yyerror(const char *s);
 "quit"		{return QUIT;}
 "exit"		{return QUIT;}
 "-"		{return MINUS;}
+","   {return COMA;}
+"["   {return BRACKETL;}
+"]"   {return BRACKETR;}
 (blue|red|yellow|green) { yylval.sval = yytext; return COLOR; }
 (([0-9])*(\.[0-9]+)?) 	{yylval.fval = atof(yytext); return FLOAT;}
 ([A-Za-z]|_)+([A-Za-z]|_|[0-9])+ { return VARIABLE; }

@@ -67,7 +67,10 @@ extern int yydebug;
     ARCSIN = 277,
     ARCOS = 278,
     SQRT = 279,
-    DRAW = 280
+    DRAW = 280,
+    BRACKETR = 281,
+    BRACKETL = 282,
+    COMA = 283
   };
 #endif
 
@@ -76,13 +79,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 32 "parser.ypp" /* yacc.c:1909  */
+#line 33 "parser.ypp" /* yacc.c:1909  */
 
 	int ival;
 	float fval;
 	char* sval;
 
-#line 86 "parser.tab.hpp" /* yacc.c:1909  */
+#line 89 "parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
