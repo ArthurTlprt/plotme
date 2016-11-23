@@ -481,8 +481,8 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    55,    55,    56,    59,    60,    61,    64,    65,    66,
-      68,    69,    70,    71,    72,    73,    74,    75,    76,    77,
-      78,    79,    80,    81,    82,    83
+      67,    68,    69,    70,    71,    72,    73,    74,    75,    76,
+      77,    78,    79,    80,    81,    82
 };
 #endif
 
@@ -1331,97 +1331,97 @@ yyreduce:
     break;
 
   case 10:
-#line 68 "parser.ypp" /* yacc.c:1646  */
+#line 67 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(PLUS); values.push_back(0); }
 #line 1337 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 69 "parser.ypp" /* yacc.c:1646  */
+#line 68 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(MINUS); values.push_back(0);}
 #line 1343 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 70 "parser.ypp" /* yacc.c:1646  */
+#line 69 "parser.ypp" /* yacc.c:1646  */
     {postfixee.push_back(MULTIPLY); values.push_back(0); }
 #line 1349 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 71 "parser.ypp" /* yacc.c:1646  */
+#line 70 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(DIVIDE); values.push_back(0); }
 #line 1355 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 72 "parser.ypp" /* yacc.c:1646  */
+#line 71 "parser.ypp" /* yacc.c:1646  */
     { }
 #line 1361 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 73 "parser.ypp" /* yacc.c:1646  */
+#line 72 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(SIN); values.push_back(0); }
 #line 1367 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 74 "parser.ypp" /* yacc.c:1646  */
+#line 73 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(COS); values.push_back(0); }
 #line 1373 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 75 "parser.ypp" /* yacc.c:1646  */
+#line 74 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(TAN); values.push_back(0); }
 #line 1379 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 76 "parser.ypp" /* yacc.c:1646  */
+#line 75 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ARCSIN); values.push_back(0); }
 #line 1385 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 77 "parser.ypp" /* yacc.c:1646  */
+#line 76 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ARCOS); values.push_back(0); }
 #line 1391 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 78 "parser.ypp" /* yacc.c:1646  */
+#line 77 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ARCTAN); values.push_back(0); }
 #line 1397 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 79 "parser.ypp" /* yacc.c:1646  */
+#line 78 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(EXP); values.push_back(0); }
 #line 1403 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 80 "parser.ypp" /* yacc.c:1646  */
+#line 79 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(SQRT); values.push_back(0); }
 #line 1409 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 81 "parser.ypp" /* yacc.c:1646  */
+#line 80 "parser.ypp" /* yacc.c:1646  */
     { printf("ma couleur est %s",(yyvsp[0].sval)); (yyval.fval)=(yyvsp[-1].fval) ; }
 #line 1415 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 82 "parser.ypp" /* yacc.c:1646  */
+#line 81 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(X); values.push_back(0); }
 #line 1421 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 83 "parser.ypp" /* yacc.c:1646  */
+#line 82 "parser.ypp" /* yacc.c:1646  */
     {
 
 		postfixee.push_back(FLOAT);
@@ -1659,26 +1659,25 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 92 "parser.ypp" /* yacc.c:1906  */
+#line 91 "parser.ypp" /* yacc.c:1906  */
 
 
 
 
 double Evaluation(double x){
 
-debug << "Evaluation" << endl;
 stack <double> pile;
 
 double a, b;
 for (int i = 0; i < postfixee.size(); i++) {
 	switch (postfixee[i]) {
 		case PLUS :
-				 a = pile.top(); pile.pop();
+		     a = pile.top(); pile.pop();
 				 b = pile.top(); pile.pop();
 				 pile.push(a+b);
 		break;
 		case FLOAT:
-				 pile.push(values[i]);
+		     pile.push(values[i]);
 		break;
 		case X :
 			pile.push(x);
@@ -1738,8 +1737,8 @@ for (int i = 0; i < postfixee.size(); i++) {
 			b=atan(a);
 			pile.push(b);
 		break;
-		}
 	}
+}
 	return pile.top();
 }
 
