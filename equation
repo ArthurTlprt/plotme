@@ -1,2 +1,2 @@
-f(x) = sin(x/5)*cos(x)
-g(x) = f(x) + 2
+x=[0,50]
+sin(x)
