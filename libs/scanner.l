@@ -40,9 +40,9 @@ void yyerror(const char *s);
 ","   {return COMA;}
 "["   {return BRACKETL;}
 "]"   {return BRACKETR;}
-(blue|red|yellow|green) { yylval.sval = yytext; return COLOR; }
+("blue"|"red"|"yellow"|"green") { yylval.sval = yytext; return COLOR; }
 (([0-9])*(\.[0-9]+)?) 	{yylval.fval = atof(yytext); return FLOAT;}
-([A-Za-z]|_)+([A-Za-z]|_|[0-9])+ { yylval.sval = yytext; return VARIABLE; }
+([A-Za-z]|_|[0-9])+ { yylval.sval = yytext; return VARIABLE; }
 \n		{return NEWLINE;}
 "+"		{return PLUS;}
 "*"		{return MULTIPLY;}
