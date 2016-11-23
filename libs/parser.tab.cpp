@@ -1673,12 +1673,12 @@ double a, b;
 for (int i = 0; i < postfixee.size(); i++) {
 	switch (postfixee[i]) {
 		case PLUS :
-		     a = pile.top(); pile.pop();
+				 a = pile.top(); pile.pop();
 				 b = pile.top(); pile.pop();
 				 pile.push(a+b);
 		break;
 		case FLOAT:
-		     pile.push(values[i]);
+				 pile.push(values[i]);
 		break;
 		case X :
 			pile.push(x);
