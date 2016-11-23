@@ -47,17 +47,17 @@ extern int yydebug;
   {
     FLOAT = 258,
     COLOR = 259,
-    PLUS = 260,
-    MINUS = 261,
-    MULTIPLY = 262,
-    DIVIDE = 263,
-    LEFT = 264,
-    RIGHT = 265,
-    EQUAL = 266,
-    NEWLINE = 267,
-    QUIT = 268,
-    X = 269,
-    VARIABLE = 270,
+    VARIABLE = 260,
+    PLUS = 261,
+    MINUS = 262,
+    MULTIPLY = 263,
+    DIVIDE = 264,
+    LEFT = 265,
+    RIGHT = 266,
+    EQUAL = 267,
+    NEWLINE = 268,
+    QUIT = 269,
+    X = 270,
     MPI = 271,
     EXP = 272,
     SIN = 273,
@@ -79,7 +79,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 33 "parser.ypp" /* yacc.c:1909  */
+#line 35 "parser.ypp" /* yacc.c:1909  */
 
 	int ival;
 	float fval;

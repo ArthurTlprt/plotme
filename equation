@@ -1,2 +1,4 @@
-f(x) = sin(x)
-draw f(x)
+cos(x) 
+x=[5,10]
+draw f(x) blue
+

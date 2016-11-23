@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <stack>
 #include <fstream>
+#include <map>
 
 
 using namespace std;
@@ -26,6 +27,7 @@ std::string debug_file("debug");
 ofstream debug(debug_file.c_str());
 double xinf=0;
 double xsup=20;
+map<string,string> dessine;
 %}
 
 %error-verbose
@@ -37,10 +39,10 @@ double xsup=20;
 }
 
 %token<fval> FLOAT
-%token<sval> COLOR
+%token<sval> COLOR VARIABLE
 %token PLUS MINUS MULTIPLY DIVIDE LEFT RIGHT EQUAL
 %token NEWLINE QUIT
-%token  X VARIABLE
+%token  X
 %token MPI EXP SIN COS TAN ARCTAN ARCSIN ARCOS SQRT DRAW BRACKETR BRACKETL COMA
 %left PLUS MINUS
 %left MULTIPLY DIVIDE
@@ -60,14 +62,15 @@ calculation:
 ;
 
 line: NEWLINE
-		| draw_function NEWLINE {}
-    | mixed_expression NEWLINE { printf("\tResult: %f\n", $1); }
+		| mixed_expression NEWLINE {}
+		| DRAW VARIABLE LEFT X RIGHT COLOR { string a1= $2; string a2=$6; dessine.insert(pair<string,string>(a1,a2)); }
     | QUIT NEWLINE { printf("bye!\n"); exit(0); }
+		| VARIABLE LEFT X RIGHT EQUAL mixed_expression {}
+		| VARIABLE EQUAL mixed_expression { }
 ;
 
+
 mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
-		| VARIABLE LEFT X RIGHT EQUAL mixed_expression {}
-		| VARIABLE EQUAL mixed_expression { $$ = $3; }
 		| X EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {xinf=$4; xsup=$6;}
 		| mixed_expression PLUS mixed_expression	 { postfixee.push_back(PLUS); values.push_back(0); }
 	  | mixed_expression MINUS mixed_expression	 { postfixee.push_back(MINUS); values.push_back(0);}
@@ -90,8 +93,6 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		}
 ;
 
-draw_function: DRAW VARIABLE COLOR { printf("The function %s color is %s",$2, $3); $$=$2 ; }
-		;
 
 
 
@@ -182,17 +183,18 @@ for (int i = 0; i < postfixee.size(); i++) {
 int main() {
 	yyin = stdin;
 	yyparse();
-
+	cout<<dessine.size()<<endl;
   ofstream xStream("x");
 	ofstream yStream("y");
-
-	for (double i = xinf; i < xsup; i+=0.1) {
-		xStream << i << " ";
+	if(dessine.size()>0){
+		cout<<"je suis dans l'evaluation"<<endl;
+		for (double i = xinf; i < xsup; i+=0.1) {
+			xStream << i << " ";
+		}
+		for (double i = xinf; i < xsup; i+=0.1) {
+			yStream << Evaluation(i) << " ";
+		}
 	}
-	for (double i = xinf; i < xsup; i+=0.1) {
-		yStream << Evaluation(i) << " ";
-	}
-
 	return 0;
 }
 
