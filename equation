@@ -1,2 +1,2 @@
-x=[0,50]
-sin(x)
+f(x) = sin(x)
+draw f(x)
