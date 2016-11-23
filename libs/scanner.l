@@ -28,9 +28,13 @@ void yyerror(const char *s);
 "sin" { return SIN; }
 "cos" { return  COS; }
 "exp" { return EXP; }
+"ln" { return LN; }
+"log" { return LOG; }
 "tan" { return TAN; }
 "draw" { return DRAW; }
 "sqrt" { return SQRT; }
+"^"  { return POW; }
+"abs" { return ABS; }
 "arcsin" { return ARCSIN; }
 "arcos" { return ARCOS; }
 "arctan" { return ARCTAN; }

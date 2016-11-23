@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 f(x)=sin(x)
 x=[-5,10]
 x*3
 draw f(x) blue
+=======
+f(x) = sin(x)
+draw f red
+>>>>>>> aeff937b632a9e653e29ada9e867c4c8ca0b5072
