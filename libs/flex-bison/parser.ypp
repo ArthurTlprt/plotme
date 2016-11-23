@@ -59,7 +59,6 @@ line: NEWLINE
 mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| VARIABLE LEFT X RIGHT EQUAL mixed_expression {}
 		| VARIABLE EQUAL mixed_expression { $$ = $3; }
-
 		| mixed_expression PLUS mixed_expression	 { postfixee.push_back(PLUS); values.push_back(0); }
 	  | mixed_expression MINUS mixed_expression	 { postfixee.push_back(MINUS); values.push_back(0);}
 	  | mixed_expression MULTIPLY mixed_expression {postfixee.push_back(MULTIPLY); values.push_back(0); }

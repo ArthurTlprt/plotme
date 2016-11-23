@@ -478,8 +478,8 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    50,    50,    51,    54,    55,    56,    59,    60,    61,
-      63,    64,    65,    66,    67,    68,    69,    70,    71,    72,
-      73,    74,    75,    76,    77,    78
+      62,    63,    64,    65,    66,    67,    68,    69,    70,    71,
+      72,    73,    74,    75,    76,    77
 };
 #endif
 
@@ -1328,97 +1328,97 @@ yyreduce:
     break;
 
   case 10:
-#line 63 "parser.ypp" /* yacc.c:1646  */
+#line 62 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(PLUS); values.push_back(0); }
 #line 1334 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 64 "parser.ypp" /* yacc.c:1646  */
+#line 63 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(MINUS); values.push_back(0);}
 #line 1340 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 65 "parser.ypp" /* yacc.c:1646  */
+#line 64 "parser.ypp" /* yacc.c:1646  */
     {postfixee.push_back(MULTIPLY); values.push_back(0); }
 #line 1346 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 66 "parser.ypp" /* yacc.c:1646  */
+#line 65 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(DIVIDE); values.push_back(0); }
 #line 1352 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 67 "parser.ypp" /* yacc.c:1646  */
+#line 66 "parser.ypp" /* yacc.c:1646  */
     { }
 #line 1358 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 68 "parser.ypp" /* yacc.c:1646  */
+#line 67 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(SIN); values.push_back(0); }
 #line 1364 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 69 "parser.ypp" /* yacc.c:1646  */
+#line 68 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(COS); values.push_back(0); }
 #line 1370 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 70 "parser.ypp" /* yacc.c:1646  */
+#line 69 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(TAN); values.push_back(0); }
 #line 1376 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 71 "parser.ypp" /* yacc.c:1646  */
+#line 70 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ARCSIN); values.push_back(0); }
 #line 1382 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 72 "parser.ypp" /* yacc.c:1646  */
+#line 71 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ARCOS); values.push_back(0); }
 #line 1388 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 73 "parser.ypp" /* yacc.c:1646  */
+#line 72 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ARCTAN); values.push_back(0); }
 #line 1394 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 74 "parser.ypp" /* yacc.c:1646  */
+#line 73 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(EXP); values.push_back(0); }
 #line 1400 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 75 "parser.ypp" /* yacc.c:1646  */
+#line 74 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(SQRT); values.push_back(0); }
 #line 1406 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 76 "parser.ypp" /* yacc.c:1646  */
+#line 75 "parser.ypp" /* yacc.c:1646  */
     { printf("ma couleur est %s",(yyvsp[0].sval)); (yyval.fval)=(yyvsp[-1].fval) ; }
 #line 1412 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 77 "parser.ypp" /* yacc.c:1646  */
+#line 76 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(X); values.push_back(0); }
 #line 1418 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 78 "parser.ypp" /* yacc.c:1646  */
+#line 77 "parser.ypp" /* yacc.c:1646  */
     {
 
 		postfixee.push_back(FLOAT);
@@ -1656,7 +1656,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 87 "parser.ypp" /* yacc.c:1906  */
+#line 86 "parser.ypp" /* yacc.c:1906  */
 
 
 
