@@ -30,6 +30,8 @@ void yyerror(const char *s);
 "exp" { return EXP; }
 "tan" { return TAN; }
 "draw" { return DRAW; }
+"title" { return TITLE; }
+"color" { return COLOR; }
 "sqrt" { return SQRT; }
 "arcsin" { return ARCSIN; }
 "arcos" { return ARCOS; }

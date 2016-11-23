@@ -67,7 +67,8 @@ extern int yydebug;
     ARCSIN = 277,
     ARCOS = 278,
     SQRT = 279,
-    DRAW = 280
+    DRAW = 280,
+    TITLE = 281
   };
 #endif
 
@@ -82,7 +83,7 @@ union YYSTYPE
 	float fval;
 	char* sval;
 
-#line 86 "parser.tab.hpp" /* yacc.c:1909  */
+#line 87 "parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

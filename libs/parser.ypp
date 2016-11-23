@@ -40,7 +40,7 @@ ofstream debug(debug_file.c_str());
 %token PLUS MINUS MULTIPLY DIVIDE LEFT RIGHT EQUAL
 %token NEWLINE QUIT
 %token  X VARIABLE
-%token MPI EXP SIN COS TAN ARCTAN ARCSIN ARCOS SQRT DRAW
+%token MPI EXP SIN COS TAN ARCTAN ARCSIN ARCOS SQRT DRAW TITLE
 %left PLUS MINUS
 %left MULTIPLY DIVIDE
 %left RIGHT LEFT
@@ -85,6 +85,8 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		values.push_back($1);
 		}
 ;
+
+
 
 //constant : FLOAT { $$ = $1; }
 

@@ -148,7 +148,8 @@ extern int yydebug;
     ARCSIN = 277,
     ARCOS = 278,
     SQRT = 279,
-    DRAW = 280
+    DRAW = 280,
+    TITLE = 281
   };
 #endif
 
@@ -163,7 +164,7 @@ union YYSTYPE
 	float fval;
 	char* sval;
 
-#line 167 "parser.tab.cpp" /* yacc.c:355  */
+#line 168 "parser.tab.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -180,7 +181,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 184 "parser.tab.cpp" /* yacc.c:358  */
+#line 185 "parser.tab.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -425,7 +426,7 @@ union yyalloc
 #define YYLAST   136
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  26
+#define YYNTOKENS  27
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
@@ -436,7 +437,7 @@ union yyalloc
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   280
+#define YYMAXUTOK   281
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -473,7 +474,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25
+      25,    26
 };
 
 #if YYDEBUG
@@ -494,7 +495,7 @@ static const char *const yytname[] =
   "$end", "error", "$undefined", "FLOAT", "COLOR", "PLUS", "MINUS",
   "MULTIPLY", "DIVIDE", "LEFT", "RIGHT", "EQUAL", "NEWLINE", "QUIT", "X",
   "VARIABLE", "MPI", "EXP", "SIN", "COS", "TAN", "ARCTAN", "ARCSIN",
-  "ARCOS", "SQRT", "DRAW", "$accept", "calculation", "line",
+  "ARCOS", "SQRT", "DRAW", "TITLE", "$accept", "calculation", "line",
   "mixed_expression", YY_NULLPTR
 };
 #endif
@@ -506,7 +507,7 @@ static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279,   280
+     275,   276,   277,   278,   279,   280,   281
 };
 # endif
 
@@ -602,21 +603,21 @@ static const yytype_int8 yycheck[] =
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    27,     0,     3,     9,    12,    13,    14,    15,    16,
-      17,    18,    19,    20,    21,    22,    23,    24,    25,    28,
-      29,    29,    12,     9,    11,     9,     9,     9,     9,     9,
-       9,     9,     9,    29,     5,     6,     7,     8,    12,    10,
-      14,    29,    29,    29,    29,    29,    29,    29,    29,    29,
-       4,    29,    29,    29,    29,    10,    10,    10,    10,    10,
-      10,    10,    10,    10,    11,    29
+       0,    28,     0,     3,     9,    12,    13,    14,    15,    16,
+      17,    18,    19,    20,    21,    22,    23,    24,    25,    29,
+      30,    30,    12,     9,    11,     9,     9,     9,     9,     9,
+       9,     9,     9,    30,     5,     6,     7,     8,    12,    10,
+      14,    30,    30,    30,    30,    30,    30,    30,    30,    30,
+       4,    30,    30,    30,    30,    10,    10,    10,    10,    10,
+      10,    10,    10,    10,    11,    30
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    26,    27,    27,    28,    28,    28,    29,    29,    29,
-      29,    29,    29,    29,    29,    29,    29,    29,    29,    29,
-      29,    29,    29,    29,    29,    29
+       0,    27,    28,    28,    29,    29,    29,    30,    30,    30,
+      30,    30,    30,    30,    30,    30,    30,    30,    30,    30,
+      30,    30,    30,    30,    30,    30
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -1303,121 +1304,121 @@ yyreduce:
         case 5:
 #line 60 "parser.ypp" /* yacc.c:1646  */
     { printf("\tResult: %f\n", (yyvsp[-1].fval)); }
-#line 1307 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1308 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 61 "parser.ypp" /* yacc.c:1646  */
     { printf("bye!\n"); exit(0); }
-#line 1313 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1314 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
 #line 64 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(FLOAT); values.push_back(M_PI); }
-#line 1319 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1320 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
 #line 65 "parser.ypp" /* yacc.c:1646  */
     {}
-#line 1325 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1326 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 66 "parser.ypp" /* yacc.c:1646  */
     { (yyval.fval) = (yyvsp[0].fval); }
-#line 1331 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1332 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 67 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(PLUS); values.push_back(0); }
-#line 1337 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1338 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 68 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(MINUS); values.push_back(0);}
-#line 1343 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1344 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
 #line 69 "parser.ypp" /* yacc.c:1646  */
     {postfixee.push_back(MULTIPLY); values.push_back(0); }
-#line 1349 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1350 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 70 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(DIVIDE); values.push_back(0); }
-#line 1355 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1356 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 71 "parser.ypp" /* yacc.c:1646  */
     { }
-#line 1361 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1362 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 72 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(SIN); values.push_back(0); }
-#line 1367 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1368 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
 #line 73 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(COS); values.push_back(0); }
-#line 1373 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1374 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
 #line 74 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(TAN); values.push_back(0); }
-#line 1379 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1380 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 75 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ARCSIN); values.push_back(0); }
-#line 1385 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1386 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 76 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ARCOS); values.push_back(0); }
-#line 1391 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1392 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 77 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ARCTAN); values.push_back(0); }
-#line 1397 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1398 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
 #line 78 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(EXP); values.push_back(0); }
-#line 1403 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1404 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
 #line 79 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(SQRT); values.push_back(0); }
-#line 1409 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1410 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
 #line 80 "parser.ypp" /* yacc.c:1646  */
     { printf("ma couleur est %s",(yyvsp[0].sval)); (yyval.fval)=(yyvsp[-1].fval) ; }
-#line 1415 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1416 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
 #line 81 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(X); values.push_back(0); }
-#line 1421 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1422 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
@@ -1427,11 +1428,11 @@ yyreduce:
 		postfixee.push_back(FLOAT);
 		values.push_back((yyvsp[0].fval));
 		}
-#line 1431 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1432 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1435 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1436 "parser.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1659,7 +1660,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 91 "parser.ypp" /* yacc.c:1906  */
+#line 93 "parser.ypp" /* yacc.c:1906  */
 
 
 
