@@ -60,17 +60,18 @@ extern int yydebug;
     X = 270,
     MPI = 271,
     EXP = 272,
-    SIN = 273,
-    COS = 274,
-    TAN = 275,
-    ARCTAN = 276,
-    ARCSIN = 277,
-    ARCOS = 278,
-    SQRT = 279,
-    DRAW = 280,
-    BRACKETR = 281,
-    BRACKETL = 282,
-    COMA = 283
+    LOG = 273,
+    SIN = 274,
+    COS = 275,
+    TAN = 276,
+    ARCTAN = 277,
+    ARCSIN = 278,
+    ARCOS = 279,
+    SQRT = 280,
+    DRAW = 281,
+    BRACKETR = 282,
+    BRACKETL = 283,
+    COMA = 284
   };
 #endif
 
@@ -85,7 +86,7 @@ union YYSTYPE
 	float fval;
 	char* sval;
 
-#line 89 "parser.tab.hpp" /* yacc.c:1909  */
+#line 90 "parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

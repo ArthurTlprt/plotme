@@ -43,7 +43,7 @@ map<string,string> dessine;
 %token PLUS MINUS MULTIPLY DIVIDE LEFT RIGHT EQUAL
 %token NEWLINE QUIT
 %token  X
-%token MPI EXP SIN COS TAN ARCTAN ARCSIN ARCOS SQRT DRAW BRACKETR BRACKETL COMA
+%token MPI EXP LOG SIN COS TAN ARCTAN ARCSIN ARCOS SQRT DRAW BRACKETR BRACKETL COMA
 %left PLUS MINUS
 %left MULTIPLY DIVIDE
 %left RIGHT LEFT
@@ -84,6 +84,7 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| ARCOS LEFT mixed_expression RIGHT { postfixee.push_back(ARCOS); values.push_back(0); }
 		| ARCTAN LEFT mixed_expression RIGHT { postfixee.push_back(ARCTAN); values.push_back(0); }
 		| EXP LEFT mixed_expression RIGHT { postfixee.push_back(EXP); values.push_back(0); }
+		| LOG LEFT mixed_expression RIGHT { postfixee.push_back(LOG); values.push_back(0); }
 		| SQRT LEFT mixed_expression RIGHT { postfixee.push_back(SQRT); values.push_back(0); }
 		| X { postfixee.push_back(X); values.push_back(0); }
 		| FLOAT                 		 {
@@ -153,6 +154,11 @@ for (int i = 0; i < postfixee.size(); i++) {
 		case EXP:
 			a = pile.top(); pile.pop();
 			b=exp(a);
+			pile.push(b);
+		break;
+		case LOG:
+			a = pile.top(); pile.pop();
+			b=log(a);
 			pile.push(b);
 		break;
 		case SQRT:

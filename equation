@@ -1,4 +1,3 @@
-cos(x) 
-x=[5,10]
-draw f(x) blue
-
+h(x) = log(x)
+x = [1, 100]
+draw h(x) blue
