@@ -40,11 +40,20 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
 
   std::ifstream xStream("x");
   std::ifstream yStream("y");
+  std::ifstream colorStream("color");
+
+  std::string color;
+  colorStream >> color;
+  std::cout << "################################" << std::endl;
+  std::cout << color << std::endl;
+  std::cout << "################################" << std::endl;
 
 
-  Local<Object> coord = Object::New(isolate);
+  Local<Object> chart = Object::New(isolate);
   Local<Array> x = Array::New(isolate);
   Local<Array> y = Array::New(isolate);
+  Local<Object> line = Object::New(isolate);
+  line->Set(String::NewFromUtf8(isolate, "color"), String::NewFromUtf8(isolate, color.c_str() ));
 
   double xf, yf;
   unsigned int i=0;
@@ -54,11 +63,13 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
     i++;
   }
 
-  coord->Set(String::NewFromUtf8(isolate, "x"), x );
-  coord->Set(String::NewFromUtf8(isolate, "y"), y );
-  coord->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
+  chart->Set(String::NewFromUtf8(isolate, "x"), x );
+  chart->Set(String::NewFromUtf8(isolate, "y"), y );
+  chart->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
+  chart->Set(String::NewFromUtf8(isolate, "line"), line);
+  //chart->Set(String::NewFromUtf8(isolate, "color"), String::NewFromUtf8(isolate, color.c_str() ));
 
-  args.GetReturnValue().Set(coord);
+  args.GetReturnValue().Set(chart);
   //std::cout << "The parsing is done" << std::endl;
 	return;
 }

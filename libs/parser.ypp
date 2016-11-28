@@ -25,6 +25,8 @@ vector<int>    postfixee;
 
 std::string debug_file("debug");
 ofstream debug(debug_file.c_str());
+ofstream colorStream("color");
+ofstream titleStream("title");
 double xinf=0;
 double xsup=20;
 map<string,string> dessine;
@@ -45,11 +47,10 @@ map<string,string> dessine;
 %token  X
 %token MPI EXP LN LOG SIN COS TAN ARCTAN ARCSIN ARCOS SQRT POW DRAW BRACKETR BRACKETL COMA ABS
 %left PLUS MINUS
-%left MULTIPLY DIVIDE
+%left MULTIPLY DIVIDE POW
 %left RIGHT LEFT
 
 %type<fval> mixed_expression
-%type<sval> draw_function
 
 %start calculation
 
@@ -62,7 +63,7 @@ calculation:
 
 line: NEWLINE
 		| mixed_expression NEWLINE {}
-		| DRAW VARIABLE LEFT X RIGHT COLOR { string a1= $2; string a2=$6; dessine.insert(pair<string,string>(a1,a2)); }
+		| DRAW VARIABLE LEFT X RIGHT COLOR { string a1= $2; string a2=$6; dessine.insert(pair<string,string>(a1,a2)); colorStream << a2; }
     | QUIT NEWLINE { printf("bye!\n"); exit(0); }
 		| VARIABLE LEFT X RIGHT EQUAL mixed_expression {}
 		| VARIABLE EQUAL mixed_expression { }
@@ -208,6 +209,7 @@ int main() {
 	cout<<dessine.size()<<endl;
   ofstream xStream("x");
 	ofstream yStream("y");
+
 	if(dessine.size()>0){
 		cout<<"je suis dans l'evaluation"<<endl;
 		for (double i = xinf; i < xsup; i+=0.1) {
@@ -217,6 +219,11 @@ int main() {
 			yStream << Evaluation(i) << " ";
 		}
 	}
+	/*
+	f(x) = x+2
+	x = [2, 3]
+	draw f(x) blue
+	*/
 	return 0;
 }
 

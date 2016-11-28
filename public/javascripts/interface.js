@@ -8,6 +8,7 @@ var send = function() {
 
 socket.on("result", function(points) {
   var data = [points];
+  
   var layout = {
     title: points.title,
     showlegend: true

@@ -1,2 +1,3 @@
-f(x) = sin(x)
-draw f red
+f(x) = x^2
+x = [0, 5]
+draw f(x) #ffa64d
