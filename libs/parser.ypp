@@ -21,8 +21,8 @@ extern FILE* yyin;
 void yyerror(const char* s);
 vector<double> values;
 vector<int>    postfixee;
-map<string,vector<double> > Myvalues;
-map<string,vector<int> >    Mypostfixee;
+vector<int> indice;
+vector<string> nom;
 
 std::string debug_file("debug");
 ofstream debug(debug_file.c_str());
@@ -30,7 +30,8 @@ ofstream colorStream("color");
 ofstream titleStream("title");
 double xinf=0;
 double xsup=20;
-map<string,string> dessine;
+vector<string> dessine;
+int nbrline;
 %}
 
 %error-verbose
@@ -59,21 +60,22 @@ map<string,string> dessine;
 
 
 calculation:
-	   | calculation line
+	   | calculation line{nbrline++; if(indice.size()==0){indice.push_back(0);}
+		 indice.push_back(values.size());cout<<indice[0]<<endl;}
 ;
 
 line: NEWLINE
-		| mixed_expression NEWLINE {}
-		| DRAW VARIABLE LEFT X RIGHT { string a1= $2; string a2="blue"; dessine.insert(pair<string,string>(a1,a2)); colorStream << a2; }
-		| DRAW VARIABLE LEFT X RIGHT COLOR { string a1= $2; string a2=$6; dessine.insert(pair<string,string>(a1,a2)); colorStream << a2; }
+		| DRAW VARIABLE LEFT X RIGHT NEWLINE{ nom.push_back("nul");string a1= $2; string a2="blue"; dessine.push_back(a1); colorStream << a2; }
+		| DRAW VARIABLE LEFT X RIGHT COLOR NEWLINE{nom.push_back("nul"); string a1= $2; string a2=$6;cout<<a2<<endl; dessine.push_back(a1); colorStream << a2; }
     | QUIT NEWLINE { printf("bye!\n"); exit(0); }
-		| VARIABLE LEFT X RIGHT EQUAL mixed_expression {}
-		| VARIABLE EQUAL mixed_expression { }
+		| VARIABLE LEFT X RIGHT EQUAL mixed_expression NEWLINE {string a1=$1;nom.push_back(a1);cout<<"ypp: "<< nom[nbrline] <<endl<<endl;}
+		| VARIABLE EQUAL mixed_expression NEWLINE { nom.push_back("nul");cout<<nom[nbrline]<<endl;}
+		| mixed_expression NEWLINE {nom.push_back("nul");cout<<nom[nbrline]<<endl;}
 ;
 
 
 mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
-		| mixed_expression PLUS mixed_expression	 { postfixee.push_back(PLUS); values.push_back(0); }
+		| mixed_expression PLUS mixed_expression	 {cout<<nbrline<<endl; postfixee.push_back(PLUS); values.push_back(0); }
 		| mixed_expression POW mixed_expression	 { postfixee.push_back(POW); values.push_back(0); }
 	  | mixed_expression MINUS mixed_expression	 { postfixee.push_back(MINUS); values.push_back(0);}
 	  | mixed_expression MULTIPLY mixed_expression {postfixee.push_back(MULTIPLY); values.push_back(0); }
@@ -93,9 +95,9 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| LOG LEFT mixed_expression RIGHT { postfixee.push_back(LOG); values.push_back(0); }
 		| SQRT LEFT mixed_expression RIGHT { postfixee.push_back(SQRT); values.push_back(0); }
 		| ABS LEFT mixed_expression RIGHT { postfixee.push_back(ABS); values.push_back(0); }
-		| X { postfixee.push_back(X); values.push_back(0); }
+		| X {cout<<nbrline<<endl; postfixee.push_back(X); values.push_back(0); }
 		| FLOAT                 		 {
-
+			cout<<nbrline<<endl;
 		postfixee.push_back(FLOAT);
 		values.push_back($1);
 		}
@@ -110,12 +112,12 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 
 
 
-double Evaluation(double x){
+double Evaluation(double x,int ind){
 
 stack <double> pile;
 
 double a, b;
-for (int i = 0; i < postfixee.size(); i++) {
+for (int i = indice[ind]; i < indice[ind+1]; i++) {
 	switch (postfixee[i]) {
 		case PLUS :
 		     a = pile.top(); pile.pop();
@@ -216,12 +218,18 @@ int main() {
 	ofstream yStream("y");
 
 	if(dessine.size()>0){
-		cout<<"je suis dans l'evaluation"<<endl;
-		for (double i = xinf; i < xsup; i+=0.05) {
-			xStream << i << " ";
-		}
-		for (double i = xinf; i < xsup; i+=0.05) {
-			yStream << Evaluation(i) << " ";
+		for(double h=0;h<dessine.size();h++){
+			for(double k=0;k<nom.size();k++){
+				if(dessine[h].compare(nom[k])==0){
+					cout<<"je suis dans l'evaluation"<<endl;
+					for (double i = xinf; i < xsup; i+=0.05) {
+						xStream << i << " ";
+					}
+					for (double i = xinf; i < xsup; i+=0.05) {
+						yStream << Evaluation(i,k) << " ";
+					}
+				}
+			}
 		}
 	}
 	/*
