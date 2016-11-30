@@ -1,11 +1,38 @@
-nul
-0
 lex: f
-1
-1
+0
+0
+0
+0
 ypp: f
 
 0
 lex: g
+1
+lex: f
+1
+ypp: g
+
+0
+lex: c
+lex: g
 2
 2
+ypp: c
+
+0
+lex: d
+lex: c
+3
+ypp: d
+
+0
+nul
+0
+nul
+0
+lex: d
+yellow
+0
+1
+je suis dans l'evaluation
+lol

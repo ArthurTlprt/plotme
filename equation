@@ -1,6 +1,7 @@
-x=[-3,3]
-f(x)=x*x
-g(x)=5*x +f(x)
-y=[-10,10]
-draw f(x) yellow
-
+f(x)=1/2 +sin(x)
+g(x)= 10+f(x)
+c(x)= g(x) -2*x
+d(x)=c(x) -2
+x=[-10,10]
+y=[-10,20]
+draw d(x) yellow
