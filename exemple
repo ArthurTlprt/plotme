@@ -6,3 +6,7 @@ draw f(x) #ffa64d
 f(x) = 2*x^2+-3*x^1-2
 x = [0, 5]
 draw f(x) #ffa64d
+
+g(x) = 0.5*x^2+10*x+10*cos(x*10)
+x = [0, 5]
+draw g(x) red

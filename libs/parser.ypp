@@ -63,6 +63,7 @@ calculation:
 
 line: NEWLINE
 		| mixed_expression NEWLINE {}
+		| DRAW VARIABLE LEFT X RIGHT { string a1= $2; string a2="blue"; dessine.insert(pair<string,string>(a1,a2)); colorStream << a2; }
 		| DRAW VARIABLE LEFT X RIGHT COLOR { string a1= $2; string a2=$6; dessine.insert(pair<string,string>(a1,a2)); colorStream << a2; }
     | QUIT NEWLINE { printf("bye!\n"); exit(0); }
 		| VARIABLE LEFT X RIGHT EQUAL mixed_expression {}
@@ -212,10 +213,10 @@ int main() {
 
 	if(dessine.size()>0){
 		cout<<"je suis dans l'evaluation"<<endl;
-		for (double i = xinf; i < xsup; i+=0.1) {
+		for (double i = xinf; i < xsup; i+=0.05) {
 			xStream << i << " ";
 		}
-		for (double i = xinf; i < xsup; i+=0.1) {
+		for (double i = xinf; i < xsup; i+=0.05) {
 			yStream << Evaluation(i) << " ";
 		}
 	}
