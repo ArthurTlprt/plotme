@@ -6,13 +6,15 @@ var send = function() {
   socket.emit('new plot', equation);
 }
 
-socket.on("result", function(points) {
-  var data = [points];
-  
+socket.on("result", function(data) {
+  var trace1 = [data.points];
+
   var layout = {
-    title: points.title,
-    showlegend: true
+    title: data.title,
+    showlegend: true,
+    yaxis: data.yaxis
   };
-  Plotly.newPlot('myDiv', data, layout, {displayModeBar: false});
-  console.log(points);
+  console.log(JSON.stringify(data, 4, null));
+  //console.log(points.yaxis);
+  Plotly.newPlot('myDiv', trace1, layout, {displayModeBar: false});
 });

@@ -23,6 +23,7 @@ using v8::Object;
 using v8::String;
 using v8::Value;
 using v8::Array;
+using v8::Boolean;
 
 
 void Evaluate(const FunctionCallbackInfo<Value>& args) {
@@ -41,19 +42,30 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
   std::ifstream xStream("x");
   std::ifstream yStream("y");
   std::ifstream colorStream("color");
+  std::ifstream yaxisStream("yaxis");
 
   std::string color;
   colorStream >> color;
   std::cout << "################################" << std::endl;
   std::cout << color << std::endl;
   std::cout << "################################" << std::endl;
+  double ymin, ymax;
+  yaxisStream >> ymin >> ymax;
 
 
-  Local<Object> chart = Object::New(isolate);
+  Local<Object> data = Object::New(isolate);
+  Local<Object> points = Object::New(isolate);
   Local<Array> x = Array::New(isolate);
   Local<Array> y = Array::New(isolate);
   Local<Object> line = Object::New(isolate);
-  line->Set(String::NewFromUtf8(isolate, "color"), String::NewFromUtf8(isolate, color.c_str() ));
+
+  Local<Array> yrange = Array::New(isolate);
+  yrange->Set(0, Number::New(isolate, ymin));
+  yrange->Set(1, Number::New(isolate, ymax));
+  Local<Object> yaxis = Object::New(isolate);
+  yaxis->Set(String::NewFromUtf8(isolate, "range"), yrange);
+  Local<Boolean> autorange = Boolean::New(isolate, false);
+  yaxis->Set(String::NewFromUtf8(isolate, "autorange"), autorange);
 
   double xf, yf;
   unsigned int i=0;
@@ -63,13 +75,15 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
     i++;
   }
 
-  chart->Set(String::NewFromUtf8(isolate, "x"), x );
-  chart->Set(String::NewFromUtf8(isolate, "y"), y );
-  chart->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
-  chart->Set(String::NewFromUtf8(isolate, "line"), line);
-  //chart->Set(String::NewFromUtf8(isolate, "color"), String::NewFromUtf8(isolate, color.c_str() ));
+  line->Set(String::NewFromUtf8(isolate, "color"), String::NewFromUtf8(isolate, color.c_str() ));
+  points->Set(String::NewFromUtf8(isolate, "x"), x );
+  points->Set(String::NewFromUtf8(isolate, "y"), y );
+  data->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
+  points->Set(String::NewFromUtf8(isolate, "line"), line);
+  data->Set(String::NewFromUtf8(isolate, "yaxis"), yaxis);
+  data->Set(String::NewFromUtf8(isolate, "points"), points);
 
-  args.GetReturnValue().Set(chart);
+  args.GetReturnValue().Set(data);
   //std::cout << "The parsing is done" << std::endl;
 	return;
 }

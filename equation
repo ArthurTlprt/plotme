@@ -1,3 +1,6 @@
-f(x)=5*sin(x)
+x=[-3,3]
+f(x)=x*x
+g(x)=5*x +f(x)
+y=[-10,10]
 draw f(x) yellow
-draw g(x) blue
+
