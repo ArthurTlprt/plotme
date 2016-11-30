@@ -3,10 +3,16 @@ x = [0, 30]
 draw f(x) #ffa64d
 
 
-f(x) = 2*x^2+-3*x^1-2
-x = [0, 5]
-draw f(x) #ffa64d
+f(x) = 0.5*x^3-x^2+2
+x = [-50, 50]
+draw f(x) #2bc0be
 
 g(x) = 0.5*x^2+10*x+10*cos(x*10)
 x = [0, 5]
 draw g(x) red
+
+
+f(x) = 2*sin(x)+1/x
+y = [-10, 10]
+x = [-2, 2]
+draw f(x) #2bc0be

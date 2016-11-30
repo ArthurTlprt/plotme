@@ -84,10 +84,10 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| X EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR {xinf=$4; xsup=(-$7);}
 		| X EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR {xinf=(-$5); xsup=(-$8);}
 		| X EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {xinf=$4; xsup=$6;}
-		| Y EQUAL BRACKETL MINUS FLOAT COMA FLOAT BRACKETR {}
-		| Y EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR {}
-		| Y EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR {}
-		| Y EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {}
+		| Y EQUAL BRACKETL MINUS FLOAT COMA FLOAT BRACKETR { yaxisStream << -$5 << " " << $7; debug << "lol";}
+		| Y EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR { yaxisStream << $4 << " " << -$7; }
+		| Y EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR { yaxisStream << -$5 << " " << -$8; }
+		| Y EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {yaxisStream << $4 << " " << $6;}
 		| LEFT mixed_expression RIGHT		 { }
 		| SIN LEFT mixed_expression RIGHT { postfixee.push_back(SIN); values.push_back(0); }
 		| COS LEFT mixed_expression RIGHT { postfixee.push_back(COS); values.push_back(0); }
@@ -187,7 +187,7 @@ for (int i = 0; i < postfixee.size(); i++) {
 		case POW :
 		     a = pile.top(); pile.pop();
 				 b = pile.top(); pile.pop();
-				 pile.push(pow(a, b));
+				 pile.push(pow(b, a));
 		break;
 		case ABS :
 			a = pile.top(); pile.pop();
@@ -225,7 +225,6 @@ int main() {
 		cout<<"je suis dans l'evaluation"<<endl;
 		for (double i = xinf; i < xsup; i+=0.05) {
 			xStream << i << " ";
-			debug << i << " ";
 		}
 		for (double i = xinf; i < xsup; i+=0.05) {
 			yStream << Evaluation(i) << " ";

@@ -1445,25 +1445,25 @@ yyreduce:
 
   case 21:
 #line 87 "parser.ypp" /* yacc.c:1646  */
-    {}
+    { yaxisStream << -(yyvsp[-3].fval) << " " << (yyvsp[-1].fval); debug << "lol";}
 #line 1450 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
 #line 88 "parser.ypp" /* yacc.c:1646  */
-    {}
+    { yaxisStream << (yyvsp[-4].fval) << " " << -(yyvsp[-1].fval); }
 #line 1456 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
 #line 89 "parser.ypp" /* yacc.c:1646  */
-    {}
+    { yaxisStream << -(yyvsp[-4].fval) << " " << -(yyvsp[-1].fval); }
 #line 1462 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
 #line 90 "parser.ypp" /* yacc.c:1646  */
-    {}
+    {yaxisStream << (yyvsp[-3].fval) << " " << (yyvsp[-1].fval);}
 #line 1468 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -1854,7 +1854,7 @@ for (int i = 0; i < postfixee.size(); i++) {
 		case POW :
 		     a = pile.top(); pile.pop();
 				 b = pile.top(); pile.pop();
-				 pile.push(pow(a, b));
+				 pile.push(pow(b, a));
 		break;
 		case ABS :
 			a = pile.top(); pile.pop();
@@ -1892,7 +1892,6 @@ int main() {
 		cout<<"je suis dans l'evaluation"<<endl;
 		for (double i = xinf; i < xsup; i+=0.05) {
 			xStream << i << " ";
-			debug << i << " ";
 		}
 		for (double i = xinf; i < xsup; i+=0.05) {
 			yStream << Evaluation(i) << " ";
