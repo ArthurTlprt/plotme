@@ -28,6 +28,7 @@ std::string debug_file("debug");
 ofstream debug(debug_file.c_str());
 ofstream colorStream("color");
 ofstream titleStream("title");
+ofstream yaxisStream("yaxis");
 double xinf=0;
 double xsup=20;
 map<string,string> dessine;
@@ -37,7 +38,7 @@ map<string,string> dessine;
 
 %union {
 	int ival;
-	float fval;
+	double fval;
 	char* sval;
 }
 
@@ -45,10 +46,11 @@ map<string,string> dessine;
 %token<sval> COLOR VARIABLE
 %token PLUS MINUS MULTIPLY DIVIDE LEFT RIGHT EQUAL
 %token NEWLINE QUIT
-%token  X
+%token  X Y
 %token MPI EXP LN LOG SIN COS TAN ARCTAN ARCSIN ARCOS SQRT POW DRAW BRACKETR BRACKETL COMA ABS
 %left PLUS MINUS
-%left MULTIPLY DIVIDE POW
+%left MULTIPLY DIVIDE
+%left POW
 %left RIGHT LEFT
 
 %type<fval> mixed_expression
@@ -82,6 +84,10 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| X EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR {xinf=$4; xsup=(-$7);}
 		| X EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR {xinf=(-$5); xsup=(-$8);}
 		| X EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {xinf=$4; xsup=$6;}
+		| Y EQUAL BRACKETL MINUS FLOAT COMA FLOAT BRACKETR {}
+		| Y EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR {}
+		| Y EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR {}
+		| Y EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {}
 		| LEFT mixed_expression RIGHT		 { }
 		| SIN LEFT mixed_expression RIGHT { postfixee.push_back(SIN); values.push_back(0); }
 		| COS LEFT mixed_expression RIGHT { postfixee.push_back(COS); values.push_back(0); }
@@ -219,16 +225,12 @@ int main() {
 		cout<<"je suis dans l'evaluation"<<endl;
 		for (double i = xinf; i < xsup; i+=0.05) {
 			xStream << i << " ";
+			debug << i << " ";
 		}
 		for (double i = xinf; i < xsup; i+=0.05) {
 			yStream << Evaluation(i) << " ";
 		}
 	}
-	/*
-	f(x) = x+2
-	x = [2, 3]
-	draw f(x) blue
-	*/
 	return 0;
 }
 

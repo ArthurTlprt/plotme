@@ -58,23 +58,24 @@ extern int yydebug;
     NEWLINE = 268,
     QUIT = 269,
     X = 270,
-    MPI = 271,
-    EXP = 272,
-    LN = 273,
-    LOG = 274,
-    SIN = 275,
-    COS = 276,
-    TAN = 277,
-    ARCTAN = 278,
-    ARCSIN = 279,
-    ARCOS = 280,
-    SQRT = 281,
-    POW = 282,
-    DRAW = 283,
-    BRACKETR = 284,
-    BRACKETL = 285,
-    COMA = 286,
-    ABS = 287
+    Y = 271,
+    MPI = 272,
+    EXP = 273,
+    LN = 274,
+    LOG = 275,
+    SIN = 276,
+    COS = 277,
+    TAN = 278,
+    ARCTAN = 279,
+    ARCSIN = 280,
+    ARCOS = 281,
+    SQRT = 282,
+    POW = 283,
+    DRAW = 284,
+    BRACKETR = 285,
+    BRACKETL = 286,
+    COMA = 287,
+    ABS = 288
   };
 #endif
 
@@ -83,17 +84,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-<<<<<<< HEAD
-#line 37 "parser.ypp" /* yacc.c:1909  */
-=======
-#line 36 "parser.ypp" /* yacc.c:1909  */
->>>>>>> b9b4e47b01ee0a09ebb507fa80b41691c52d86fc
+#line 39 "parser.ypp" /* yacc.c:1909  */
 
 	int ival;
-	float fval;
+	double fval;
 	char* sval;
 
-#line 93 "parser.tab.hpp" /* yacc.c:1909  */
+#line 94 "parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
