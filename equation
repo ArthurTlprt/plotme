@@ -1,4 +1,2 @@
-f(x) = 2/x
-y = [-50, 50]
-x = [-20, 20]
-draw f(x) #ee9faa
+f(x) = 4-5
+draw f(x)

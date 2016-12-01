@@ -25,6 +25,7 @@ void yyerror(const char *s);
 
 [ \t]	; // ignore all whitespace
 "x" {return X;}
+"-x" {return NEG_X;}
 "y" {return Y;}
 "pi" { return MPI; }
 "sin" { return SIN; }
@@ -42,12 +43,12 @@ void yyerror(const char *s);
 "arctan" { return ARCTAN; }
 "quit"		{return QUIT;}
 "exit"		{return QUIT;}
-"-"		{return MINUS;}
 ","   {return COMA;}
 "["   {return BRACKETL;}
 "]"   {return BRACKETR;}
 ("#"[A-Fa-f0-9]{6}|[a-fA-F0-9]{3})|("blue"|"red"|"yellow"|"green"|"black"|"purple"|"pink"|"white"|"orange") { yylval.sval = yytext; return COLOR; }
-(([0-9])*(\.[0-9]+)?) 	{yylval.fval = atof(yytext); return FLOAT;}
+(([0-9])+(\.[0-9]+)?) 	{yylval.fval = atof(yytext); printf("match : %f\n", yylval.fval); return FLOAT;}
+"-"		{return MINUS;}
 ([A-Za-z]|_|[0-9])+ { yylval.sval = yytext; return VARIABLE; }
 \n		{return NEWLINE;}
 "+"		{return PLUS;}

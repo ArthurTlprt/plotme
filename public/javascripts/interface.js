@@ -8,7 +8,8 @@ var send = function() {
 
 socket.on("result", function(data) {
   var trace1 = [data.points];
-
+  console.log(data.points.x);
+  console.log(data.points.y);
   var layout = {
     title: data.title,
     showlegend: true,

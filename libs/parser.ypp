@@ -32,6 +32,8 @@ ofstream yaxisStream("yaxis");
 double xinf=0;
 double xsup=20;
 map<string,string> dessine;
+bool yaxisDefined = false;
+double ymin=-10, ymax=10;
 %}
 
 %error-verbose
@@ -46,12 +48,12 @@ map<string,string> dessine;
 %token<sval> COLOR VARIABLE
 %token PLUS MINUS MULTIPLY DIVIDE LEFT RIGHT EQUAL
 %token NEWLINE QUIT
-%token  X Y
+%token  X NEG_X Y
 %token MPI EXP LN LOG SIN COS TAN ARCTAN ARCSIN ARCOS SQRT POW DRAW BRACKETR BRACKETL COMA ABS
 %left PLUS MINUS
 %left MULTIPLY DIVIDE
 %left POW
-%left RIGHT LEFT
+//%left RIGHT LEFT
 
 %type<fval> mixed_expression
 
@@ -62,12 +64,28 @@ map<string,string> dessine;
 
 calculation:
 	   | calculation line
+		 | %empty
 ;
 
 line: NEWLINE
 		| mixed_expression NEWLINE {}
-		| DRAW VARIABLE LEFT X RIGHT { string a1= $2; string a2="blue"; dessine.insert(pair<string,string>(a1,a2)); colorStream << a2; }
-		| DRAW VARIABLE LEFT X RIGHT COLOR { string a1= $2; string a2=$6; dessine.insert(pair<string,string>(a1,a2)); colorStream << a2; }
+		| DRAW VARIABLE LEFT X RIGHT {
+			string a1= $2;
+			string a2="blue";
+			dessine.insert(pair<string,string>(a1,a2));
+			colorStream << "blue\n";
+			debug << "blue\n";
+			titleStream << a1;
+			if(!yaxisDefined) {
+				yaxisStream << ymin << " " << ymax;
+			}
+		}
+		| DRAW VARIABLE LEFT X RIGHT COLOR {
+			string a1= $2; string a2=$6; dessine.insert(pair<string,string>(a1,a2)); colorStream << a2;
+			if(!yaxisDefined) {
+				yaxisStream << ymin << " " << ymax;
+			}
+		}
     | QUIT NEWLINE { printf("bye!\n"); exit(0); }
 		| VARIABLE LEFT X RIGHT EQUAL mixed_expression {}
 		| VARIABLE EQUAL mixed_expression { }
@@ -78,16 +96,17 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| mixed_expression PLUS mixed_expression	 { postfixee.push_back(PLUS); values.push_back(0); }
 		| mixed_expression POW mixed_expression	 { postfixee.push_back(POW); values.push_back(0); }
 	  | mixed_expression MINUS mixed_expression	 { postfixee.push_back(MINUS); values.push_back(0);}
+		| MINUS mixed_expression	 { postfixee.push_back(MINUS); values.push_back(0);}
 	  | mixed_expression MULTIPLY mixed_expression {postfixee.push_back(MULTIPLY); values.push_back(0); }
 	  | mixed_expression DIVIDE mixed_expression	 { postfixee.push_back(DIVIDE); values.push_back(0); }
 		| X EQUAL BRACKETL MINUS FLOAT COMA FLOAT BRACKETR {xinf=(-$5); xsup=$7;}
 		| X EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR {xinf=$4; xsup=(-$7);}
 		| X EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR {xinf=(-$5); xsup=(-$8);}
 		| X EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {xinf=$4; xsup=$6;}
-		| Y EQUAL BRACKETL MINUS FLOAT COMA FLOAT BRACKETR { yaxisStream << -$5 << " " << $7; debug << "lol";}
-		| Y EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR { yaxisStream << $4 << " " << -$7; }
-		| Y EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR { yaxisStream << -$5 << " " << -$8; }
-		| Y EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {yaxisStream << $4 << " " << $6;}
+		| Y EQUAL BRACKETL MINUS FLOAT COMA FLOAT BRACKETR { yaxisStream << -$5 << " " << $7; debug << "lol"; yaxisDefined = true;}
+		| Y EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR { yaxisStream << $4 << " " << -$7; yaxisDefined = true;}
+		| Y EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR { yaxisStream << -$5 << " " << -$8; yaxisDefined = true;}
+		| Y EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {yaxisStream << $4 << " " << $6;yaxisDefined = true;}
 		| LEFT mixed_expression RIGHT		 { }
 		| SIN LEFT mixed_expression RIGHT { postfixee.push_back(SIN); values.push_back(0); }
 		| COS LEFT mixed_expression RIGHT { postfixee.push_back(COS); values.push_back(0); }
@@ -100,6 +119,8 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| SQRT LEFT mixed_expression RIGHT { postfixee.push_back(SQRT); values.push_back(0); }
 		| ABS LEFT mixed_expression RIGHT { postfixee.push_back(ABS); values.push_back(0); }
 		| X { postfixee.push_back(X); values.push_back(0); }
+		| NEG_X { postfixee.push_back(NEG_X); values.push_back(0); }
+		| MINUS FLOAT { postfixee.push_back(FLOAT); values.push_back(-$2); }
 		| FLOAT                 		 {
 
 		postfixee.push_back(FLOAT);
@@ -134,6 +155,9 @@ for (int i = 0; i < postfixee.size(); i++) {
 		case X :
 			pile.push(x);
 			break;
+		case NEG_X :
+			pile.push(-x);
+			break;
 		case MULTIPLY:
 				a = pile.top(); pile.pop();
 				b = pile.top(); pile.pop();
@@ -147,6 +171,9 @@ for (int i = 0; i < postfixee.size(); i++) {
 		case DIVIDE:
 			a = pile.top(); pile.pop();
 			b = pile.top(); pile.pop();
+			if(a == 0.0) {
+				a = 0.5;
+			}
 			pile.push(b/a);
 		break;
 		case SIN:
