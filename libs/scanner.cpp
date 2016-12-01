@@ -375,19 +375,19 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[114] =
     {   0,
-        0,    0,   36,   35,    1,   28,   35,   32,   33,   30,
-       29,   21,   26,   31,   25,   34,   27,   27,   22,   23,
-       14,   27,   27,   27,   27,   27,   27,   27,   27,   27,
-       27,   27,   27,   27,   27,    2,    4,    0,    3,    0,
-       25,   27,   27,   27,   27,   27,   27,   27,   27,   27,
-        9,   27,   27,    5,   27,   27,   27,   27,   27,   27,
-       27,   27,    0,   25,   24,   24,   15,   27,   27,   27,
-        7,   27,   27,    8,   27,   10,   27,   27,   27,   27,
-       24,    6,   27,   11,   27,   27,    0,   25,   27,   27,
-       27,   27,   12,   20,   27,   27,   27,   19,   13,   27,
+        0,    0,   36,   35,    1,   25,   35,   29,   30,   27,
+       26,   21,   24,   28,   33,   31,   34,   34,   22,   23,
+       14,   34,   34,   34,   34,   34,   34,   34,   34,   34,
+       34,   34,   34,   34,   34,    2,    4,    0,    3,    0,
+       33,   34,   34,   34,   34,   34,   34,   34,   34,   34,
+        9,   34,   34,    5,   34,   34,   34,   34,   34,   34,
+       34,   34,    0,   33,   32,   32,   15,   34,   34,   34,
+        7,   34,   34,    8,   34,   10,   34,   34,   34,   34,
+       32,    6,   34,   11,   34,   34,    0,   33,   34,   34,
+       34,   34,   12,   20,   34,   34,   34,   19,   13,   34,
 
-       27,    0,   17,   27,   27,   27,   27,   27,    0,   16,
-       18,   24,    0
+       34,    0,   17,   34,   34,   34,   34,   34,    0,   16,
+       18,   32,    0
     } ;
 
 static yyconst YY_CHAR yy_ec[256] =
@@ -960,58 +960,58 @@ YY_RULE_SETUP
 case 24:
 YY_RULE_SETUP
 #line 49 "scanner.l"
-{ yylval.sval = yytext; return COLOR; }
+{return MINUS;}
 	YY_BREAK
 case 25:
+/* rule 25 can match eol */
 YY_RULE_SETUP
 #line 50 "scanner.l"
-{yylval.fval = atof(yytext); printf("match : %f\n", yylval.fval); return FLOAT;}
+{return NEWLINE;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 51 "scanner.l"
-{return MINUS;}
+{return PLUS;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 52 "scanner.l"
-{ yylval.sval = yytext; return VARIABLE; }
+{return MULTIPLY;}
 	YY_BREAK
 case 28:
-/* rule 28 can match eol */
 YY_RULE_SETUP
 #line 53 "scanner.l"
-{return NEWLINE;}
+{return DIVIDE;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 54 "scanner.l"
-{return PLUS;}
+{return LEFT;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 55 "scanner.l"
-{return MULTIPLY;}
+{return RIGHT;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 56 "scanner.l"
-{return DIVIDE;}
+{return EQUAL;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 57 "scanner.l"
-{return LEFT;}
+{ yylval.sval = strdup(yytext); return COLOR; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 58 "scanner.l"
-{return RIGHT;}
+{yylval.fval = atof(yytext); return FLOAT;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 59 "scanner.l"
-{return EQUAL;}
+{ yylval.sval = strdup(yytext);printf("lex: %s\n", yytext); return VARIABLE;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
