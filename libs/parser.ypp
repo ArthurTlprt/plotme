@@ -109,7 +109,10 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| MINUS mixed_expression	 { postfixee.push_back(MINUS); values.push_back(0);}
 	  | mixed_expression MULTIPLY mixed_expression {postfixee.push_back(MULTIPLY); values.push_back(0); }
 	  | mixed_expression DIVIDE mixed_expression	 { postfixee.push_back(DIVIDE); values.push_back(0); }
-		| X EQUAL BRACKETL MINUS FLOAT COMA FLOAT BRACKETR {xinf=(-$5); xsup=$7;}
+		| X EQUAL BRACKETL MINUS FLOAT COMA FLOAT BRACKETR {
+			xinf=(-$5); xsup=$7;
+			debug << "xinf: " << (-$5) << " xsup: " << $7 << endl;
+		}
 		| X EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR {xinf=$4; xsup=(-$7);}
 		| X EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR {xinf=(-$5); xsup=(-$8);}
 		| X EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {xinf=$4; xsup=$6;}

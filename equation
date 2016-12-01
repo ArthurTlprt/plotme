@@ -1,2 +1,6 @@
-f(x) = 4-5
-draw f(x)
+f(x) = cos(x*5)
+g(x) = sin(x)
+h(x) = f(x) * g(x)
+y = [-1, 1]
+x = [-100, 100]
+draw h(x)

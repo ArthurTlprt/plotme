@@ -54,8 +54,8 @@ void yyerror(const char *s);
 "("		{return LEFT;}
 ")"		{return RIGHT;}
 "="   {return EQUAL;}
-("#"[A-Fa-f0-9]{6}|[a-fA-F0-9]{3})|("blue"|"red"|"yellow"|"green"|"black"|"purple"|"pink"|"white"|"orange") { yylval.sval = strdup(yytext); return COLOR; }
 (([0-9])+(\.[0-9]+)?) 	{yylval.fval = atof(yytext); return FLOAT;}
+("#"[A-Fa-f0-9]{6})|("blue"|"red"|"yellow"|"green"|"black"|"purple"|"pink"|"white"|"orange") { yylval.sval = strdup(yytext); return COLOR; }
 ([A-Za-z]|_|[0-9])+ { yylval.sval = strdup(yytext);printf("lex: %s\n", yytext); return VARIABLE;}
 
 
