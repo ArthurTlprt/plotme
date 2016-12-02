@@ -23,6 +23,8 @@ vector<double> values;
 vector<int>    postfixee;
 vector<int> indice;
 vector<string> nom;
+map<string,double> constante ;
+map<string,double>::iterator it;
 double assembleur(string test);
 std::string debug_file("debug");
 ofstream debug(debug_file.c_str());
@@ -96,8 +98,9 @@ line: NEWLINE
 		}
     | QUIT NEWLINE { printf("bye!\n"); exit(0); }
 		| VARIABLE LEFT X RIGHT EQUAL mixed_expression NEWLINE {string a1=$1;nom.push_back(a1);cout<<"ypp: "<< nom[nbrline] <<endl<<endl;}
-		| VARIABLE EQUAL mixed_expression NEWLINE { nom.push_back("nul");cout<<nom[nbrline]<<endl;}
+		//| VARIABLE EQUAL mixed_expression NEWLINE { nom.push_back("nul");cout<<nom[nbrline]<<endl;}
 		| mixed_expression NEWLINE {nom.push_back("nul");cout<<nom[nbrline]<<endl;}
+		| VARIABLE EQUAL FLOAT NEWLINE {nom.push_back("nul");string a= $1;constante[a]=$3;}
 ;
 
 
@@ -139,6 +142,7 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		postfixee.push_back(FLOAT);
 		values.push_back($1);
 		}
+		| VARIABLE {string a=$1;it=constante.find(a);if(it!=constante.end()){postfixee.push_back(FLOAT);double v=it->second;values.push_back(v); }}
 ;
 
 

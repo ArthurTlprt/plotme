@@ -1,27 +1,13 @@
+lex: vac
+0
 lex: f
-0
-0
+1
+1
+1
 ypp: f
 
 0
-lex: g
-1
-ypp: g
-
-0
-lex: h
 lex: f
-lex: g
-ypp: h
-
-0
-nul
-0
-lolxinf: -100 xsup: 100
-nul
-0
-lex: h
 0
 1
 je suis dans l'evaluation
-blue
