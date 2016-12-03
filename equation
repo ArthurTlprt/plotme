@@ -1,5 +1,7 @@
-g(x) = sin(x)
+g(x) = sin(1/x)
 f(x) = cos(x)
+x = [-10, 10]
 y = [-2, 2]
 draw f(x) blue
 draw g(x) red
+draw f(x)*g(x)

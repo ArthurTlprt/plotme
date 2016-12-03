@@ -1,5 +1,6 @@
 lex: g
 0
+0
 ypp: g
 
 0
@@ -8,13 +9,13 @@ lex: f
 ypp: f
 
 0
+xinf: -10 xsup: 10
+nul
+0
 nul
 0
 lex: f
 0
 lex: g
 0
-2
-je suis dans l'evaluation
-je suis dans l'evaluation
 lol
