@@ -219,6 +219,9 @@ for (int i = indice[ind]; i < indice[ind+1]; i++) {
 			pile.push(b);
 		break;
 		case LOG:
+			/*if( a < 0) {
+
+			}*/
 			a = pile.top(); pile.pop();
 			b=log10(a);
 			pile.push(b);

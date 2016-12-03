@@ -1,21 +1,4 @@
-lex: g
-0
-0
-ypp: g
-
-0
-lex: f
-1
-ypp: f
-
-0
-xinf: -10 xsup: 10
+lex: null
 nul
 0
-nul
 0
-lex: f
-0
-lex: g
-0
-lol
