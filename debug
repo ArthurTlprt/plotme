@@ -1,27 +1,20 @@
-lex: f
-0
-0
-ypp: f
-
-0
 lex: g
-1
+0
 ypp: g
 
 0
-lex: h
 lex: f
-lex: g
-ypp: h
+1
+ypp: f
 
 0
 nul
 0
-lolxinf: -100 xsup: 100
-nul
+lex: f
 0
-lex: h
+lex: g
 0
-1
+2
 je suis dans l'evaluation
-blue
+je suis dans l'evaluation
+lol

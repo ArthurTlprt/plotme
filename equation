@@ -1,6 +1,5 @@
-f(x) = cos(x*5)
 g(x) = sin(x)
-h(x) = f(x) * g(x)
-y = [-1, 1]
-x = [-100, 100]
-draw h(x)
+f(x) = cos(x)
+y = [-2, 2]
+draw f(x) blue
+draw g(x) red

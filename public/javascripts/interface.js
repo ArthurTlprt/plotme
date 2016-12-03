@@ -7,15 +7,13 @@ var send = function() {
 }
 
 socket.on("result", function(data) {
-  var trace1 = [data.points];
-  console.log(data.points.x);
-  console.log(data.points.y);
+  var traces = [data.traces];
+
   var layout = {
     title: data.title,
     showlegend: true,
     yaxis: data.yaxis
   };
-  console.log(JSON.stringify(data, 4, null));
-  //console.log(points.yaxis);
-  Plotly.newPlot('myDiv', trace1, layout, {displayModeBar: false});
+  console.log(JSON.stringify(traces[0][0], 4, null));
+  Plotly.newPlot('myDiv', traces[0], layout, {displayModeBar: false});
 });

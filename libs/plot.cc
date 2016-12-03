@@ -44,21 +44,62 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
   std::ifstream colorStream("color");
   std::ifstream yaxisStream("yaxis");
 
-  std::string color;
-  colorStream >> color;
-  std::cout << "################################" << std::endl;
-  std::cout << color << std::endl;
-  std::cout << "################################" << std::endl;
   double ymin, ymax;
   yaxisStream >> ymin >> ymax;
 
 
   Local<Object> data = Object::New(isolate);
-  Local<Object> points = Object::New(isolate);
-  Local<Array> x = Array::New(isolate);
-  Local<Array> y = Array::New(isolate);
-  Local<Object> line = Object::New(isolate);
+  Local<Array> traces = Array::New(isolate);
+  std::string fileInput;
+  std::vector<std::vector<double> > xss, yss;
+  std::vector<std::string> colors;
+  unsigned int nbTrace=0;
+  while (getline(colorStream, fileInput)) {
+    colors.push_back(fileInput);
+    nbTrace++;
+  }
+  double xf, yf;
+  while (getline(xStream, fileInput)) {
+    std::istringstream is(fileInput);
+    std::vector<double> xs;
+    while(is >> xf) {
+      xs.push_back(xf);
+    }
+    xss.push_back(xs);
+  }
+  fileInput = "";
+  while (getline(yStream, fileInput)) {
+    std::istringstream is(fileInput);
+    std::vector<double> ys;
+    while(is >> yf) {
+      ys.push_back(yf);
+    }
+    yss.push_back(ys);
+  }
+  for (unsigned int i = 0; i < nbTrace; i++) {
+    Local<Object> points = Object::New(isolate);
+    Local<Array> x = Array::New(isolate);
+    Local<Array> y = Array::New(isolate);
+    // insertion des x et y
+    for(unsigned int j=0; j < xss[i].size(); j++) {
+      x->Set(j, Number::New(isolate, xss[i][j]));
+      y->Set(j, Number::New(isolate, yss[i][j]));
+    }
+    // // gestion couleur
+    Local<Object> line = Object::New(isolate);
+    std::string colorToAd = colors[i];
+    line->Set(String::NewFromUtf8(isolate, "color"), String::NewFromUtf8(isolate, colorToAd.c_str() ));
+    points->Set(String::NewFromUtf8(isolate, "line"), line);
+    // ajout dans les tableau de tous les graphes
+    points->Set(String::NewFromUtf8(isolate, "x"), x );
+    points->Set(String::NewFromUtf8(isolate, "y"), y );
+    traces->Set(i, points);
+  }
 
+
+
+
+  // yaxis control
   Local<Array> yrange = Array::New(isolate);
   yrange->Set(0, Number::New(isolate, ymin));
   yrange->Set(1, Number::New(isolate, ymax));
@@ -67,21 +108,10 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
   Local<Boolean> autorange = Boolean::New(isolate, false);
   yaxis->Set(String::NewFromUtf8(isolate, "autorange"), autorange);
 
-  double xf, yf;
-  unsigned int i=0;
-  while(xStream >> xf && yStream >> yf) {
-    x->Set(i, Number::New(isolate, xf));
-    y->Set(i, Number::New(isolate, yf));
-    i++;
-  }
 
-  line->Set(String::NewFromUtf8(isolate, "color"), String::NewFromUtf8(isolate, color.c_str() ));
-  points->Set(String::NewFromUtf8(isolate, "x"), x );
-  points->Set(String::NewFromUtf8(isolate, "y"), y );
   data->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
-  points->Set(String::NewFromUtf8(isolate, "line"), line);
   data->Set(String::NewFromUtf8(isolate, "yaxis"), yaxis);
-  data->Set(String::NewFromUtf8(isolate, "points"), points);
+  data->Set(String::NewFromUtf8(isolate, "traces"), traces);
 
   args.GetReturnValue().Set(data);
   //std::cout << "The parsing is done" << std::endl;

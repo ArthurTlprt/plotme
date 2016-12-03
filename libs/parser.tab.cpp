@@ -1386,7 +1386,7 @@ yyreduce:
 			string a2="blue";
 			nom.push_back("nul");
 			dessine.push_back(a1);
-			colorStream << "blue\n";
+			colorStream <<a2 << endl;
 			debug << "blue\n";
 			titleStream << a1;
 			if(!yaxisDefined) {
@@ -1399,7 +1399,7 @@ yyreduce:
   case 6:
 #line 89 "parser.ypp" /* yacc.c:1646  */
     {
-			string a1= (yyvsp[-5].sval); string a2=(yyvsp[-1].sval);colorStream << a2;
+			string a1= (yyvsp[-5].sval); string a2=(yyvsp[-1].sval);colorStream << a2 << endl;
 			nom.push_back("nul");
 			dessine.push_back(a1);
 			if(!yaxisDefined) {
@@ -1995,9 +1995,11 @@ int main() {
 					for (double i = xinf; i < xsup; i+=0.05) {
 						xStream << i << " ";
 					}
+					xStream << endl;
 					for (double i = xinf; i < xsup; i+=0.05) {
 						yStream << Evaluation(i,k) << " ";
 					}
+					yStream << endl;
 				}
 			}
 		}
