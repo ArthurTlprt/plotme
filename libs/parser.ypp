@@ -9,6 +9,7 @@
 #include <stack>
 #include <fstream>
 #include <map>
+#include <limits>
 
 
 using namespace std;
@@ -131,6 +132,7 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| ARCOS LEFT mixed_expression RIGHT { postfixee.push_back(ARCOS); values.push_back(0); }
 		| ARCTAN LEFT mixed_expression RIGHT { postfixee.push_back(ARCTAN); values.push_back(0); }
 		| EXP LEFT mixed_expression RIGHT { postfixee.push_back(EXP); values.push_back(0); }
+		| LN LEFT mixed_expression RIGHT { postfixee.push_back(LOG); values.push_back(0); }
 		| LOG LEFT mixed_expression RIGHT { postfixee.push_back(LOG); values.push_back(0); }
 		| SQRT LEFT mixed_expression RIGHT { postfixee.push_back(SQRT); values.push_back(0); }
 		| ABS LEFT mixed_expression RIGHT { postfixee.push_back(ABS); values.push_back(0); }
@@ -156,105 +158,111 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 
 double Evaluation(double x,int ind){
 
-stack <double> pile;
+	stack <double> pile;
 
-double a, b;
-for (int i = indice[ind]; i < indice[ind+1]; i++) {
-	switch (postfixee[i]) {
-		case PLUS :
-		     a = pile.top(); pile.pop();
-				 b = pile.top(); pile.pop();
-				 pile.push(a+b);
-		break;
-		case FLOAT:
-		     pile.push(values[i]);
-		break;
-		case X :
-			pile.push(x);
+	double a, b;
+	for (int i = indice[ind]; i < indice[ind+1]; i++) {
+		switch (postfixee[i]) {
+			case PLUS :
+			     a = pile.top(); pile.pop();
+					 b = pile.top(); pile.pop();
+					 pile.push(a+b);
 			break;
-		case NEG_X :
-			pile.push(-x);
+			case FLOAT:
+			     pile.push(values[i]);
 			break;
-		case MULTIPLY:
+			case X :
+				pile.push(x);
+				break;
+			case NEG_X :
+				pile.push(-x);
+				break;
+			case MULTIPLY:
+					a = pile.top(); pile.pop();
+					b = pile.top(); pile.pop();
+					pile.push(a*b);
+			break;
+			case MINUS:
+					a = pile.top(); pile.pop();
+					b = pile.top(); pile.pop();
+					pile.push(b-a);
+			break;
+			case DIVIDE:
 				a = pile.top(); pile.pop();
 				b = pile.top(); pile.pop();
-				pile.push(a*b);
-		break;
-		case MINUS:
+				if(a == 0.0) {
+					return std::numeric_limits<double>::quiet_NaN();
+				}
+				pile.push(b/a);
+			break;
+			case SIN:
 				a = pile.top(); pile.pop();
-				b = pile.top(); pile.pop();
-				pile.push(b-a);
-		break;
-		case DIVIDE:
-			a = pile.top(); pile.pop();
-			b = pile.top(); pile.pop();
-			if(a == 0.0) {
-				a = 0.5;
-			}
-			pile.push(b/a);
-		break;
-		case SIN:
-			a = pile.top(); pile.pop();
-			b=sin(a);
-			pile.push(b);
-		break;
-		case COS:
-			a = pile.top(); pile.pop();
-			b=cos(a);
-			pile.push(b);
-		break;
-		case TAN:
-			a = pile.top(); pile.pop();
-			b=tan(a);
-			pile.push(b);
-		break;
-		case EXP:
-			a = pile.top(); pile.pop();
-			b=exp(a);
-			pile.push(b);
-		break;
-		case LN:
-			a = pile.top(); pile.pop();
-			b=log(a);
-			pile.push(b);
-		break;
-		case LOG:
-			a = pile.top(); pile.pop();
-			b=log10(a);
-			pile.push(b);
-		break;
-		case SQRT:
-			a = pile.top(); pile.pop();
-			b=sqrt(a);
-			pile.push(b);
-		break;
-		case POW :
-		     a = pile.top(); pile.pop();
-				 b = pile.top(); pile.pop();
-				 pile.push(pow(b, a));
-		break;
-		case ABS :
-			a = pile.top(); pile.pop();
-			b=abs(a);
-			pile.push(b);
-		break;
-		case ARCSIN:
-			a = pile.top(); pile.pop();
-			b=asin(a);
-			pile.push(b);
-		break;
-		case ARCOS:
-			a = pile.top(); pile.pop();
-			b=acos(a);
-			pile.push(b);
-		break;
-		case ARCTAN:
-			a = pile.top(); pile.pop();
-			b=atan(a);
-			pile.push(b);
-		break;
+				b=sin(a);
+				pile.push(b);
+			break;
+			case COS:
+				a = pile.top(); pile.pop();
+				b=cos(a);
+				pile.push(b);
+			break;
+			case TAN:
+				a = pile.top(); pile.pop();
+				b=tan(a);
+				pile.push(b);
+			break;
+			case EXP:
+				a = pile.top(); pile.pop();
+				b=exp(a);
+				pile.push(b);
+			break;
+			case LN:
+				a = pile.top(); pile.pop();
+				if(a <= 0) {
+					return std::numeric_limits<double>::quiet_NaN();
+				}
+				b=log(a);
+				pile.push(b);
+			break;
+			case LOG:
+				a = pile.top(); pile.pop();
+				if(a <= 0) {
+					return std::numeric_limits<double>::quiet_NaN();
+				}
+				b=log10(a);
+				pile.push(b);
+			break;
+			case SQRT:
+				a = pile.top(); pile.pop();
+				b=sqrt(a);
+				pile.push(b);
+			break;
+			case POW :
+			     a = pile.top(); pile.pop();
+					 b = pile.top(); pile.pop();
+					 pile.push(pow(b, a));
+			break;
+			case ABS :
+				a = pile.top(); pile.pop();
+				b=abs(a);
+				pile.push(b);
+			break;
+			case ARCSIN:
+				a = pile.top(); pile.pop();
+				b=asin(a);
+				pile.push(b);
+			break;
+			case ARCOS:
+				a = pile.top(); pile.pop();
+				b=acos(a);
+				pile.push(b);
+			break;
+			case ARCTAN:
+				a = pile.top(); pile.pop();
+				b=atan(a);
+				pile.push(b);
+			break;
+		}
 	}
-}
 	return pile.top();
 }
 
@@ -287,12 +295,14 @@ int main() {
 				if(dessine[h].compare(nom[k])==0){
 					cout<<"je suis dans l'evaluation"<<endl;
 					for (double i = xinf; i < xsup; i+=0.05) {
-						xStream << i << " ";
+						if (!isnan(Evaluation(i,k))) {
+							yStream << Evaluation(i,k) << " ";
+							xStream << i << " ";
+						} else {
+							debug << "NAN" << endl;
+						}
 					}
 					xStream << endl;
-					for (double i = xinf; i < xsup; i+=0.05) {
-						yStream << Evaluation(i,k) << " ";
-					}
 					yStream << endl;
 				}
 			}
