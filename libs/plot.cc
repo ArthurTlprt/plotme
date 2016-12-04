@@ -43,6 +43,7 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
   std::ifstream yStream("y");
   std::ifstream colorStream("color");
   std::ifstream yaxisStream("yaxis");
+  std::ifstream errorStream("error");
 
   double ymin, ymax;
   yaxisStream >> ymin >> ymax;
@@ -98,9 +99,14 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
     points->Set(String::NewFromUtf8(isolate, "y"), y );
     traces->Set(i, points);
   }
-
-
-
+  fileInput = "";
+  std::string message = "";
+  std::cout << "mesage:" << std::endl;
+  while (getline(errorStream, fileInput)) {
+    std::cout << fileInput << std::endl;
+    message = message + fileInput + "<br>";
+  }
+  std::cout << message << std::endl;
 
   // yaxis control
   Local<Array> yrange = Array::New(isolate);
@@ -114,6 +120,7 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
 
   data->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
   data->Set(String::NewFromUtf8(isolate, "yaxis"), yaxis);
+  data->Set(String::NewFromUtf8(isolate, "error"), String::NewFromUtf8(isolate, message.c_str()));
   data->Set(String::NewFromUtf8(isolate, "traces"), traces);
 
   args.GetReturnValue().Set(data);

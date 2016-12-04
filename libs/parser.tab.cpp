@@ -1908,9 +1908,6 @@ double Evaluation(double x,int ind){
 				a = pile.top(); pile.pop();
 				b = pile.top(); pile.pop();
 				if(a <= 0.005 && a >= -0.005 ) {
-					//xStream << endl;
-					//yStream << endl;
-					//colorStream << "blue" << endl;
 					debug << "division by zero" << endl;
 					return std::numeric_limits<double>::quiet_NaN();
 				}
