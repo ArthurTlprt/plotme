@@ -1,1 +1,2 @@
-null
+f(x) = sin(x)
+draw f(x)

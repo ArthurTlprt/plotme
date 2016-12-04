@@ -85,7 +85,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 44 "parser.ypp" /* yacc.c:1909  */
+#line 45 "parser.ypp" /* yacc.c:1909  */
 
 	int ival;
 	double fval;
