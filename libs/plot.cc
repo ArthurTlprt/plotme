@@ -51,28 +51,31 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
   Local<Object> data = Object::New(isolate);
   Local<Array> traces = Array::New(isolate);
   std::string fileInput;
-  std::vector<std::vector<double> > xss, yss;
+  std::vector<std::vector<double> > yss;
+  std::vector<double> xs;
   std::vector<std::string> colors;
   unsigned int nbTrace=0;
   while (getline(colorStream, fileInput)) {
     colors.push_back(fileInput);
     nbTrace++;
   }
-  double xf, yf;
-  while (getline(xStream, fileInput)) {
+  double xf;
+  {
+    getline(xStream, fileInput);
     std::istringstream is(fileInput);
-    std::vector<double> xs;
     while(is >> xf) {
       xs.push_back(xf);
     }
-    xss.push_back(xs);
   }
   fileInput = "";
+  std::string yf;
   while (getline(yStream, fileInput)) {
     std::istringstream is(fileInput);
     std::vector<double> ys;
+    std::cout << "yf:" << std::endl;
     while(is >> yf) {
-      ys.push_back(yf);
+      std::cout << yf << std::endl;
+      ys.push_back(std::stod(yf));
     }
     yss.push_back(ys);
   }
@@ -81,8 +84,8 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
     Local<Array> x = Array::New(isolate);
     Local<Array> y = Array::New(isolate);
     // insertion des x et y
-    for(unsigned int j=0; j < xss[i].size(); j++) {
-      x->Set(j, Number::New(isolate, xss[i][j]));
+    for(unsigned int j=0; j < xs.size(); j++) {
+      x->Set(j, Number::New(isolate, xs[j]));
       y->Set(j, Number::New(isolate, yss[i][j]));
     }
     // // gestion couleur
