@@ -2021,8 +2021,6 @@ int main() {
 					}
 					xStream << endl;
 					yStream << endl;
-					/*for (double i = xinf; i < xsup; i+=0.05) {
-					}*/
 				}
 			}
 		}
