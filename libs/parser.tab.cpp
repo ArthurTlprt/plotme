@@ -510,7 +510,7 @@ static const yytype_uint8 yyrline[] =
      105,   109,   110,   111,   112,   113,   114,   115,   116,   117,
      120,   121,   122,   123,   124,   125,   126,   127,   128,   129,
      130,   131,   132,   133,   134,   135,   136,   137,   138,   139,
-     143,   148
+     140,   145
 };
 #endif
 
@@ -1610,7 +1610,7 @@ yyreduce:
     break;
 
   case 40:
-#line 143 "parser.ypp" /* yacc.c:1646  */
+#line 140 "parser.ypp" /* yacc.c:1646  */
     {
 			cout<<nbrline<<endl;
 		postfixee.push_back(FLOAT);
@@ -1620,7 +1620,7 @@ yyreduce:
     break;
 
   case 41:
-#line 148 "parser.ypp" /* yacc.c:1646  */
+#line 145 "parser.ypp" /* yacc.c:1646  */
     {string a=(yyvsp[0].sval);it=constante.find(a);if(it!=constante.end()){postfixee.push_back(FLOAT);double v=it->second;values.push_back(v); }}
 #line 1626 "parser.tab.cpp" /* yacc.c:1646  */
     break;
@@ -1854,7 +1854,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 156 "parser.ypp" /* yacc.c:1906  */
+#line 153 "parser.ypp" /* yacc.c:1906  */
 
 
 
@@ -1997,8 +1997,10 @@ int main() {
 
 	if(dessine.size()>0){
 		for(double h=0;h<dessine.size();h++){
+			int print=0;
 			for(double k=0;k<nom.size();k++){
 				if(dessine[h].compare(nom[k])==0){
+					print=1;
 					cout<<"je suis dans l'evaluation"<<endl;
 					for (double i = xinf; i < xsup; i+=0.05) {
 						if (!isnan(Evaluation(i,k))) {
@@ -2009,10 +2011,14 @@ int main() {
 							xStream << i << " ";
 							yStream << "nan" << " ";
 						}
+
 					}
 					//xStream << endl;
 					yStream << endl;
 				}
+			}
+			if(print==0){
+				ofstream colorStream("color");
 			}
 		}
 	}

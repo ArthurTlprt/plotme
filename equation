@@ -1,4 +1,2 @@
-f(x) =1/-x
-x = [-5, 10]
-y = [-20, 20]
-draw f(x) green
+f(x)=5*x
+draw f(x) purple
