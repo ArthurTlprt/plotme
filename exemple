@@ -16,3 +16,10 @@ f(x) = 2*sin(x)+1/x
 y = [-10, 10]
 x = [-2, 2]
 draw f(x) #2bc0be
+
+g(x) = 9*(1-exp(-x))
+x = [-10, 10]
+y = [-40,40]
+f(x)  = 9*cos(x*5)/x
+draw f(x) orange
+draw g(x) red

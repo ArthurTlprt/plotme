@@ -138,7 +138,7 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| ABS LEFT mixed_expression RIGHT { postfixee.push_back(ABS); values.push_back(0); }
 		| X { cout<<nbrline<<endl; postfixee.push_back(X); values.push_back(0); }
 		| NEG_X { postfixee.push_back(NEG_X); values.push_back(0); }
-		| MINUS FLOAT { postfixee.push_back(FLOAT); values.push_back(-$2); }
+		/*| MINUS FLOAT { postfixee.push_back(FLOAT); values.push_back(-$2); }*/
 		| FLOAT {
 			cout<<nbrline<<endl;
 		postfixee.push_back(FLOAT);

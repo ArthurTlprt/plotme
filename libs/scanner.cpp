@@ -850,7 +850,7 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 #line 28 "scanner.l"
-{return NEG_X;}
+{return PLUS NEG_X;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP

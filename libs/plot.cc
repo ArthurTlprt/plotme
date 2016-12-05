@@ -85,7 +85,7 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
     Local<Array> x = Array::New(isolate);
     Local<Array> y = Array::New(isolate);
     // insertion des x et y
-    for(unsigned int j=0; j < xs.size(); j++) {
+    for(unsigned int j=0; j < yss[0].size(); j++) {
       x->Set(j, Number::New(isolate, xs[j]));
       y->Set(j, Number::New(isolate, yss[i][j]));
     }
