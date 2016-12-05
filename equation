@@ -1,4 +1,3 @@
-f(x) =1/-x
-x = [-5, 10]
-y = [-20, 20]
-draw f(x) green
+f(x) = 9*log(x)
+x = [-1, 1]
+draw f(x) red

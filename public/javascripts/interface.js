@@ -15,5 +15,6 @@ socket.on("result", function(data) {
     yaxis: data.yaxis
   };
   console.log(data.error);
+  $('#output').append(data.error);
   Plotly.newPlot('myDiv', traces[0], layout, {displayModeBar: false});
 });

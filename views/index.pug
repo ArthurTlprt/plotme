@@ -1,8 +1,22 @@
 extends layout
-
 block content
-  #myDiv(style='width: 1080px; height: 400px;')
-  script(src='javascripts/interface.js')
-  fieldset.pure-group
-    textarea.pure-input-1-2#input(placeholder='Entrez votre fonction', rows='8', cols='100')
-  button.pure-button.pure-input-1-2.pure-button-primary(onclick="send();") Afficher
+  header
+    .container
+      br
+      br
+      br
+      .row
+        .col-sm-12
+          #myDiv(style='height: 400px;')
+          script(src='javascripts/interface.js')
+      br
+      .row
+        .col-sm-6
+          .thumbnail
+            textarea#input(placeholder='Entrez votre fonction', rows='8', cols='40')
+            button.btn.btn-success(onclick="send();") Afficher
+        .col-sm-6
+          .thumbnail
+            p#output
+              em(style='color:orange;') warning: division by zero
+              br

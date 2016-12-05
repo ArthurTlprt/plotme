@@ -32,6 +32,7 @@ ofstream debug(debug_file.c_str());
 ofstream colorStream("color");
 ofstream titleStream("title");
 ofstream yaxisStream("yaxis");
+ofstream errorStream("error");
 ofstream xStream("x");
 ofstream yStream("y");
 double xinf=0;
@@ -194,6 +195,7 @@ double Evaluation(double x,int ind){
 				b = pile.top(); pile.pop();
 				if(a <= 0.005 && a >= -0.005 ) {
 					debug << "division by zero" << endl;
+					errorStream << "<em style=\"color:orange;\">warning: division by zero</em>" << endl;
 					return std::numeric_limits<double>::quiet_NaN();
 				}
 				pile.push(b/a);
@@ -221,6 +223,7 @@ double Evaluation(double x,int ind){
 			case LN:
 				a = pile.top(); pile.pop();
 				if(a <= 0) {
+					errorStream << "<em style=\"color:orange;\">warning: ln is not defined in this area</em>" << endl;
 					return std::numeric_limits<double>::quiet_NaN();
 				}
 				b=log(a);
@@ -229,6 +232,7 @@ double Evaluation(double x,int ind){
 			case LOG:
 				a = pile.top(); pile.pop();
 				if(a <= 0) {
+					errorStream << "<em style=\"color:orange;\">warning: log is not defined in this area</em>" << endl;
 					return std::numeric_limits<double>::quiet_NaN();
 				}
 				b=log10(a);
