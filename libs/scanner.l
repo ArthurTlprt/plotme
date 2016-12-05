@@ -17,7 +17,7 @@ extern "C" FILE *yyin;*/
 
 void yyerror(const char *s);
 
-////("rgb("([0-9]{3}","){2}[0-9]{3}")")
+/*"-x" {return NEG_X;}*/
 %}
 
 
@@ -25,7 +25,6 @@ void yyerror(const char *s);
 
 [ \t]	; // ignore all whitespace
 "x" {return X;}
-"-x" {return NEG_X;}
 "y" {return Y;}
 "pi" { return MPI; }
 "sin" { return SIN; }

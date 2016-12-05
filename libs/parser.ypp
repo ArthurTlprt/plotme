@@ -52,7 +52,7 @@ int nbrline;
 
 %token<fval> FLOAT
 %token<sval> COLOR VARIABLE
-%token PLUS MINUS MULTIPLY DIVIDE LEFT RIGHT EQUAL
+%token PLUS MINUS MULTIPLY DIVIDE LEFT RIGHT EQUAL MINUSALONE
 %token NEWLINE QUIT
 %token  X NEG_X Y
 %token MPI EXP LN LOG SIN COS TAN ARCTAN ARCSIN ARCOS SQRT POW DRAW BRACKETR BRACKETL COMA ABS
@@ -111,7 +111,7 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| mixed_expression PLUS mixed_expression	 {cout<<nbrline<<endl; postfixee.push_back(PLUS); values.push_back(0); }
 		| mixed_expression POW mixed_expression	 { postfixee.push_back(POW); values.push_back(0); }
 	  | mixed_expression MINUS mixed_expression	 { postfixee.push_back(MINUS); values.push_back(0);}
-		| MINUS mixed_expression	 { postfixee.push_back(MINUS); values.push_back(0);}
+		| MINUS mixed_expression	 { postfixee.push_back(MINUSALONE); values.push_back(0);}
 	  | mixed_expression MULTIPLY mixed_expression {postfixee.push_back(MULTIPLY); values.push_back(0); }
 	  | mixed_expression DIVIDE mixed_expression	 { postfixee.push_back(DIVIDE); values.push_back(0); }
 		| X EQUAL BRACKETL MINUS FLOAT COMA FLOAT BRACKETR {
@@ -137,8 +137,6 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| SQRT LEFT mixed_expression RIGHT { postfixee.push_back(SQRT); values.push_back(0); }
 		| ABS LEFT mixed_expression RIGHT { postfixee.push_back(ABS); values.push_back(0); }
 		| X { cout<<nbrline<<endl; postfixee.push_back(X); values.push_back(0); }
-		| NEG_X { postfixee.push_back(NEG_X); values.push_back(0); }
-		/*| MINUS FLOAT { postfixee.push_back(FLOAT); values.push_back(-$2); }*/
 		| FLOAT {
 			cout<<nbrline<<endl;
 		postfixee.push_back(FLOAT);
@@ -186,6 +184,10 @@ double Evaluation(double x,int ind){
 					a = pile.top(); pile.pop();
 					b = pile.top(); pile.pop();
 					pile.push(b-a);
+			break;
+			case MINUSALONE:
+					a = pile.top(); pile.pop();
+					pile.push(-a);
 			break;
 			case DIVIDE:
 				a = pile.top(); pile.pop();
