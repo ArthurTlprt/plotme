@@ -1625,12 +1625,13 @@ yyreduce:
 
   case 41:
 #line 149 "parser.ypp" /* yacc.c:1646  */
-    {string a=(yyvsp[0].sval);it=constante.find(a);if(it!=constante.end()){postfixee.push_back(FLOAT);double v=it->second;values.push_back(v); }}
-#line 1630 "parser.tab.cpp" /* yacc.c:1646  */
+    {string a=(yyvsp[0].sval);it=constante.find(a);if(it!=constante.end()){postfixee.push_back(FLOAT);double v=it->second;values.push_back(v); }else{postfixee.push_back(FLOAT);values.push_back(0);
+			errorStream << "<em style=\"color:orange;\">warning: the constant "<<a<<" is not defined(remplaced by 0)</em>" << endl;}}
+#line 1631 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1634 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1635 "parser.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1858,7 +1859,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 157 "parser.ypp" /* yacc.c:1906  */
+#line 158 "parser.ypp" /* yacc.c:1906  */
 
 
 
@@ -1994,6 +1995,10 @@ double assembleur(string test){
 			return 0;
 		}
 	}
+	postfixee.push_back(FLOAT);
+	values.push_back(0);
+	errorStream << "<em style=\"color:orange;\">warning: the function "<<test<<"(x) is not defined(remplaced by 0)</em>" << endl;
+
 	return (-1);
 
 }
@@ -2029,6 +2034,8 @@ int main() {
 			}
 			if(print==0){
 				ofstream colorStream("color");
+				errorStream << "<em style=\"color:red;\">ERROR: "<<dessine[h]<<"(x) can't be draw, because is not defined</em>" << endl;
+
 			}
 		}
 	}
