@@ -33,13 +33,18 @@ ofstream debug(debug_file.c_str());
 ofstream colorStream("color");
 ofstream titleStream("title");
 ofstream yaxisStream("yaxis");
+ofstream xaxisStream("xaxis");
 ofstream errorStream("error");
 ofstream xStream("x");
 ofstream yStream("y");
+ofstream zStream("z");
 double xinf=0;
 double xsup=20;
 bool yaxisDefined = false;
+bool xaxisDefined = false;
 double ymin=-10, ymax=10;
+// 3D
+double xmin=-10, xmax=10;
 vector<string> dessine;
 int nbrline;
 std::set<std::string>outputs;
@@ -102,8 +107,35 @@ line: NEWLINE
 				yaxisStream << ymin << " " << ymax;
 			}
 		}
+		// 3D
+		| DRAW VARIABLE LEFT X COMA Y RIGHT NEWLINE{
+			string a1= $2;
+			string a2="blue";
+			nom.push_back("nul");
+			dessine.push_back(a1);
+			colorStream <<a2 << endl;
+			titleStream << a1;
+			if(!yaxisDefined) {
+				yaxisStream << ymin << " " << ymax;
+			}
+			if(!xaxisDefined) {
+				xaxisStream << xmin << " " << xmax;
+			}
+		}
+		| DRAW VARIABLE LEFT X COMA Y RIGHT COLOR NEWLINE{
+			string a1= $2; string a2=$8;colorStream << a2 << endl;
+			nom.push_back("nul");
+			dessine.push_back(a1);
+			if(!yaxisDefined) {
+				yaxisStream << ymin << " " << ymax;
+			}
+			if(!xaxisDefined) {
+				xaxisStream << xmin << " " << xmax;
+			}
+		}
     | QUIT NEWLINE { printf("bye!\n"); exit(0); }
 		| VARIABLE LEFT X RIGHT EQUAL mixed_expression NEWLINE {string a1=$1;nom.push_back(a1);cout<<"ypp: "<< nom[nbrline] <<endl<<endl;}
+		| VARIABLE LEFT X COMA Y RIGHT EQUAL mixed_expression NEWLINE {string a1=$1;nom.push_back(a1);cout<<"ypp: "<< nom[nbrline] <<endl<<endl;}
 		//| VARIABLE EQUAL mixed_expression NEWLINE { nom.push_back("nul");cout<<nom[nbrline]<<endl;}
 		| mixed_expression NEWLINE {nom.push_back("nul");cout<<nom[nbrline]<<endl;}
 		| VARIABLE EQUAL FLOAT NEWLINE {nom.push_back("nul");string a= $1;constante[a]=$3;}
@@ -280,6 +312,125 @@ double Evaluation(double x,int ind){
 	return pile.top();
 }
 
+/*3D*/
+double Evaluation(double x,double y, int ind){
+
+	stack <double> pile;
+
+	double a, b;
+	for (int i = indice[ind]; i < indice[ind+1]; i++) {
+		switch (postfixee[i]) {
+			case PLUS :
+			     a = pile.top(); pile.pop();
+					 b = pile.top(); pile.pop();
+					 pile.push(a+b);
+			break;
+			case FLOAT:
+			     pile.push(values[i]);
+			break;
+			case X :
+				pile.push(x);
+				break;
+			case Y :
+				pile.push(y);
+				break;
+			case MULTIPLY:
+					a = pile.top(); pile.pop();
+					b = pile.top(); pile.pop();
+					pile.push(a*b);
+			break;
+			case MINUS:
+					a = pile.top(); pile.pop();
+					b = pile.top(); pile.pop();
+					pile.push(b-a);
+			break;
+			case MINUSALONE:
+					a = pile.top(); pile.pop();
+					pile.push(-a);
+			break;
+			case DIVIDE:
+				a = pile.top(); pile.pop();
+				b = pile.top(); pile.pop();
+				if(a <= 0.005 && a >= -0.005 ) {
+					debug << "division by zero" << endl;
+					outputs.insert(string("<em style=\"color:orange;\">warning: division by zero</em>"));
+					return std::numeric_limits<double>::quiet_NaN();
+				}
+				pile.push(b/a);
+			break;
+			case SIN:
+				a = pile.top(); pile.pop();
+				b=sin(a);
+				pile.push(b);
+			break;
+			case COS:
+				a = pile.top(); pile.pop();
+				b=cos(a);
+				pile.push(b);
+			break;
+			case TAN:
+				a = pile.top(); pile.pop();
+				b=tan(a);
+				pile.push(b);
+			break;
+			case EXP:
+				a = pile.top(); pile.pop();
+				b=exp(a);
+				pile.push(b);
+			break;
+			case LN:
+				a = pile.top(); pile.pop();
+				if(a <= 0) {
+					outputs.insert(string("<em style=\"color:orange;\">warning: ln is not defined in this area</em>"));
+					return std::numeric_limits<double>::quiet_NaN();
+				}
+				b=log(a);
+				pile.push(b);
+			break;
+			case LOG:
+				a = pile.top(); pile.pop();
+				if(a <= 0) {
+					outputs.insert(string("<em style=\"color:orange;\">warning: log is not defined in this area</em>"));
+					return std::numeric_limits<double>::quiet_NaN();
+				}
+				b=log10(a);
+				pile.push(b);
+			break;
+			case SQRT:
+				a = pile.top(); pile.pop();
+				b=sqrt(a);
+				pile.push(b);
+			break;
+			case POW :
+			     a = pile.top(); pile.pop();
+					 b = pile.top(); pile.pop();
+					 pile.push(pow(b, a));
+			break;
+			case ABS :
+				a = pile.top(); pile.pop();
+				b=abs(a);
+				pile.push(b);
+			break;
+			case ARCSIN:
+				a = pile.top(); pile.pop();
+				b=asin(a);
+				pile.push(b);
+			break;
+			case ARCOS:
+				a = pile.top(); pile.pop();
+				b=acos(a);
+				pile.push(b);
+			break;
+			case ARCTAN:
+				a = pile.top(); pile.pop();
+				b=atan(a);
+				pile.push(b);
+			break;
+		}
+	}
+	return pile.top();
+}
+
 double assembleur(string test){
 	for(int i=0;i<nom.size();i++){
 		if(test.compare(nom[i])==0){
@@ -312,6 +463,7 @@ int main() {
 				if(dessine[h].compare(nom[k])==0){
 					print=1;
 					cout<<"je suis dans l'evaluation"<<endl;
+					/*if 2D*/
 					for (double i = xinf; i < xsup; i+=0.05) {
 						if (!isnan(Evaluation(i,k))) {
 							yStream << Evaluation(i,k) << " ";
@@ -321,16 +473,30 @@ int main() {
 							xStream << i << " ";
 							yStream << "nan" << " ";
 						}
-
 					}
-					//xStream << endl;
 					yStream << endl;
+					/*if 3D*/
+					/*for (double i = xinf; i < xsup; i+=0.05) {
+							for (double j = yinf; j < ysup; j+=0.05) {
+							if (!isnan(Evaluation(i,j,k))) {
+								xStream << i << " ";
+								yStream << j << " ";
+								zStream << Evaluation(i,j,k) << " ";
+							} else {
+								debug << "NAN" << endl;
+								xStream << i << " ";
+								yStream << j << " ";
+								zStream << "nan" << " ";
+							}
+						}
+					}
+					yStream << endl;
+				}*/
 				}
 			}
 			if(print==0){
 				ofstream colorStream("color");
 				errorStream << "<em style=\"color:red;\">ERROR: "<<dessine[h]<<"(x) can't be draw, because is not defined</em>" << endl;
-
 			}
 		}
 	}
