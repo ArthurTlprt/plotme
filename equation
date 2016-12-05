@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 f(x) = 9*log(x)
 x = [-1, 1]
 draw f(x) red
+=======
+f(x)=5*x
+draw f(x) purple
+>>>>>>> 85d74cf039fe303475ade983a7236a3aef8a09f8

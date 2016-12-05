@@ -296,8 +296,10 @@ int main() {
 
 	if(dessine.size()>0){
 		for(double h=0;h<dessine.size();h++){
+			int print=0;
 			for(double k=0;k<nom.size();k++){
 				if(dessine[h].compare(nom[k])==0){
+					print=1;
 					cout<<"je suis dans l'evaluation"<<endl;
 					for (double i = xinf; i < xsup; i+=0.05) {
 						if (!isnan(Evaluation(i,k))) {
@@ -308,10 +310,14 @@ int main() {
 							xStream << i << " ";
 							yStream << "nan" << " ";
 						}
+
 					}
 					//xStream << endl;
 					yStream << endl;
 				}
+			}
+			if(print==0){
+				ofstream colorStream("color");
 			}
 		}
 	}
