@@ -143,7 +143,8 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		postfixee.push_back(FLOAT);
 		values.push_back($1);
 		}
-		| VARIABLE {string a=$1;it=constante.find(a);if(it!=constante.end()){postfixee.push_back(FLOAT);double v=it->second;values.push_back(v); }}
+		| VARIABLE {string a=$1;it=constante.find(a);if(it!=constante.end()){postfixee.push_back(FLOAT);double v=it->second;values.push_back(v); }else{postfixee.push_back(FLOAT);values.push_back(0);
+			errorStream << "<em style=\"color:orange;\">warning: the constant "<<a<<" is not defined(remplaced by 0)</em>" << endl;}}
 ;
 
 
@@ -283,6 +284,10 @@ double assembleur(string test){
 			return 0;
 		}
 	}
+	postfixee.push_back(FLOAT);
+	values.push_back(0);
+	errorStream << "<em style=\"color:orange;\">warning: the function "<<test<<"(x) is not defined(remplaced by 0)</em>" << endl;
+
 	return (-1);
 
 }
@@ -318,6 +323,8 @@ int main() {
 			}
 			if(print==0){
 				ofstream colorStream("color");
+				errorStream << "<em style=\"color:red;\">ERROR: "<<dessine[h]<<"(x) can't be draw, because is not defined</em>" << endl;
+
 			}
 		}
 	}

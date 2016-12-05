@@ -1,38 +1,27 @@
 lex: f
 0
 0
+0
+0
 ypp: f
 
 0
-<<<<<<< HEAD
-nul
+lex: g
+1
+1
+ypp: g
+
 0
-=======
->>>>>>> 85d74cf039fe303475ade983a7236a3aef8a09f8
+lex: d
 lex: f
+lex: b
+2
+lex: e
+2
+ypp: d
+
+0
+lex: d
 0
 1
 je suis dans l'evaluation
-<<<<<<< HEAD
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-=======
->>>>>>> 85d74cf039fe303475ade983a7236a3aef8a09f8
