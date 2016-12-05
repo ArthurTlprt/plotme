@@ -34,10 +34,10 @@ CFLAGS_CC_Debug := \
 	-std=gnu++0x
 
 INCS_Debug := \
-	-I/home/alan/.node-gyp/4.2.6/include/node \
-	-I/home/alan/.node-gyp/4.2.6/src \
-	-I/home/alan/.node-gyp/4.2.6/deps/uv/include \
-	-I/home/alan/.node-gyp/4.2.6/deps/v8/include
+	-I/home/arthur/.node-gyp/4.2.6/include/node \
+	-I/home/arthur/.node-gyp/4.2.6/src \
+	-I/home/arthur/.node-gyp/4.2.6/deps/uv/include \
+	-I/home/arthur/.node-gyp/4.2.6/deps/v8/include
 
 DEFS_Release := \
 	'-DNODE_GYP_MODULE_NAME=parser' \
@@ -71,10 +71,10 @@ CFLAGS_CC_Release := \
 	-std=gnu++0x
 
 INCS_Release := \
-	-I/home/alan/.node-gyp/4.2.6/include/node \
-	-I/home/alan/.node-gyp/4.2.6/src \
-	-I/home/alan/.node-gyp/4.2.6/deps/uv/include \
-	-I/home/alan/.node-gyp/4.2.6/deps/v8/include
+	-I/home/arthur/.node-gyp/4.2.6/include/node \
+	-I/home/arthur/.node-gyp/4.2.6/src \
+	-I/home/arthur/.node-gyp/4.2.6/deps/uv/include \
+	-I/home/arthur/.node-gyp/4.2.6/deps/v8/include
 
 OBJS := \
 	$(obj).target/$(TARGET)/plot.o

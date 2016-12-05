@@ -7,16 +7,17 @@ block content
       br
       .row
         .col-sm-12
-          #myDiv(style='height: 400px;')
-          script(src='javascripts/interface.js')
+          .thumbnail
+            #myDiv(style='height: 400px;')
+            script(src='javascripts/interface.js')
       br
       .row
         .col-sm-6
           .thumbnail
-            textarea#input(placeholder='Entrez votre fonction', rows='8', cols='40')
+            textarea#input(placeholder='Entrez votre fonction', rows='8', cols='60')
             button.btn.btn-success(onclick="send();") Afficher
         .col-sm-6
           .thumbnail
             p#output
-              em(style='color:orange;') warning: division by zero
+              em(style='color:blue;') output:
               br

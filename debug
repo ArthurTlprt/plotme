@@ -4,35 +4,11 @@ lex: f
 ypp: f
 
 0
-<<<<<<< HEAD
 nul
 0
-=======
->>>>>>> 85d74cf039fe303475ade983a7236a3aef8a09f8
 lex: f
 0
 1
 je suis dans l'evaluation
-<<<<<<< HEAD
+division by zero
 NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-NAN
-=======
->>>>>>> 85d74cf039fe303475ade983a7236a3aef8a09f8
