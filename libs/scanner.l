@@ -6,18 +6,13 @@
 #include "parser.tab.hpp"
 #include <cstdio>
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
-// stuff from flex that bison needs to know about:
-/*extern "C" int yylex();
-extern "C" int yyparse();
-extern "C" FILE *yyin;*/
-//[a-zA-Z]+"(x)" { return FUNCTION; }
 
 void yyerror(const char *s);
 
-/*"-x" {return NEG_X;}*/
 %}
 
 
@@ -56,6 +51,7 @@ void yyerror(const char *s);
 (([0-9])+(\.[0-9]+)?) 	{yylval.fval = atof(yytext); return FLOAT;}
 ("#"[A-Fa-f0-9]{6})|("blue"|"red"|"yellow"|"green"|"black"|"purple"|"pink"|"white"|"orange") { yylval.sval = strdup(yytext); return COLOR; }
 ([A-Za-z]|_|[0-9])+ { yylval.sval = strdup(yytext);printf("lex: %s\n", yytext); return VARIABLE;}
+
 
 
 %%

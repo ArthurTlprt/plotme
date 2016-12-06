@@ -1,3 +1,2 @@
-f(x) = ln(x)+ln(2)
-x = [0.1, 50]
+f(x) = sin(x*x)+g
 draw f(x)

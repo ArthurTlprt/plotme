@@ -63,7 +63,7 @@ std::set<std::string>::iterator output;
 %token<sval> COLOR VARIABLE
 %token PLUS MINUS MULTIPLY DIVIDE LEFT RIGHT EQUAL MINUSALONE
 %token NEWLINE QUIT
-%token  X NEG_X Y
+%token  X Y
 %token MPI EXP LN LOG SIN COS TAN ARCTAN ARCSIN ARCOS SQRT POW DRAW BRACKETR BRACKETL COMA ABS
 %left PLUS MINUS
 %left MULTIPLY DIVIDE
@@ -208,9 +208,6 @@ double Evaluation(double x,int ind){
 			break;
 			case X :
 				pile.push(x);
-				break;
-			case NEG_X :
-				pile.push(-x);
 				break;
 			case MULTIPLY:
 					a = pile.top(); pile.pop();
@@ -474,6 +471,7 @@ int main() {
 							yStream << "nan" << " ";
 						}
 					}
+
 					yStream << endl;
 					/*if 3D*/
 					/*for (double i = xinf; i < xsup; i+=0.05) {
@@ -492,21 +490,29 @@ int main() {
 					}
 					yStream << endl;
 				}*/
+
 				}
 			}
+
 			if(print==0){
 				ofstream colorStream("color");
-				errorStream << "<em style=\"color:red;\">ERROR: "<<dessine[h]<<"(x) can't be draw, because is not defined</em>" << endl;
+				errorStream << "<em style=\"color:red;\">error: "<<dessine[h]<<"(x) can't be draw, because is not defined</em>" << endl;
 			}
+
 		}
 	}
+
 	for(output=outputs.begin(); output!=outputs.end(); output++) {
 		errorStream << *output << endl;
 	}
 	return 0;
+
 }
 
 void yyerror(const char* s) {
-	fprintf(stderr, "Parse error: %s\n", s);
+	/*fprintf(stderr, "Parse error: %s\n", s);*/
+	ofstream colorStream("color");
+	ofstream errorStream("error");
+	errorStream << "<em style=\"color:red;\">error: unexpected "<< s <<"  </em>" << endl;
 	exit(1);
 }

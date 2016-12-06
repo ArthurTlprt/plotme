@@ -17,5 +17,9 @@ socket.on("result", function(data) {
   };
   console.log(data.error);
   $('#output').append(data.error);
+  if(traces.length == 0)  {
+    console.log("empty plot");
+    return;
+  }
   Plotly.newPlot('myDiv', traces[0], layout, {displayModeBar: false});
 });
