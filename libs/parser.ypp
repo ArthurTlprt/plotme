@@ -283,6 +283,10 @@ double Evaluation(double x,int ind){
 			break;
 			case SQRT:
 				a = pile.top(); pile.pop();
+				if(a < 0) {
+					outputs.insert(string("<em style=\"color:orange;\">warning: square root of a negative number</em>"));
+					return std::numeric_limits<double>::quiet_NaN();
+				}
 				b=sqrt(a);
 				pile.push(b);
 			break;
@@ -402,6 +406,10 @@ double Evaluation3d(double x,double y, int ind){
 			break;
 			case SQRT:
 				a = pile.top(); pile.pop();
+				if(a < 0) {
+					outputs.insert(string("<em style=\"color:orange;\">warning: square root of a negative number</em>"));
+					return std::numeric_limits<double>::quiet_NaN();
+				}
 				b=sqrt(a);
 				pile.push(b);
 			break;
@@ -467,8 +475,8 @@ int main() {
 					print=1;
 					debug<<"3D"<<endl;
 					/*if 3D*/
-					for (double i = xinf; i < xsup; i+=0.5) {
-							for (double j = yinf; j < ysup; j+=0.5) {
+					for (double i = xinf; i < xsup; i+=0.3) {
+							for (double j = yinf; j < ysup; j+=0.3) {
 							if (!isnan(Evaluation3d(i,j,k))) {
 								xStream << i << " ";
 								yStream << j << " ";
@@ -551,7 +559,6 @@ int main() {
 }
 
 void yyerror(const char* s) {
-	/*fprintf(stderr, "Parse error: %s\n", s);*/
 	ofstream colorStream("color");
 	ofstream errorStream("error");
 	errorStream << "<em style=\"color:red;\">error: unexpected "<< s <<"  </em>" << endl;
