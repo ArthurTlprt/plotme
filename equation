@@ -1,3 +1,4 @@
-f(x,y)=5*x+y
-y = [-10, 30]
+f(x)=5*x
+g(x)=5*y
 draw f(x,y) purple
+draw g(x,y) red

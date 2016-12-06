@@ -2187,13 +2187,16 @@ int main() {
 	yyparse();
 	debug<<dessine3d.size()<<endl;
 	if(dessine3d.size()>0){
+		int print=0;
 		for(double h=0;h<dessine3d.size();h++){
-			int print=0;
+			int canprint=0;
 			for(double k=0;k<nom.size();k++){
 				if(dessine3d[h].compare(nom[k])==0){
-					print=1;
+					canprint=1;
 					debug<<"3D"<<endl;
 					/*if 3D*/
+					if(print==0){
+						print++;
 					for (double i = xinf; i < xsup; i+=0.05) {
 							for (double j = yinf; j < ysup; j+=0.05) {
 							if (!isnan(Evaluation3d(i,j,k))) {
@@ -2209,12 +2212,16 @@ int main() {
 						}
 					}
 					yStream << endl;
-
+				}
+				else{
+					ofstream colorStream("color");
+					errorStream << "<em style=\"color:red;\">warning: "<<dessine3d[h]<<"(x) can't be draw, only one function can be print in 3D</em>" << endl;
+				}
 
 				}
 			}
 
-			if(print==0){
+			if(canprint==0){
 				ofstream colorStream("color");
 				errorStream << "<em style=\"color:red;\">error: "<<dessine3d[h]<<"(x) can't be draw, because is not defined</em>" << endl;
 			}
