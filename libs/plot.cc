@@ -43,7 +43,7 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
   std::ifstream zStream("z");
   std::ifstream colorStream("color");
   std::ifstream yaxisStream("yaxis");
-  //std::ifstream xaxisStream("xaxis");
+  std::ifstream titleStream("title");
   std::ifstream errorStream("error");
 
   double ymin, ymax;
@@ -117,8 +117,8 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
     Local<Boolean> autorange = Boolean::New(isolate, false);
     yaxis->Set(String::NewFromUtf8(isolate, "autorange"), autorange);
 
-
-    data->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
+    getline(titleStream, fileInput);
+    data->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, fileInput.substr(0, fileInput.size()-1).c_str()) );
     data->Set(String::NewFromUtf8(isolate, "yaxis"), yaxis);
     data->Set(String::NewFromUtf8(isolate, "error"), String::NewFromUtf8(isolate, message.c_str()));
     data->Set(String::NewFromUtf8(isolate, "traces"), traces);
@@ -191,7 +191,8 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
     yaxis->Set(String::NewFromUtf8(isolate, "autorange"), autorange);
 
 
-    data->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
+    getline(titleStream, fileInput);
+    data->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, fileInput.substr(0, fileInput.size()-1).c_str()) );
     data->Set(String::NewFromUtf8(isolate, "yaxis"), yaxis);
     data->Set(String::NewFromUtf8(isolate, "error"), String::NewFromUtf8(isolate, message.c_str()));
     data->Set(String::NewFromUtf8(isolate, "traces"), traces);

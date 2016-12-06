@@ -21,6 +21,7 @@ void yyerror(const char *s);
 [ \t]	; // ignore all whitespace
 "x" {return X;}
 "y" {return Y;}
+"title" {return TITLE;}
 "pi" { return MPI; }
 "sin" { return SIN; }
 "cos" { return  COS; }

@@ -63,7 +63,7 @@ std::set<std::string>::iterator output;
 }
 
 %token<fval> FLOAT
-%token<sval> COLOR VARIABLE
+%token<sval> COLOR VARIABLE TITLE
 %token PLUS MINUS MULTIPLY DIVIDE LEFT RIGHT EQUAL MINUSALONE
 %token NEWLINE QUIT
 %token  X Y
@@ -139,7 +139,7 @@ line: NEWLINE
     | QUIT NEWLINE { printf("bye!\n"); exit(0); }
 		| VARIABLE LEFT X RIGHT EQUAL mixed_expression NEWLINE {string a1=$1;nom.push_back(a1);cout<<"ypp: "<< nom[nbrline] <<endl<<endl;}
 		| VARIABLE LEFT X COMA Y RIGHT EQUAL mixed_expression NEWLINE {string a1=$1;nom.push_back(a1);cout<<"ypp: "<< nom[nbrline] <<endl<<endl;}
-		//| VARIABLE EQUAL mixed_expression NEWLINE { nom.push_back("nul");cout<<nom[nbrline]<<endl;}
+		|	TITLE EQUAL VARIABLE { titleStream << $3; }
 		| mixed_expression NEWLINE {nom.push_back("nul");cout<<nom[nbrline]<<endl;}
 		| VARIABLE EQUAL FLOAT NEWLINE {nom.push_back("nul");string a= $1;constante[a]=$3;}
 ;
@@ -576,6 +576,6 @@ int main() {
 void yyerror(const char* s) {
 	ofstream colorStream("color");
 	ofstream errorStream("error");
-	errorStream << "<em style=\"color:red;\">error: unexpected "<< s <<"  </em>" << endl;
+	errorStream << "<em style=\"color:red;\">fatal error: "<< s <<"  </em>" << endl;
 	exit(1);
 }
