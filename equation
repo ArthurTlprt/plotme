@@ -1,3 +1,4 @@
-f(x) = sin(x)
-draw f(x)
-fezdx+
+f(x, y) = sin(x)
+x = [-10000, 10000]
+y = [-1, 1]
+draw f(x, y)
