@@ -40,12 +40,15 @@ ofstream yStream("y");
 ofstream zStream("z");
 double xinf=0;
 double xsup=20;
+double yinf=0;
+double ysup=20;
 bool yaxisDefined = false;
 bool xaxisDefined = false;
 double ymin=-10, ymax=10;
 // 3D
 double xmin=-10, xmax=10;
 vector<string> dessine;
+vector<string> dessine3d;
 int nbrline;
 std::set<std::string>outputs;
 std::set<std::string>::iterator output;
@@ -112,7 +115,7 @@ line: NEWLINE
 			string a1= $2;
 			string a2="blue";
 			nom.push_back("nul");
-			dessine.push_back(a1);
+			dessine3d.push_back(a1);
 			colorStream <<a2 << endl;
 			titleStream << a1;
 			if(!yaxisDefined) {
@@ -125,7 +128,7 @@ line: NEWLINE
 		| DRAW VARIABLE LEFT X COMA Y RIGHT COLOR NEWLINE{
 			string a1= $2; string a2=$8;colorStream << a2 << endl;
 			nom.push_back("nul");
-			dessine.push_back(a1);
+			dessine3d.push_back(a1);
 			if(!yaxisDefined) {
 				yaxisStream << ymin << " " << ymax;
 			}
@@ -156,10 +159,10 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| X EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR {xinf=$4; xsup=(-$7);}
 		| X EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR {xinf=(-$5); xsup=(-$8);}
 		| X EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {xinf=$4; xsup=$6;}
-		| Y EQUAL BRACKETL MINUS FLOAT COMA FLOAT BRACKETR { yaxisStream << -$5 << " " << $7; yaxisDefined = true;}
-		| Y EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR { yaxisStream << $4 << " " << -$7; yaxisDefined = true;}
-		| Y EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR { yaxisStream << -$5 << " " << -$8; yaxisDefined = true;}
-		| Y EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {yaxisStream << $4 << " " << $6;yaxisDefined = true;}
+		| Y EQUAL BRACKETL MINUS FLOAT COMA FLOAT BRACKETR { yaxisStream << -$5 << " " << $7; yaxisDefined = true; yinf = -$5; ysup = $7;}
+		| Y EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR { yaxisStream << $4 << " " << -$7; yaxisDefined = true; yinf = $4; ysup = -$7;}
+		| Y EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR { yaxisStream << -$5 << " " << -$8; yaxisDefined = true; yinf = -$5; ysup = -$8;}
+		| Y EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {yaxisStream << $4 << " " << $6;yaxisDefined = true; yinf = $4; ysup = $6;}
 		| LEFT mixed_expression RIGHT		 { }
 		| SIN LEFT mixed_expression RIGHT { postfixee.push_back(SIN); values.push_back(0); }
 		| COS LEFT mixed_expression RIGHT { postfixee.push_back(COS); values.push_back(0); }
@@ -173,6 +176,7 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| SQRT LEFT mixed_expression RIGHT { postfixee.push_back(SQRT); values.push_back(0); }
 		| ABS LEFT mixed_expression RIGHT { postfixee.push_back(ABS); values.push_back(0); }
 		| X { cout<<nbrline<<endl; postfixee.push_back(X); values.push_back(0); }
+		| Y { postfixee.push_back(Y);values.push_back(0);}
 		| FLOAT {
 			cout<<nbrline<<endl;
 		postfixee.push_back(FLOAT);
@@ -209,6 +213,9 @@ double Evaluation(double x,int ind){
 			case X :
 				pile.push(x);
 				break;
+			case Y:
+				outputs.insert(string("<em style=\"color:red;\">error: unexpected y</em>"));
+				return std::numeric_limits<double>::quiet_NaN();
 			case MULTIPLY:
 					a = pile.top(); pile.pop();
 					b = pile.top(); pile.pop();
@@ -310,7 +317,7 @@ double Evaluation(double x,int ind){
 }
 
 /*3D*/
-double Evaluation(double x,double y, int ind){
+double Evaluation3d(double x,double y, int ind){
 
 	stack <double> pile;
 
@@ -451,7 +458,41 @@ double assembleur(string test){
 int main() {
 	yyin = stdin;
 	yyparse();
-	cout<<dessine.size()<<endl;
+	debug<<dessine3d.size()<<endl;
+	if(dessine3d.size()>0){
+		for(double h=0;h<dessine3d.size();h++){
+			int print=0;
+			for(double k=0;k<nom.size();k++){
+				if(dessine3d[h].compare(nom[k])==0){
+					print=1;
+					debug<<"3D"<<endl;
+					/*if 3D*/
+					for (double i = xinf; i < xsup; i+=0.5) {
+							for (double j = yinf; j < ysup; j+=0.5) {
+							if (!isnan(Evaluation3d(i,j,k))) {
+								xStream << i << " ";
+								yStream << j << " ";
+								zStream << Evaluation3d(i,j,k) << " ";
+							} else {
+								debug << "NAN" << endl;
+								xStream << i << " ";
+								yStream << j << " ";
+								zStream << "nan" << " ";
+							}
+						}
+					}
+					yStream << endl;
+
+
+				}
+			}
+
+			if(print==0){
+				ofstream colorStream("color");
+				errorStream << "<em style=\"color:red;\">error: "<<dessine3d[h]<<"(x) can't be draw, because is not defined</em>" << endl;
+			}
+		}
+		}
 
 	if(dessine.size()>0){
 		for(double h=0;h<dessine.size();h++){

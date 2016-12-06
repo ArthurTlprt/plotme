@@ -1,4 +1,2 @@
-f(x, y) = sin(x)
-x = [-10000, 10000]
-y = [-1, 1]
-draw f(x, y)
+f(x, y) = sqrt(x^2+y^2+16)
+draw f(x, y) purple
