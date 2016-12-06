@@ -1,1 +1,1 @@
-<em style="color:orange;">warning: the constant g is not defined(remplaced by 0)</em>
+<em style="color:red;">error: unexpected syntax error, unexpected NEWLINE  </em>
