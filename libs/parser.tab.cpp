@@ -105,17 +105,20 @@ ofstream yStream("y");
 ofstream zStream("z");
 double xinf=0;
 double xsup=20;
+double yinf=0;
+double ysup=20;
 bool yaxisDefined = false;
 bool xaxisDefined = false;
 double ymin=-10, ymax=10;
 // 3D
 double xmin=-10, xmax=10;
 vector<string> dessine;
+vector<string> dessine3d;
 int nbrline;
 std::set<std::string>outputs;
 std::set<std::string>::iterator output;
 
-#line 119 "parser.tab.cpp" /* yacc.c:339  */
+#line 122 "parser.tab.cpp" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -190,13 +193,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 56 "parser.ypp" /* yacc.c:355  */
+#line 59 "parser.ypp" /* yacc.c:355  */
 
 	int ival;
 	double fval;
 	char* sval;
 
-#line 200 "parser.tab.cpp" /* yacc.c:355  */
+#line 203 "parser.tab.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -213,7 +216,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 217 "parser.tab.cpp" /* yacc.c:358  */
+#line 220 "parser.tab.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -462,7 +465,7 @@ union yyalloc
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  44
+#define YYNRULES  45
 /* YYNSTATES -- Number of states.  */
 #define YYNSTATES  140
 
@@ -513,11 +516,11 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    80,    80,    81,    89,    91,   102,   111,   125,   136,
-     137,   138,   140,   141,   145,   146,   147,   148,   149,   150,
-     151,   152,   153,   156,   157,   158,   159,   160,   161,   162,
-     163,   164,   165,   166,   167,   168,   169,   170,   171,   172,
-     173,   174,   175,   176,   181
+       0,    83,    83,    84,    92,    94,   105,   114,   128,   139,
+     140,   141,   143,   144,   148,   149,   150,   151,   152,   153,
+     154,   155,   156,   159,   160,   161,   162,   163,   164,   165,
+     166,   167,   168,   169,   170,   171,   172,   173,   174,   175,
+     176,   177,   178,   179,   180,   185
 };
 #endif
 
@@ -582,9 +585,9 @@ static const yytype_int16 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       2,     0,     1,    43,    44,     0,     0,     4,     0,    42,
-       0,    14,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     3,     0,     0,     0,    44,    19,
+       2,     0,     1,    44,    45,     0,     0,     4,     0,    42,
+      43,    14,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     3,     0,     0,     0,    45,    19,
        0,     9,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
       12,     0,     0,     0,     0,    30,     0,     0,     0,     0,
@@ -694,7 +697,7 @@ static const yytype_uint8 yyr1[] =
       37,    37,    37,    37,    38,    38,    38,    38,    38,    38,
       38,    38,    38,    38,    38,    38,    38,    38,    38,    38,
       38,    38,    38,    38,    38,    38,    38,    38,    38,    38,
-      38,    38,    38,    38,    38
+      38,    38,    38,    38,    38,    38
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -704,7 +707,7 @@ static const yytype_uint8 yyr2[] =
        7,     9,     2,     4,     1,     4,     3,     3,     3,     2,
        3,     3,     8,     8,     9,     7,     8,     8,     9,     7,
        3,     4,     4,     4,     4,     4,     4,     4,     4,     4,
-       4,     4,     1,     1,     1
+       4,     4,     1,     1,     1,     1
 };
 
 
@@ -1381,7 +1384,7 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 81 "parser.ypp" /* yacc.c:1646  */
+#line 84 "parser.ypp" /* yacc.c:1646  */
     {
 		nbrline++;
 		if(indice.size()==0){
@@ -1389,11 +1392,11 @@ yyreduce:
 		}
 		indice.push_back(values.size());cout<<indice[0]<<endl;
 }
-#line 1393 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1396 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 91 "parser.ypp" /* yacc.c:1646  */
+#line 94 "parser.ypp" /* yacc.c:1646  */
     {
 			string a1= (yyvsp[-4].sval);
 			string a2="blue";
@@ -1405,11 +1408,11 @@ yyreduce:
 				yaxisStream << ymin << " " << ymax;
 			}
 		}
-#line 1409 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1412 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 102 "parser.ypp" /* yacc.c:1646  */
+#line 105 "parser.ypp" /* yacc.c:1646  */
     {
 			string a1= (yyvsp[-5].sval); string a2=(yyvsp[-1].sval);colorStream << a2 << endl;
 			nom.push_back("nul");
@@ -1418,16 +1421,16 @@ yyreduce:
 				yaxisStream << ymin << " " << ymax;
 			}
 		}
-#line 1422 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1425 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 111 "parser.ypp" /* yacc.c:1646  */
+#line 114 "parser.ypp" /* yacc.c:1646  */
     {
 			string a1= (yyvsp[-6].sval);
 			string a2="blue";
 			nom.push_back("nul");
-			dessine.push_back(a1);
+			dessine3d.push_back(a1);
 			colorStream <<a2 << endl;
 			titleStream << a1;
 			if(!yaxisDefined) {
@@ -1437,15 +1440,15 @@ yyreduce:
 				xaxisStream << xmin << " " << xmax;
 			}
 		}
-#line 1441 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1444 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 125 "parser.ypp" /* yacc.c:1646  */
+#line 128 "parser.ypp" /* yacc.c:1646  */
     {
 			string a1= (yyvsp[-7].sval); string a2=(yyvsp[-1].sval);colorStream << a2 << endl;
 			nom.push_back("nul");
-			dessine.push_back(a1);
+			dessine3d.push_back(a1);
 			if(!yaxisDefined) {
 				yaxisStream << ymin << " " << ymax;
 			}
@@ -1453,234 +1456,240 @@ yyreduce:
 				xaxisStream << xmin << " " << xmax;
 			}
 		}
-#line 1457 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1460 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 136 "parser.ypp" /* yacc.c:1646  */
+#line 139 "parser.ypp" /* yacc.c:1646  */
     { printf("bye!\n"); exit(0); }
-#line 1463 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1466 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 137 "parser.ypp" /* yacc.c:1646  */
+#line 140 "parser.ypp" /* yacc.c:1646  */
     {string a1=(yyvsp[-6].sval);nom.push_back(a1);cout<<"ypp: "<< nom[nbrline] <<endl<<endl;}
-#line 1469 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1472 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 138 "parser.ypp" /* yacc.c:1646  */
+#line 141 "parser.ypp" /* yacc.c:1646  */
     {string a1=(yyvsp[-8].sval);nom.push_back(a1);cout<<"ypp: "<< nom[nbrline] <<endl<<endl;}
-#line 1475 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1478 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 140 "parser.ypp" /* yacc.c:1646  */
+#line 143 "parser.ypp" /* yacc.c:1646  */
     {nom.push_back("nul");cout<<nom[nbrline]<<endl;}
-#line 1481 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1484 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 141 "parser.ypp" /* yacc.c:1646  */
+#line 144 "parser.ypp" /* yacc.c:1646  */
     {nom.push_back("nul");string a= (yyvsp[-3].sval);constante[a]=(yyvsp[-1].fval);}
-#line 1487 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1490 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 145 "parser.ypp" /* yacc.c:1646  */
+#line 148 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(FLOAT); values.push_back(M_PI); }
-#line 1493 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1496 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 146 "parser.ypp" /* yacc.c:1646  */
+#line 149 "parser.ypp" /* yacc.c:1646  */
     {string a=(yyvsp[-3].sval);assembleur(a);}
-#line 1499 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1502 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 147 "parser.ypp" /* yacc.c:1646  */
+#line 150 "parser.ypp" /* yacc.c:1646  */
     {cout<<nbrline<<endl; postfixee.push_back(PLUS); values.push_back(0); }
-#line 1505 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1508 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 148 "parser.ypp" /* yacc.c:1646  */
+#line 151 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(POW); values.push_back(0); }
-#line 1511 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1514 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 149 "parser.ypp" /* yacc.c:1646  */
+#line 152 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(MINUS); values.push_back(0);}
-#line 1517 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1520 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 150 "parser.ypp" /* yacc.c:1646  */
+#line 153 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(MINUSALONE); values.push_back(0);}
-#line 1523 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1526 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 151 "parser.ypp" /* yacc.c:1646  */
+#line 154 "parser.ypp" /* yacc.c:1646  */
     {postfixee.push_back(MULTIPLY); values.push_back(0); }
-#line 1529 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1532 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 152 "parser.ypp" /* yacc.c:1646  */
+#line 155 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(DIVIDE); values.push_back(0); }
-#line 1535 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1538 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 153 "parser.ypp" /* yacc.c:1646  */
+#line 156 "parser.ypp" /* yacc.c:1646  */
     {
 			xinf=(-(yyvsp[-3].fval)); xsup=(yyvsp[-1].fval);
 		}
-#line 1543 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1546 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 156 "parser.ypp" /* yacc.c:1646  */
+#line 159 "parser.ypp" /* yacc.c:1646  */
     {xinf=(yyvsp[-4].fval); xsup=(-(yyvsp[-1].fval));}
-#line 1549 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1552 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 157 "parser.ypp" /* yacc.c:1646  */
+#line 160 "parser.ypp" /* yacc.c:1646  */
     {xinf=(-(yyvsp[-4].fval)); xsup=(-(yyvsp[-1].fval));}
-#line 1555 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1558 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 158 "parser.ypp" /* yacc.c:1646  */
+#line 161 "parser.ypp" /* yacc.c:1646  */
     {xinf=(yyvsp[-3].fval); xsup=(yyvsp[-1].fval);}
-#line 1561 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1564 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 159 "parser.ypp" /* yacc.c:1646  */
+#line 162 "parser.ypp" /* yacc.c:1646  */
     { yaxisStream << -(yyvsp[-3].fval) << " " << (yyvsp[-1].fval); yaxisDefined = true;}
-#line 1567 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1570 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 160 "parser.ypp" /* yacc.c:1646  */
+#line 163 "parser.ypp" /* yacc.c:1646  */
     { yaxisStream << (yyvsp[-4].fval) << " " << -(yyvsp[-1].fval); yaxisDefined = true;}
-#line 1573 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1576 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 161 "parser.ypp" /* yacc.c:1646  */
+#line 164 "parser.ypp" /* yacc.c:1646  */
     { yaxisStream << -(yyvsp[-4].fval) << " " << -(yyvsp[-1].fval); yaxisDefined = true;}
-#line 1579 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1582 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 162 "parser.ypp" /* yacc.c:1646  */
+#line 165 "parser.ypp" /* yacc.c:1646  */
     {yaxisStream << (yyvsp[-3].fval) << " " << (yyvsp[-1].fval);yaxisDefined = true;}
-#line 1585 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1588 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 163 "parser.ypp" /* yacc.c:1646  */
+#line 166 "parser.ypp" /* yacc.c:1646  */
     { }
-#line 1591 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1594 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 164 "parser.ypp" /* yacc.c:1646  */
+#line 167 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(SIN); values.push_back(0); }
-#line 1597 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1600 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 165 "parser.ypp" /* yacc.c:1646  */
+#line 168 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(COS); values.push_back(0); }
-#line 1603 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1606 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 166 "parser.ypp" /* yacc.c:1646  */
+#line 169 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(TAN); values.push_back(0); }
-#line 1609 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1612 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 167 "parser.ypp" /* yacc.c:1646  */
+#line 170 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ARCSIN); values.push_back(0); }
-#line 1615 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1618 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 168 "parser.ypp" /* yacc.c:1646  */
+#line 171 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ARCOS); values.push_back(0); }
-#line 1621 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1624 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 169 "parser.ypp" /* yacc.c:1646  */
+#line 172 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ARCTAN); values.push_back(0); }
-#line 1627 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1630 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 170 "parser.ypp" /* yacc.c:1646  */
+#line 173 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(EXP); values.push_back(0); }
-#line 1633 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1636 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 171 "parser.ypp" /* yacc.c:1646  */
+#line 174 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(LOG); values.push_back(0); }
-#line 1639 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1642 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 172 "parser.ypp" /* yacc.c:1646  */
+#line 175 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(LOG); values.push_back(0); }
-#line 1645 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1648 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 173 "parser.ypp" /* yacc.c:1646  */
+#line 176 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(SQRT); values.push_back(0); }
-#line 1651 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1654 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 174 "parser.ypp" /* yacc.c:1646  */
+#line 177 "parser.ypp" /* yacc.c:1646  */
     { postfixee.push_back(ABS); values.push_back(0); }
-#line 1657 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1660 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 175 "parser.ypp" /* yacc.c:1646  */
+#line 178 "parser.ypp" /* yacc.c:1646  */
     { cout<<nbrline<<endl; postfixee.push_back(X); values.push_back(0); }
-#line 1663 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1666 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 176 "parser.ypp" /* yacc.c:1646  */
+#line 179 "parser.ypp" /* yacc.c:1646  */
+    { postfixee.push_back(Y);values.push_back(0);}
+#line 1672 "parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 44:
+#line 180 "parser.ypp" /* yacc.c:1646  */
     {
 			cout<<nbrline<<endl;
 		postfixee.push_back(FLOAT);
 		values.push_back((yyvsp[0].fval));
 		}
-#line 1673 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1682 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
-  case 44:
-#line 181 "parser.ypp" /* yacc.c:1646  */
+  case 45:
+#line 185 "parser.ypp" /* yacc.c:1646  */
     {string a=(yyvsp[0].sval);it=constante.find(a);if(it!=constante.end()){postfixee.push_back(FLOAT);double v=it->second;values.push_back(v); }else{postfixee.push_back(FLOAT);values.push_back(0);
 			errorStream << "<em style=\"color:orange;\">warning: the constant "<<a<<" is not defined(remplaced by 0)</em>" << endl;}}
-#line 1680 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1689 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1684 "parser.tab.cpp" /* yacc.c:1646  */
+#line 1693 "parser.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1908,7 +1917,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 190 "parser.ypp" /* yacc.c:1906  */
+#line 194 "parser.ypp" /* yacc.c:1906  */
 
 
 
@@ -1931,6 +1940,9 @@ double Evaluation(double x,int ind){
 			case X :
 				pile.push(x);
 				break;
+			case Y:
+				outputs.insert(string("<em style=\"color:red;\">error: unexpected y</em>"));
+				return std::numeric_limits<double>::quiet_NaN();
 			case MULTIPLY:
 					a = pile.top(); pile.pop();
 					b = pile.top(); pile.pop();
@@ -2032,7 +2044,7 @@ double Evaluation(double x,int ind){
 }
 
 /*3D*/
-double Evaluation(double x,double y, int ind){
+double Evaluation3d(double x,double y, int ind){
 
 	stack <double> pile;
 
@@ -2173,7 +2185,41 @@ double assembleur(string test){
 int main() {
 	yyin = stdin;
 	yyparse();
-	cout<<dessine.size()<<endl;
+	debug<<dessine3d.size()<<endl;
+	if(dessine3d.size()>0){
+		for(double h=0;h<dessine3d.size();h++){
+			int print=0;
+			for(double k=0;k<nom.size();k++){
+				if(dessine3d[h].compare(nom[k])==0){
+					print=1;
+					debug<<"3D"<<endl;
+					/*if 3D*/
+					for (double i = xinf; i < xsup; i+=0.05) {
+							for (double j = yinf; j < ysup; j+=0.05) {
+							if (!isnan(Evaluation3d(i,j,k))) {
+								xStream << i << " ";
+								yStream << j << " ";
+								zStream << Evaluation3d(i,j,k) << " ";
+							} else {
+								debug << "NAN" << endl;
+								xStream << i << " ";
+								yStream << j << " ";
+								zStream << "nan" << " ";
+							}
+						}
+					}
+					yStream << endl;
+
+
+				}
+			}
+
+			if(print==0){
+				ofstream colorStream("color");
+				errorStream << "<em style=\"color:red;\">error: "<<dessine3d[h]<<"(x) can't be draw, because is not defined</em>" << endl;
+			}
+		}
+		}
 
 	if(dessine.size()>0){
 		for(double h=0;h<dessine.size();h++){
