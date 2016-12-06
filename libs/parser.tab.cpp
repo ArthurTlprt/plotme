@@ -1960,7 +1960,7 @@ double Evaluation(double x,int ind){
 			case DIVIDE:
 				a = pile.top(); pile.pop();
 				b = pile.top(); pile.pop();
-				if(a <= 0.005 && a >= -0.005 ) {
+				if(a <= 0.05 && a >= -0.05 ) {
 					debug << "division by zero" << endl;
 					/*errorStream << "<em style=\"color:orange;\">warning: division by zero</em>" << endl;*/
 					outputs.insert(string("<em style=\"color:orange;\">warning: division by zero</em>"));
@@ -2286,7 +2286,6 @@ int main() {
 }
 
 void yyerror(const char* s) {
-	/*fprintf(stderr, "Parse error: %s\n", s);*/
 	ofstream colorStream("color");
 	ofstream errorStream("error");
 	errorStream << "<em style=\"color:red;\">error: unexpected "<< s <<"  </em>" << endl;

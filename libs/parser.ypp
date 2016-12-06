@@ -233,7 +233,7 @@ double Evaluation(double x,int ind){
 			case DIVIDE:
 				a = pile.top(); pile.pop();
 				b = pile.top(); pile.pop();
-				if(a <= 0.005 && a >= -0.005 ) {
+				if(a <= 0.05 && a >= -0.05 ) {
 					debug << "division by zero" << endl;
 					/*errorStream << "<em style=\"color:orange;\">warning: division by zero</em>" << endl;*/
 					outputs.insert(string("<em style=\"color:orange;\">warning: division by zero</em>"));
@@ -253,6 +253,10 @@ double Evaluation(double x,int ind){
 			break;
 			case TAN:
 				a = pile.top(); pile.pop();
+				if(a%2 <= 0.5*M_PI+0.5 && a%2 >= 0.5*M_PI-0.5) {
+					outputs.insert(string("<em style=\"color:orange;\">warning: tangeant is not defined in this area</em>"));
+					return std::numeric_limits<double>::quiet_NaN();
+				}
 				b=tan(a);
 				pile.push(b);
 			break;
@@ -378,6 +382,10 @@ double Evaluation3d(double x,double y, int ind){
 			break;
 			case TAN:
 				a = pile.top(); pile.pop();
+				if(a%2 <= 0.5*M_PI+0.5 && a%2 >= 0.5*M_PI-0.5) {
+					outputs.insert(string("<em style=\"color:orange;\">warning: tangeant is not defined in this area</em>"));
+					return std::numeric_limits<double>::quiet_NaN();
+				}
 				b=tan(a);
 				pile.push(b);
 			break;

@@ -11,12 +11,78 @@ block content
           .thumbnail
             h2 Defining a function
             p
-              | To define a one variable function, use a string of character followed by "(x)"
+              | To define a one variable function, use a string of character followed by "(x)".
+              br
+              u Exemple:
+              br
+              i f(x) = 0.5*x^3-x^2+2
+              br
+              | To define a two variables function, use a string of character followed by "(x, y)".
+              br
+              u Exemple:
+              br
+              i f(x, y) = 10*(-(x^2+y^2))
           .thumbnail
             h2 Drawing a function
+            p
+              | To draw a function use "draw" followed by the name of your function and by the color.
+              br
+              | The color can be an hexa color.
+              br
+              u Exemple:
+              br
+              i draw f(x) red
+              br
+              | or:
+              br
+              i draw f(x, y) #2bc0be
+              br
+              | Note: you can draw several 2d functions but only one 3d function at the same time.
           .thumbnail
-            h2 Defining interval
+            h2 Defining an interval
+            p
+              | To define an interval use "[]"
+              br
+              u Exemple:
+              br
+              i x = [-1, 1]
+              br
+              | Then the function will be drawn on the -1, 1 interval.
           .thumbnail
-            h2 Defining constant
+            h2 Defining a constant
+            p
+              | To define a constant use a string of character followed bu "=" and then an mathematical expression.
+              br
+              u Exemple:
+              br
+              i sum = 42
           .thumbnail
             h2 Embedded function
+            p
+              | Here is the list of mathematical function that plotme is able to compute.
+              br
+              i exp
+              br
+              i ln
+              br
+              i log
+              br
+              i sin
+              br
+              i cos
+              br
+              i tan
+              br
+              i arctan
+              br
+              i arcsin
+              br
+              i arcos
+              br
+              i sqrt
+              br
+              i pow
+              br
+              i draw
+              br
+              i abs
