@@ -16,10 +16,10 @@ DEFS_Debug := \
 # Flags passed to all source files.
 CFLAGS_Debug := \
 	-fPIC \
-	-pthread \
 	-Wall \
 	-Wextra \
 	-Wno-unused-parameter \
+	-pthread \
 	-m64 \
 	-g \
 	-O0
@@ -30,14 +30,13 @@ CFLAGS_C_Debug :=
 # Flags passed to only C++ files.
 CFLAGS_CC_Debug := \
 	-fno-rtti \
-	-fno-exceptions \
-	-std=gnu++0x
+	-fno-exceptions
 
 INCS_Debug := \
-	-I/home/alan/.node-gyp/4.2.6/include/node \
-	-I/home/alan/.node-gyp/4.2.6/src \
-	-I/home/alan/.node-gyp/4.2.6/deps/uv/include \
-	-I/home/alan/.node-gyp/4.2.6/deps/v8/include
+	-I/home/alan/.node-gyp/0.10.42/include/node \
+	-I/home/alan/.node-gyp/0.10.42/src \
+	-I/home/alan/.node-gyp/0.10.42/deps/uv/include \
+	-I/home/alan/.node-gyp/0.10.42/deps/v8/include
 
 DEFS_Release := \
 	'-DNODE_GYP_MODULE_NAME=parser' \
@@ -51,14 +50,14 @@ DEFS_Release := \
 # Flags passed to all source files.
 CFLAGS_Release := \
 	-fPIC \
-	-pthread \
 	-Wall \
 	-Wextra \
 	-Wno-unused-parameter \
+	-pthread \
 	-m64 \
-	-O3 \
-	-ffunction-sections \
-	-fdata-sections \
+	-O2 \
+	-fno-strict-aliasing \
+	-fno-tree-vrp \
 	-fno-omit-frame-pointer
 
 # Flags passed to only C files.
@@ -67,14 +66,13 @@ CFLAGS_C_Release :=
 # Flags passed to only C++ files.
 CFLAGS_CC_Release := \
 	-fno-rtti \
-	-fno-exceptions \
-	-std=gnu++0x
+	-fno-exceptions
 
 INCS_Release := \
-	-I/home/alan/.node-gyp/4.2.6/include/node \
-	-I/home/alan/.node-gyp/4.2.6/src \
-	-I/home/alan/.node-gyp/4.2.6/deps/uv/include \
-	-I/home/alan/.node-gyp/4.2.6/deps/v8/include
+	-I/home/alan/.node-gyp/0.10.42/include/node \
+	-I/home/alan/.node-gyp/0.10.42/src \
+	-I/home/alan/.node-gyp/0.10.42/deps/uv/include \
+	-I/home/alan/.node-gyp/0.10.42/deps/v8/include
 
 OBJS := \
 	$(obj).target/$(TARGET)/plot.o

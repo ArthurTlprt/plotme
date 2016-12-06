@@ -28,3 +28,8 @@ f(x)=cos(2*3.14*x)/(x*0.1)
 x = [-5, 10]
 y = [-10, 10]
 draw f(x) green
+
+f(x,y)= 4*cos(x*2)*4*sin(y*2)*2
+x=[0,6.36]
+y=[0,6.36]
+draw f(x,y) purple
