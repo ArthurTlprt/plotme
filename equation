@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 f(x,y)= 4*cos(x*2)*4*sin(y*2)*2
 x=[0,6.36]
 y=[0,6.36]
 draw f(x,y) purple
+=======
+f(x) = sqrt(x)
+x = [-30, 30]
+draw f(x) #ffa64d
+>>>>>>> 314d6505167c928717fc1b838e1067c599ef0c01

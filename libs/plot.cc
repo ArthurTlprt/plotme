@@ -31,7 +31,6 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
 
 	String::Utf8Value param1(args[0]->ToString());
 	std::string input = std::string(*param1);
-  //std::cout << input << std::endl;
 
   std::ofstream equation("equation");
   equation << input << std::endl;
@@ -79,9 +78,7 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
     while (getline(yStream, fileInput)) {
       std::istringstream is(fileInput);
       std::vector<double> ys;
-      std::cout << "yf:" << std::endl;
       while(is >> yf) {
-        std::cout << yf << std::endl;
         ys.push_back(std::stod(yf));
       }
       yss.push_back(ys);
@@ -107,12 +104,9 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
     }
     fileInput = "";
     std::string message = "";
-    std::cout << "mesage:" << std::endl;
     while (getline(errorStream, fileInput)) {
-      std::cout << fileInput << std::endl;
       message = message + fileInput + "<br>";
     }
-    std::cout << message << std::endl;
 
     // yaxis control
     Local<Array> yrange = Array::New(isolate);
@@ -183,12 +177,9 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
     traces->Set(0, points);
     fileInput = "";
     std::string message = "";
-    std::cout << "mesage:" << std::endl;
     while (getline(errorStream, fileInput)) {
-      std::cout << fileInput << std::endl;
       message = message + fileInput + "<br>";
     }
-    std::cout << message << std::endl;
 
     // yaxis control
     Local<Array> yrange = Array::New(isolate);
@@ -204,11 +195,9 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
     data->Set(String::NewFromUtf8(isolate, "yaxis"), yaxis);
     data->Set(String::NewFromUtf8(isolate, "error"), String::NewFromUtf8(isolate, message.c_str()));
     data->Set(String::NewFromUtf8(isolate, "traces"), traces);
-    std::cout << "209" << std::endl;
     args.GetReturnValue().Set(data);
   }
 
-  //std::cout << "The parsing is done" << std::endl;
 	return;
 }
 

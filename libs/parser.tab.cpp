@@ -2010,6 +2010,10 @@ double Evaluation(double x,int ind){
 			break;
 			case SQRT:
 				a = pile.top(); pile.pop();
+				if(a < 0) {
+					outputs.insert(string("<em style=\"color:orange;\">warning: square root of a negative number</em>"));
+					return std::numeric_limits<double>::quiet_NaN();
+				}
 				b=sqrt(a);
 				pile.push(b);
 			break;
@@ -2129,6 +2133,10 @@ double Evaluation3d(double x,double y, int ind){
 			break;
 			case SQRT:
 				a = pile.top(); pile.pop();
+				if(a < 0) {
+					outputs.insert(string("<em style=\"color:orange;\">warning: square root of a negative number</em>"));
+					return std::numeric_limits<double>::quiet_NaN();
+				}
 				b=sqrt(a);
 				pile.push(b);
 			break;
@@ -2195,10 +2203,15 @@ int main() {
 					canprint=1;
 					debug<<"3D"<<endl;
 					/*if 3D*/
+<<<<<<< HEAD
 					if(print==0){
 						print++;
 					for (double i = xinf; i < xsup; i+=0.5) {
 							for (double j = yinf; j < ysup; j+=0.5) {
+=======
+					for (double i = xinf; i < xsup; i+=0.3) {
+							for (double j = yinf; j < ysup; j+=0.3) {
+>>>>>>> 314d6505167c928717fc1b838e1067c599ef0c01
 							if (!isnan(Evaluation3d(i,j,k))) {
 								xStream << i << " ";
 								yStream << j << " ";
