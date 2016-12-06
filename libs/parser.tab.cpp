@@ -1565,25 +1565,25 @@ yyreduce:
 
   case 26:
 #line 162 "parser.ypp" /* yacc.c:1646  */
-    { yaxisStream << -(yyvsp[-3].fval) << " " << (yyvsp[-1].fval); yaxisDefined = true;}
+    { yaxisStream << -(yyvsp[-3].fval) << " " << (yyvsp[-1].fval); yaxisDefined = true; yinf = -(yyvsp[-3].fval); ysup = (yyvsp[-1].fval);}
 #line 1570 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 27:
 #line 163 "parser.ypp" /* yacc.c:1646  */
-    { yaxisStream << (yyvsp[-4].fval) << " " << -(yyvsp[-1].fval); yaxisDefined = true;}
+    { yaxisStream << (yyvsp[-4].fval) << " " << -(yyvsp[-1].fval); yaxisDefined = true; yinf = (yyvsp[-4].fval); ysup = -(yyvsp[-1].fval);}
 #line 1576 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 28:
 #line 164 "parser.ypp" /* yacc.c:1646  */
-    { yaxisStream << -(yyvsp[-4].fval) << " " << -(yyvsp[-1].fval); yaxisDefined = true;}
+    { yaxisStream << -(yyvsp[-4].fval) << " " << -(yyvsp[-1].fval); yaxisDefined = true; yinf = -(yyvsp[-4].fval); ysup = -(yyvsp[-1].fval);}
 #line 1582 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 29:
 #line 165 "parser.ypp" /* yacc.c:1646  */
-    {yaxisStream << (yyvsp[-3].fval) << " " << (yyvsp[-1].fval);yaxisDefined = true;}
+    {yaxisStream << (yyvsp[-3].fval) << " " << (yyvsp[-1].fval);yaxisDefined = true; yinf = (yyvsp[-3].fval); ysup = (yyvsp[-1].fval);}
 #line 1588 "parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -2197,8 +2197,8 @@ int main() {
 					/*if 3D*/
 					if(print==0){
 						print++;
-					for (double i = xinf; i < xsup; i+=0.05) {
-							for (double j = yinf; j < ysup; j+=0.05) {
+					for (double i = xinf; i < xsup; i+=0.5) {
+							for (double j = yinf; j < ysup; j+=0.5) {
 							if (!isnan(Evaluation3d(i,j,k))) {
 								xStream << i << " ";
 								yStream << j << " ";

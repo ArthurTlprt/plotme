@@ -41,8 +41,10 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
 
   std::ifstream xStream("x");
   std::ifstream yStream("y");
+  std::ifstream zStream("z");
   std::ifstream colorStream("color");
   std::ifstream yaxisStream("yaxis");
+  //std::ifstream xaxisStream("xaxis");
   std::ifstream errorStream("error");
 
   double ymin, ymax;
@@ -54,76 +56,158 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
   std::string fileInput;
   std::vector<std::vector<double> > yss;
   std::vector<double> xs;
+  std::vector<double> zs;
   std::vector<std::string> colors;
-  unsigned int nbTrace=0;
-  while (getline(colorStream, fileInput)) {
-    colors.push_back(fileInput);
-    nbTrace++;
-  }
-  double xf;
-  {
-    getline(xStream, fileInput);
-    std::istringstream is(fileInput);
-    while(is >> xf) {
-      xs.push_back(xf);
+
+  // check if file is empty
+  if ( zStream.peek() == std::ifstream::traits_type::eof() ) {
+    unsigned int nbTrace=0;
+    while (getline(colorStream, fileInput)) {
+      colors.push_back(fileInput);
+      nbTrace++;
     }
-  }
-  fileInput = "";
-  std::string yf;
-  while (getline(yStream, fileInput)) {
-    std::istringstream is(fileInput);
-    std::vector<double> ys;
-    std::cout << "yf:" << std::endl;
-    while(is >> yf) {
-      std::cout << yf << std::endl;
-      ys.push_back(std::stod(yf));
+    double xf;
+    {
+      getline(xStream, fileInput);
+      std::istringstream is(fileInput);
+      while(is >> xf) {
+        xs.push_back(xf);
+      }
     }
-    yss.push_back(ys);
-  }
-  for (unsigned int i = 0; i < nbTrace; i++) {
+    fileInput = "";
+    std::string yf;
+    while (getline(yStream, fileInput)) {
+      std::istringstream is(fileInput);
+      std::vector<double> ys;
+      std::cout << "yf:" << std::endl;
+      while(is >> yf) {
+        std::cout << yf << std::endl;
+        ys.push_back(std::stod(yf));
+      }
+      yss.push_back(ys);
+    }
+    for (unsigned int i = 0; i < nbTrace; i++) {
+      Local<Object> points = Object::New(isolate);
+      Local<Array> x = Array::New(isolate);
+      Local<Array> y = Array::New(isolate);
+      // insertion des x et y
+      for(unsigned int j=0; j < yss[0].size(); j++) {
+        x->Set(j, Number::New(isolate, xs[j]));
+        y->Set(j, Number::New(isolate, yss[i][j]));
+      }
+      // // gestion couleur
+      Local<Object> line = Object::New(isolate);
+      std::string colorToAd = colors[i];
+      line->Set(String::NewFromUtf8(isolate, "color"), String::NewFromUtf8(isolate, colorToAd.c_str() ));
+      points->Set(String::NewFromUtf8(isolate, "line"), line);
+      // ajout dans les tableau de tous les graphes
+      points->Set(String::NewFromUtf8(isolate, "x"), x );
+      points->Set(String::NewFromUtf8(isolate, "y"), y );
+      traces->Set(i, points);
+    }
+    fileInput = "";
+    std::string message = "";
+    std::cout << "mesage:" << std::endl;
+    while (getline(errorStream, fileInput)) {
+      std::cout << fileInput << std::endl;
+      message = message + fileInput + "<br>";
+    }
+    std::cout << message << std::endl;
+
+    // yaxis control
+    Local<Array> yrange = Array::New(isolate);
+    yrange->Set(0, Number::New(isolate, ymin));
+    yrange->Set(1, Number::New(isolate, ymax));
+    Local<Object> yaxis = Object::New(isolate);
+    yaxis->Set(String::NewFromUtf8(isolate, "range"), yrange);
+    Local<Boolean> autorange = Boolean::New(isolate, false);
+    yaxis->Set(String::NewFromUtf8(isolate, "autorange"), autorange);
+
+
+    data->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
+    data->Set(String::NewFromUtf8(isolate, "yaxis"), yaxis);
+    data->Set(String::NewFromUtf8(isolate, "error"), String::NewFromUtf8(isolate, message.c_str()));
+    data->Set(String::NewFromUtf8(isolate, "traces"), traces);
+
+    args.GetReturnValue().Set(data);
+
+  } else {
+    // 3D
+    std::string color;
+    getline(colorStream, color);
+    double xf;
+    {
+      getline(xStream, fileInput);
+      std::istringstream is(fileInput);
+      while(is >> xf) {
+        xs.push_back(xf);
+      }
+    }
+    fileInput = "";
+    std::string yf;
+    {
+      getline(yStream, fileInput);
+      std::istringstream is(fileInput);
+      std::vector<double> ys;
+      while(is >> yf) {
+        ys.push_back(std::stod(yf));
+      }
+      yss.push_back(ys);
+    }
+    double zf;
+    {
+      getline(zStream, fileInput);
+      std::istringstream is(fileInput);
+      while(is >> zf) {
+        zs.push_back(zf);
+      }
+    }
     Local<Object> points = Object::New(isolate);
     Local<Array> x = Array::New(isolate);
     Local<Array> y = Array::New(isolate);
+    Local<Array> z = Array::New(isolate);
     // insertion des x et y
     for(unsigned int j=0; j < yss[0].size(); j++) {
       x->Set(j, Number::New(isolate, xs[j]));
-      y->Set(j, Number::New(isolate, yss[i][j]));
+      y->Set(j, Number::New(isolate, yss[0][j]));
+      z->Set(j, Number::New(isolate, zs[j]));
     }
     // // gestion couleur
-    Local<Object> line = Object::New(isolate);
-    std::string colorToAd = colors[i];
-    line->Set(String::NewFromUtf8(isolate, "color"), String::NewFromUtf8(isolate, colorToAd.c_str() ));
-    points->Set(String::NewFromUtf8(isolate, "line"), line);
+    std::string colorToAd = color;
+    points->Set(String::NewFromUtf8(isolate, "color"), String::NewFromUtf8(isolate, colorToAd.c_str() ));
     // ajout dans les tableau de tous les graphes
     points->Set(String::NewFromUtf8(isolate, "x"), x );
     points->Set(String::NewFromUtf8(isolate, "y"), y );
-    traces->Set(i, points);
+    points->Set(String::NewFromUtf8(isolate, "z"), z );
+    points->Set(String::NewFromUtf8(isolate, "type"), String::NewFromUtf8(isolate, "mesh3d") );
+    traces->Set(0, points);
+    fileInput = "";
+    std::string message = "";
+    std::cout << "mesage:" << std::endl;
+    while (getline(errorStream, fileInput)) {
+      std::cout << fileInput << std::endl;
+      message = message + fileInput + "<br>";
+    }
+    std::cout << message << std::endl;
+
+    // yaxis control
+    Local<Array> yrange = Array::New(isolate);
+    yrange->Set(0, Number::New(isolate, ymin));
+    yrange->Set(1, Number::New(isolate, ymax));
+    Local<Object> yaxis = Object::New(isolate);
+    yaxis->Set(String::NewFromUtf8(isolate, "range"), yrange);
+    Local<Boolean> autorange = Boolean::New(isolate, false);
+    yaxis->Set(String::NewFromUtf8(isolate, "autorange"), autorange);
+
+
+    data->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
+    data->Set(String::NewFromUtf8(isolate, "yaxis"), yaxis);
+    data->Set(String::NewFromUtf8(isolate, "error"), String::NewFromUtf8(isolate, message.c_str()));
+    data->Set(String::NewFromUtf8(isolate, "traces"), traces);
+    std::cout << "209" << std::endl;
+    args.GetReturnValue().Set(data);
   }
-  fileInput = "";
-  std::string message = "";
-  std::cout << "mesage:" << std::endl;
-  while (getline(errorStream, fileInput)) {
-    std::cout << fileInput << std::endl;
-    message = message + fileInput + "<br>";
-  }
-  std::cout << message << std::endl;
 
-  // yaxis control
-  Local<Array> yrange = Array::New(isolate);
-  yrange->Set(0, Number::New(isolate, ymin));
-  yrange->Set(1, Number::New(isolate, ymax));
-  Local<Object> yaxis = Object::New(isolate);
-  yaxis->Set(String::NewFromUtf8(isolate, "range"), yrange);
-  Local<Boolean> autorange = Boolean::New(isolate, false);
-  yaxis->Set(String::NewFromUtf8(isolate, "autorange"), autorange);
-
-
-  data->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, "y = f(x)") );
-  data->Set(String::NewFromUtf8(isolate, "yaxis"), yaxis);
-  data->Set(String::NewFromUtf8(isolate, "error"), String::NewFromUtf8(isolate, message.c_str()));
-  data->Set(String::NewFromUtf8(isolate, "traces"), traces);
-
-  args.GetReturnValue().Set(data);
   //std::cout << "The parsing is done" << std::endl;
 	return;
 }

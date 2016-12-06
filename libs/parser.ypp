@@ -159,10 +159,10 @@ mixed_expression: MPI { postfixee.push_back(FLOAT); values.push_back(M_PI); }
 		| X EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR {xinf=$4; xsup=(-$7);}
 		| X EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR {xinf=(-$5); xsup=(-$8);}
 		| X EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {xinf=$4; xsup=$6;}
-		| Y EQUAL BRACKETL MINUS FLOAT COMA FLOAT BRACKETR { yaxisStream << -$5 << " " << $7; yaxisDefined = true;}
-		| Y EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR { yaxisStream << $4 << " " << -$7; yaxisDefined = true;}
-		| Y EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR { yaxisStream << -$5 << " " << -$8; yaxisDefined = true;}
-		| Y EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {yaxisStream << $4 << " " << $6;yaxisDefined = true;}
+		| Y EQUAL BRACKETL MINUS FLOAT COMA FLOAT BRACKETR { yaxisStream << -$5 << " " << $7; yaxisDefined = true; yinf = -$5; ysup = $7;}
+		| Y EQUAL BRACKETL FLOAT COMA MINUS FLOAT BRACKETR { yaxisStream << $4 << " " << -$7; yaxisDefined = true; yinf = $4; ysup = -$7;}
+		| Y EQUAL BRACKETL MINUS FLOAT COMA MINUS FLOAT BRACKETR { yaxisStream << -$5 << " " << -$8; yaxisDefined = true; yinf = -$5; ysup = -$8;}
+		| Y EQUAL BRACKETL FLOAT COMA FLOAT BRACKETR {yaxisStream << $4 << " " << $6;yaxisDefined = true; yinf = $4; ysup = $6;}
 		| LEFT mixed_expression RIGHT		 { }
 		| SIN LEFT mixed_expression RIGHT { postfixee.push_back(SIN); values.push_back(0); }
 		| COS LEFT mixed_expression RIGHT { postfixee.push_back(COS); values.push_back(0); }
@@ -470,8 +470,8 @@ int main() {
 					/*if 3D*/
 					if(print==0){
 						print++;
-					for (double i = xinf; i < xsup; i+=0.05) {
-							for (double j = yinf; j < ysup; j+=0.05) {
+					for (double i = xinf; i < xsup; i+=0.5) {
+							for (double j = yinf; j < ysup; j+=0.5) {
 							if (!isnan(Evaluation3d(i,j,k))) {
 								xStream << i << " ";
 								yStream << j << " ";

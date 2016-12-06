@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 f(x)=5*x
 g(x)=5*y
 draw f(x,y) purple
 draw g(x,y) red
+=======
+f(x, y) = sqrt(x^2+y^2+16)
+draw f(x, y) purple
+>>>>>>> 25c13870db266b7106246735019d9d84f3f9a804
