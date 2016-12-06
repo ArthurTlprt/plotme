@@ -1980,6 +1980,10 @@ double Evaluation(double x,int ind){
 			break;
 			case TAN:
 				a = pile.top(); pile.pop();
+				if(cos(a) <= 0.05 && cos(a) >= -0.05 ) {
+					outputs.insert(string("<em style=\"color:orange;\">warning: tangent is not defined in this area</em>"));
+					return std::numeric_limits<double>::quiet_NaN();
+				}
 				b=tan(a);
 				pile.push(b);
 			break;
@@ -2105,6 +2109,10 @@ double Evaluation3d(double x,double y, int ind){
 			break;
 			case TAN:
 				a = pile.top(); pile.pop();
+				if(cos(a) <= 0.05 && cos(a) >= -0.05 ) {
+					outputs.insert(string("<em style=\"color:orange;\">warning: tangent is not defined in this area</em>"));
+					return std::numeric_limits<double>::quiet_NaN();
+				}
 				b=tan(a);
 				pile.push(b);
 			break;
