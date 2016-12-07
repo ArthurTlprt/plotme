@@ -12,6 +12,11 @@ Pour compiler l'addon, il faut installer node-gyp:
 npm install -g node-gyp
 ```
 
+Ensuite installer les dépendences:
+```bash
+npm install
+```
+
 Enfin pour compiler et démarrer le serveur:
 ```bash
 make
