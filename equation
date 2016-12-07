@@ -1,4 +1,6 @@
-f(x) = abs(sin(x))
-x = [0, pi]
-title =  rigolo
-draw f(x)
+f(x, y) = sin(x*5)*sin(x*2*y)
+a = 4
+clement(x) = log(x)
+x = [-10, 10]
+y = [-1, 1]
+draw clement(x) red
