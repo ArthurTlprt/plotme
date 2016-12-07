@@ -192,7 +192,7 @@ void Evaluate(const FunctionCallbackInfo<Value>& args) {
 
 
     getline(titleStream, fileInput);
-    data->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, fileInput.substr(0, fileInput.size()-1).c_str()) );
+    data->Set(String::NewFromUtf8(isolate, "title"), String::NewFromUtf8(isolate, fileInput/*.substr(0, fileInput.size()-1)*/.c_str()) );
     data->Set(String::NewFromUtf8(isolate, "yaxis"), yaxis);
     data->Set(String::NewFromUtf8(isolate, "error"), String::NewFromUtf8(isolate, message.c_str()));
     data->Set(String::NewFromUtf8(isolate, "traces"), traces);
